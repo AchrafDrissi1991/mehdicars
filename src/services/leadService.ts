@@ -1,7 +1,9 @@
 import type { FunnelAnswers } from '../types/funnel';
+import type { LeadFormData } from '../types/lead';
 
 export interface CreateLeadPayload {
-  answers: FunnelAnswers;
+  answers?: FunnelAnswers;
+  lead?: LeadFormData;
   language: string;
   source?: string;
   token?: string;
@@ -41,7 +43,35 @@ function buildReportText(payload: CreateLeadPayload | undefined) {
     return 'Noch kein Mock-Lead gespeichert.';
   }
 
-  const answers = payload.answers;
+  if (payload.lead) {
+    const lead = payload.lead;
+
+    return [
+      'Neue Kundenanfrage',
+      '',
+      'Kunde:',
+      `- Name: ${lead.fullName || '-'}`,
+      `- E-Mail: ${lead.email || '-'}`,
+      `- Telefon: ${lead.phone || '-'}`,
+      `- Sprache: ${payload.language}`,
+      '',
+      'Fahrzeugwunsch:',
+      `- Marke: ${lead.brand === 'Autre' ? lead.otherBrand || 'Autre' : lead.brand || '-'}`,
+      `- Modell: ${lead.model || '-'}`,
+      `- Fahrzeugtyp / Wunsch: ${lead.vehicleTypeOrModel || '-'}`,
+      `- Baujahr ab: ${lead.minYear ?? '-'}`,
+      `- Kilometer max.: ${lead.maxMileage ?? '-'}`,
+      `- Budget: ${lead.budget ?? '-'} EUR`,
+      `- Getriebe: ${lead.gearbox || '-'}`,
+      `- Kraftstoff: ${lead.fuel || '-'}`,
+      `- Kaufzeitraum: ${lead.purchaseTimeline || '-'}`,
+      '',
+      'Zusatzinfos / Anzeigenlink:',
+      `${lead.notesOrListingLink || '-'}`,
+    ].join('\n');
+  }
+
+  const answers = payload.answers ?? {};
 
   return [
     'Neue Kundenanfrage',

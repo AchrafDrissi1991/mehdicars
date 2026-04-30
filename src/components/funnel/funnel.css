@@ -365,3 +365,372 @@
     width: 100%;
   }
 }
+
+/* New compact 4-step lead funnel */
+.funnel-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.funnel-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  align-items: center;
+  gap: 20px;
+  min-height: 72px;
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.88);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+}
+
+.funnel-topbar .brand {
+  color: #0b1220;
+  font-weight: 850;
+}
+
+.funnel-progress {
+  display: grid;
+  gap: 6px;
+  color: #6b7280;
+  font-weight: 700;
+  text-align: center;
+}
+
+.funnel-progress span {
+  color: #111827;
+  font-size: 13px;
+}
+
+.funnel-help {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.funnel-content {
+  display: grid;
+  min-height: calc(100vh - 72px);
+  align-items: center;
+  padding: 64px 24px;
+}
+
+.lead-funnel-shell {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.lead-funnel-card,
+.success-step {
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.1);
+}
+
+.lead-funnel-card {
+  display: grid;
+  gap: 34px;
+  padding: 48px;
+}
+
+.lead-funnel-progress {
+  display: grid;
+  gap: 10px;
+}
+
+.lead-funnel-progress span {
+  color: #111827;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.lead-step {
+  display: grid;
+  gap: 24px;
+}
+
+.lead-step-heading {
+  display: grid;
+  gap: 14px;
+}
+
+.lead-step-heading span {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: #e0ecff;
+  color: #1e4ead;
+  font-weight: 900;
+}
+
+.lead-step-heading h1 {
+  max-width: 720px;
+  margin: 0;
+  color: #111827;
+  font-size: clamp(32px, 4.8vw, 52px);
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.lead-field {
+  display: grid;
+  gap: 9px;
+}
+
+.lead-field label,
+.choice-section > label,
+.lead-slider label {
+  color: #111827;
+  font-weight: 850;
+}
+
+.lead-field .ant-input,
+.lead-field .ant-select-selector,
+.lead-field .ant-input-affix-wrapper {
+  border-color: #cbd5e1 !important;
+}
+
+.lead-field .ant-input-lg,
+.lead-field .ant-select-lg .ant-select-selector {
+  min-height: 52px;
+  border-radius: 12px !important;
+  font-weight: 700;
+}
+
+.lead-field textarea.ant-input {
+  min-height: 160px;
+  border-radius: 14px;
+  resize: vertical;
+}
+
+.quick-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.quick-chip-row button {
+  height: 36px;
+  padding: 0 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #111827;
+  cursor: pointer;
+  font-weight: 750;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.quick-chip-row button:hover {
+  border-color: #2f6fed;
+  background: #eff6ff;
+  color: #1e4ead;
+}
+
+.slider-grid {
+  display: grid;
+  gap: 22px;
+}
+
+.lead-slider {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.lead-slider > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lead-slider strong {
+  color: #1e4ead;
+  white-space: nowrap;
+}
+
+.choice-section {
+  display: grid;
+  gap: 12px;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.choice-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-grid button {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #111827;
+  cursor: pointer;
+  font-weight: 850;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.choice-grid button:hover,
+.choice-grid button.is-selected {
+  border-color: #2f6fed;
+  background: #e0ecff;
+  color: #1e4ead;
+}
+
+.choice-grid button:hover {
+  transform: translateY(-2px);
+}
+
+.choice-grid button svg {
+  color: #2f6fed;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.lead-field--full {
+  grid-column: 1 / -1;
+}
+
+.lead-funnel-navigation {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.lead-funnel-navigation span {
+  color: #111827;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.lead-funnel-navigation .ant-btn {
+  min-height: 46px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.lead-funnel-navigation .ant-btn-primary {
+  justify-self: end;
+  min-width: 132px;
+  background: #2f6fed;
+  box-shadow: 0 14px 32px rgba(47, 111, 237, 0.24);
+}
+
+.lead-funnel-navigation .ant-btn-primary:hover {
+  background: #255ed0 !important;
+}
+
+.funnel-prev-button {
+  justify-self: start;
+  min-width: 132px;
+  border-color: #2f6fed;
+  color: #2f6fed;
+}
+
+.funnel-prev-button:hover {
+  border-color: #2f6fed !important;
+  background: #eff6ff !important;
+  color: #1e4ead !important;
+}
+
+.funnel-prev-button:disabled {
+  border-color: #cbd5e1 !important;
+  color: #9ca3af !important;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.success-step {
+  padding: 24px;
+}
+
+.ant-slider-track {
+  background: #2f6fed !important;
+}
+
+.ant-slider-rail {
+  background: #cbd5e1 !important;
+}
+
+.ant-slider-handle::after {
+  box-shadow: 0 0 0 2px #2f6fed !important;
+}
+
+@media (max-width: 720px) {
+  .funnel-topbar {
+    grid-template-columns: 1fr auto;
+    padding: 10px 16px;
+  }
+
+  .funnel-progress {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-bottom: 8px;
+  }
+
+  .funnel-help .language-select {
+    display: none;
+  }
+
+  .funnel-content {
+    align-items: start;
+    padding: 40px 16px;
+  }
+
+  .lead-funnel-card {
+    gap: 28px;
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  .choice-grid,
+  .choice-grid--two,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lead-funnel-navigation {
+    grid-template-columns: 1fr;
+  }
+
+  .lead-funnel-navigation .ant-btn,
+  .funnel-prev-button,
+  .lead-funnel-navigation .ant-btn-primary {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .lead-funnel-navigation span {
+    order: -1;
+    text-align: center;
+  }
+}

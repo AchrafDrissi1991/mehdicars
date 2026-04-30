@@ -1,0 +1,38 @@
+.report-page {
+  min-height: 100vh;
+  padding: 48px 16px;
+  background: #f8fafc;
+}
+
+.report-shell {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.report-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.report-box {
+  min-height: 420px;
+  margin: 0;
+  padding: 24px;
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #111827;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 640px) {
+  .report-header {
+    display: grid;
+  }
+}

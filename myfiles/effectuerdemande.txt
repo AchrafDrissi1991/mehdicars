@@ -1,0 +1,616 @@
+Bitte überarbeite den Anfrage-Funnel als kompakten, modernen 4-Schritte-Prozess.
+
+Der Funnel soll inspiriert sein von den gezeigten Screenshots:
+- große klare Überschrift
+- heller Funnel-Bereich
+- viel Weißraum
+- große Inputs / Selects / Auswahlflächen
+- Step-by-Step Navigation
+- unten: Zurück / Schritt X von 4 / Weiter
+- kein langes klassisches Formular
+
+Wichtig:
+Unsere Farben bleiben:
+- Royal Blue
+- Dunkelblau
+- Schwarz/Graphit
+- Weiß
+- Hellgrau
+- neutrale Grautöne
+
+Bitte KEIN Gold, KEIN Bronze, KEIN Braun, KEIN Beige verwenden.
+
+Farbsystem für den Funnel:
+- Primary: #2F6FED
+- Primary Hover: #255ED0
+- Primary Active: #1E4EAD
+- Background: #F8FAFC oder #F1F5F9
+- Surface: #FFFFFF
+- Text: #111827
+- Body Text: #4B5563
+- Muted Text: #6B7280
+- Border: #E5E7EB
+- Strong Border: #CBD5E1
+- Hover Background: #EFF6FF
+- Selected Background: #E0ECFF
+- Selected Text: #1E4EAD
+- Focus Shadow: 0 0 0 3px rgba(47,111,237,0.16)
+
+Der Funnel besteht aus 4 Schritten:
+
+==================================================
+STEP 1 / 4: Fahrzeugmarke und Modell
+==================================================
+
+Ziel:
+Der Kunde gibt an, welche Automarke er sucht. Es soll nicht nur eine kleine Auswahl von Marken geben, sondern eine vollständige durchsuchbare Automarkenliste.
+
+Titel FR:
+Quelle marque recherchez-vous ?
+
+Titel DE:
+Welche Automarke suchen Sie?
+
+Felder:
+1. Automarke Select
+2. Modell Text Input optional
+3. Optional: Quick-Chips für beliebte Marken
+
+FR Labels:
+- Marque
+- Modèle optionnel
+
+DE Labels:
+- Automarke
+- Modell optional
+
+UI:
+- Verwende Ant Design Select.
+- Der Select muss searchable sein.
+- Der Kunde soll tippen können, um Marken schnell zu finden.
+- Der Select soll groß und gut klickbar sein.
+- Placeholder FR: Sélectionnez une marque
+- Placeholder DE: Marke auswählen
+- Modellfeld darunter als normales Input.
+- Modell bleibt optional.
+- Optional unter dem Select kleine Quick-Chips für beliebte Marken:
+  Audi, BMW, Mercedes-Benz, Volkswagen, Porsche, Tesla
+- Wenn ein Quick-Chip geklickt wird, wird der Select-Wert automatisch gesetzt.
+
+Wichtig:
+Bitte die festen 6 Marken-Cards entfernen oder nur noch als kleine Quick-Chips verwenden.
+Die vollständige Markenauswahl muss über den Select möglich sein.
+
+Bitte lege eine zentrale Markenliste an, z. B.:
+
+src/data/carBrands.ts
+
+Inhalt:
+
+export const carBrands = [
+  "Abarth",
+  "Alfa Romeo",
+  "Alpine",
+  "Aston Martin",
+  "Audi",
+  "Bentley",
+  "BMW",
+  "BYD",
+  "Cadillac",
+  "Chevrolet",
+  "Chrysler",
+  "Citroën",
+  "Cupra",
+  "Dacia",
+  "Daewoo",
+  "Daihatsu",
+  "Dodge",
+  "DS Automobiles",
+  "Ferrari",
+  "Fiat",
+  "Ford",
+  "Genesis",
+  "Honda",
+  "Hyundai",
+  "Infiniti",
+  "Isuzu",
+  "Iveco",
+  "Jaguar",
+  "Jeep",
+  "Kia",
+  "Lamborghini",
+  "Lancia",
+  "Land Rover",
+  "Lexus",
+  "Lotus",
+  "Maserati",
+  "Mazda",
+  "McLaren",
+  "Mercedes-Benz",
+  "MG",
+  "Mini",
+  "Mitsubishi",
+  "Nissan",
+  "Opel",
+  "Peugeot",
+  "Polestar",
+  "Porsche",
+  "Renault",
+  "Rolls-Royce",
+  "Saab",
+  "Seat",
+  "Skoda",
+  "Smart",
+  "SsangYong",
+  "Subaru",
+  "Suzuki",
+  "Tesla",
+  "Toyota",
+  "Volkswagen",
+  "Volvo",
+  "Autre"
+];
+
+Bitte daraus Select Options generieren:
+
+const brandOptions = carBrands.map((brand) => ({
+  label: brand,
+  value: brand
+}));
+
+Ant Design Select Beispiel:
+
+<Select
+  showSearch
+  size="large"
+  placeholder={language === "fr" ? "Sélectionnez une marque" : "Marke auswählen"}
+  options={brandOptions}
+  value={formData.brand}
+  onChange={(value) => updateFormData({ brand: value })}
+  filterOption={(input, option) =>
+    String(option?.label ?? "")
+      .toLowerCase()
+      .includes(input.toLowerCase())
+  }
+/>
+
+Falls der Nutzer „Autre“ auswählt, soll ein zusätzliches Textfeld erscheinen.
+
+FR Placeholder:
+Précisez la marque
+
+DE Placeholder:
+Andere Marke angeben
+
+Validierung:
+- Step 1 darf weitergehen, wenn eine Marke ausgewählt wurde.
+- Modell ist optional.
+- Falls „Autre“ gewählt wurde, ist das zusätzliche Markenfeld Pflicht.
+
+Design für Select/Input:
+- background #FFFFFF
+- border #CBD5E1
+- hover border #2F6FED
+- focus border #2F6FED
+- focus shadow 0 0 0 3px rgba(47,111,237,0.16)
+- selected option background #E0ECFF
+- selected option text #1E4EAD
+
+==================================================
+STEP 2 / 4: Fahrzeugkriterien
+==================================================
+
+Ziel:
+Der Kunde gibt die wichtigsten Suchkriterien an.
+
+Titel FR:
+Quel type de véhicule ?
+
+Titel DE:
+Welches Fahrzeug suchen Sie genau?
+
+Felder:
+1. Fahrzeugtyp / Modellwunsch als Freitext
+2. Baujahr ab
+3. Kilometer maximal
+4. Budget
+
+FR Labels:
+- Type de véhicule ou modèle recherché
+- Année minimum
+- Kilométrage maximum
+- Votre budget
+
+DE Labels:
+- Fahrzeugtyp oder Modellwunsch
+- Baujahr ab
+- Maximale Kilometer
+- Budget
+
+UI:
+- Oben ein großes Input-Feld für Fahrzeugtyp / Modellwunsch.
+- Darunter drei Slider:
+  1. Baujahr ab
+  2. Kilometer maximal
+  3. Budget
+- Werte jeweils rechts neben dem Label anzeigen.
+- Slider modern, sauber und gut bedienbar.
+
+Empfohlene Slider-Werte:
+- Baujahr: 2005 bis aktuelles Jahr
+- Kilometer: 0 bis 250.000 km
+- Budget: 5.000 € bis 100.000 €
+
+Formatierung:
+- Kilometer mit Leerzeichen formatieren, z. B. 55 000 km
+- Budget als Euro formatieren, z. B. 70 000 €
+- Baujahr als Jahr, z. B. 2023
+
+Slider Design:
+- active track #2F6FED
+- handle #2F6FED
+- rail #CBD5E1
+- hover/focus mit Royal Blue
+- keine warmen Farben
+
+Validierung:
+- Step 2 darf weitergehen, wenn mindestens Fahrzeugtyp/Modellwunsch oder Budget vorhanden ist.
+- Baujahr und Kilometer sind optional, aber empfohlen.
+
+==================================================
+STEP 3 / 4: Technische Präferenzen
+==================================================
+
+Ziel:
+Der Kunde wählt Getriebe und Kraftstoff.
+
+Titel FR:
+Précisez vos préférences techniques
+
+Titel DE:
+Technische Präferenzen
+
+Bereich 1:
+Boîte de vitesses / Getriebe
+
+Optionen:
+FR:
+- Manuelle
+- Automatique
+
+DE:
+- Manuell
+- Automatik
+
+Bereich 2:
+Carburant / Kraftstoff
+
+Optionen:
+FR:
+- Essence
+- Diesel
+- Hybride
+- Électrique
+
+DE:
+- Benzin
+- Diesel
+- Hybrid
+- Elektro
+
+UI:
+- Getriebe als zwei große horizontale Auswahlkarten.
+- Kraftstoff als vier Auswahlkarten.
+- Auf Desktop 4 Spalten für Kraftstoff.
+- Auf Mobile 2 Spalten oder 1 Spalte, je nach Breite.
+- Optional einfache lineare Icons verwenden.
+- Keine echten geschützten Markenlogos.
+- Selected State klar sichtbar.
+
+Card Design:
+- background #FFFFFF oder transparent auf hellem Hintergrund
+- border #CBD5E1
+- hover background #EFF6FF
+- hover border #2F6FED
+- selected border #2F6FED
+- selected background #E0ECFF
+- selected text #1E4EAD
+- icon selected #2F6FED
+
+Validierung:
+- Getriebe optional.
+- Kraftstoff optional.
+- Wenn ausgewählt, sauber in formData speichern.
+
+==================================================
+STEP 4 / 4: Kontaktdaten und Zusatzinfos
+==================================================
+
+Ziel:
+Der Kunde gibt seine Kontaktdaten an und kann zusätzliche Wünsche oder einen Anzeigenlink ergänzen.
+
+Titel FR:
+Et pour vous recontacter ?
+
+Titel DE:
+Wie können wir Sie erreichen?
+
+Felder:
+1. Vorname und Name
+2. E-Mail
+3. Telefon
+4. Kaufzeitraum
+5. Zusatzfeld / Textarea
+
+FR Labels:
+- Prénom et Nom
+- E-mail
+- Téléphone
+- Prévision d’achat
+- Ajoutez des précisions ou envoyez un lien d’annonce que vous aimez.
+
+DE Labels:
+- Vorname und Name
+- E-Mail
+- Telefon
+- Kaufzeitraum
+- Ergänzen Sie weitere Wünsche oder senden Sie einen Link zu einer Anzeige, die Ihnen gefällt.
+
+Kaufzeitraum Optionen:
+
+FR:
+- Dès que possible
+- Dans 1 mois
+- Dans 3 mois
+- Je ne sais pas encore
+
+DE:
+- So schnell wie möglich
+- In 1 Monat
+- In 3 Monaten
+- Ich weiß es noch nicht
+
+UI:
+- Zwei-Spalten-Grid auf Desktop.
+- Einspaltig auf Mobile.
+- Große Inputs.
+- Kaufzeitraum als Select.
+- Textarea über volle Breite.
+- Textarea mindestens 160px hoch.
+- Klare Pflichtfeldmarkierung.
+
+Validierung:
+- Name ist Pflichtfeld.
+- Telefon ist Pflichtfeld.
+- E-Mail optional oder Pflichtfeld, je nachdem wie es aktuell in der App definiert ist.
+- Kaufzeitraum optional.
+- Zusatzfeld optional.
+
+==================================================
+Navigation und Step Layout
+==================================================
+
+Jeder Step soll unten dieselbe Navigation haben:
+
+Links:
+FR: Précédent
+DE: Zurück
+
+Mitte:
+FR: ÉTAPE X / 4
+DE: SCHRITT X / 4
+
+Rechts:
+Step 1–3:
+FR: Suivant
+DE: Weiter
+
+Step 4:
+FR: Envoyer
+DE: Absenden
+
+Im ersten Step ist der Zurück-Button disabled.
+
+Button Design:
+Primary Button:
+- background #2F6FED
+- text #FFFFFF
+- hover background #255ED0
+- active background #1E4EAD
+- border-radius 8px bis 10px
+- height ca. 46px
+- padding horizontal 22px bis 28px
+
+Secondary / Previous Button:
+- background #FFFFFF oder transparent
+- text #2F6FED
+- border #2F6FED
+- hover background #EFF6FF
+- hover border #2F6FED
+
+Disabled Previous Button:
+- opacity 0.45
+- cursor not-allowed
+- border #CBD5E1
+- text #9CA3AF
+
+Step Indicator:
+- uppercase
+- font-weight 700
+- letter spacing leicht
+- color #111827
+
+Zusätzlich:
+Bitte oben im Funnel eine Progress Bar anzeigen.
+- Step 1: 25%
+- Step 2: 50%
+- Step 3: 75%
+- Step 4: 100%
+Progress active color: #2F6FED
+Progress background: #E5E7EB
+
+==================================================
+Allgemeines Funnel Layout
+==================================================
+
+Der Funnel soll optisch modern, fokussiert und ruhig wirken.
+
+Layout:
+- Funnel Section Background: #F8FAFC oder #F1F5F9
+- Container max-width ca. 900px
+- centered
+- padding desktop 64px 24px
+- padding mobile 40px 16px
+- große Überschrift
+- viel Weißraum
+- keine lange Formularseite
+- keine überfüllten Steps
+
+Optional:
+Der Funnel kann als große weiße Card gerendert werden:
+- background #FFFFFF
+- border #E5E7EB
+- border-radius 24px
+- box-shadow soft
+- padding desktop 48px
+- padding mobile 24px
+
+Oder direkt auf hellem Hintergrund wie in den Screenshots, aber bitte sauber und konsistent.
+
+==================================================
+Danke-Seite nach Absenden
+==================================================
+
+Nach erfolgreichem Absenden bitte eine Danke-Seite oder Success-Step anzeigen.
+
+FR:
+Titre:
+Merci, votre demande a été envoyée.
+
+Texte:
+Nous avons reçu vos informations. L’équipe Mehdi Cars va analyser votre demande et vous recontacter avec les prochaines étapes.
+
+Button:
+Retour à l’accueil
+
+DE:
+Titel:
+Vielen Dank, Ihre Anfrage wurde gesendet.
+
+Text:
+Wir haben Ihre Informationen erhalten. Das Mehdi Cars Team prüft Ihre Anfrage und meldet sich mit den nächsten Schritten.
+
+Button:
+Zurück zur Startseite
+
+==================================================
+Lead Objekt / Datenstruktur
+==================================================
+
+Bitte aus den Antworten ein strukturiertes Lead-Objekt erzeugen:
+
+{
+  brand,
+  otherBrand,
+  model,
+  vehicleTypeOrModel,
+  minYear,
+  maxMileage,
+  budget,
+  gearbox,
+  fuel,
+  fullName,
+  email,
+  phone,
+  purchaseTimeline,
+  notesOrListingLink,
+  language,
+  createdAt
+}
+
+Bitte TypeScript Types definieren:
+
+type Language = "de" | "fr";
+
+type Gearbox = "manual" | "automatic" | "";
+
+type FuelType = "petrol" | "diesel" | "hybrid" | "electric" | "";
+
+type PurchaseTimeline =
+  | "asap"
+  | "one_month"
+  | "three_months"
+  | "not_sure"
+  | "";
+
+type LeadFormData = {
+  brand: string;
+  otherBrand?: string;
+  model?: string;
+  vehicleTypeOrModel?: string;
+  minYear?: number;
+  maxMileage?: number;
+  budget?: number;
+  gearbox?: Gearbox;
+  fuel?: FuelType;
+  fullName: string;
+  email?: string;
+  phone: string;
+  purchaseTimeline?: PurchaseTimeline;
+  notesOrListingLink?: string;
+  language: Language;
+  createdAt?: string;
+};
+
+==================================================
+Technische Umsetzung
+==================================================
+
+Bitte den Funnel so bauen, dass er später einfach erweitert werden kann.
+
+Empfehlung:
+- Steps als Konfiguration definieren.
+- FormData zentral im State speichern.
+- updateFormData helper verwenden.
+- Keine Steps hart und unübersichtlich verdrahten.
+- TypeScript sauber verwenden.
+- Validierung pro Step in einer Funktion bündeln.
+- Komponenten aufteilen:
+
+components/funnel/LeadFunnel.tsx
+components/funnel/FunnelNavigation.tsx
+components/funnel/StepBrand.tsx
+components/funnel/StepCriteria.tsx
+components/funnel/StepTechnicalPreferences.tsx
+components/funnel/StepContact.tsx
+components/funnel/SuccessStep.tsx
+data/carBrands.ts
+types/lead.ts
+
+Beispiel Funktionen:
+- updateFormData(partialData)
+- canGoNext(currentStep, formData)
+- handleNext()
+- handlePrevious()
+- handleSubmit()
+
+==================================================
+Wichtige Design-Regeln
+==================================================
+
+Bitte unbedingt beachten:
+- Kein Gold.
+- Kein Bronze.
+- Kein Braun.
+- Kein Beige.
+- Keine warmen CTA-Farben.
+- Keine gelben Buttons.
+- Keine gelben Badges.
+- Keine WhatsApp Buttons.
+- Keine festen 6 Marken-Cards als einzige Auswahl.
+- Automarke muss über vollständigen Searchable Select auswählbar sein.
+- Der Funnel soll kurz wirken: maximal 4 Schritte.
+- Mobile Darstellung muss sauber sein.
+- Inputs und Auswahlkarten müssen groß genug für Touch sein.
+- Selected States müssen klar sichtbar sein.
+- Farben müssen zum bestehenden Royal-Blue/Dark/White/Gray Design passen.

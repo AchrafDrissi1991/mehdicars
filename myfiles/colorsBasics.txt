@@ -1,0 +1,349 @@
+Bitte passe das Design-System erneut an.
+
+Wir entfernen Gold/Bronze komplett aus dem Design. Die aktuelle Kombination aus dunklem Schwarz/Grau mit Royal Blue und Weiß wirkt deutlich moderner und passender für die Auto-Vermittlungsseite.
+
+Neue Designrichtung:
+Die App soll nicht warm/gold/premium wirken, sondern modern, seriös, digital, klar und hochwertig.
+
+Gewünschte Wirkung:
+- moderne Auto-Vermittlung
+- seriös
+- digital
+- sauber
+- vertrauenswürdig
+- klar
+- hochwertig
+- nicht altmodisch
+- nicht zu warm
+- kein Gold/Bronze mehr
+
+Bitte entferne alle Gold-/Bronze-/Sand-/Champagne-Farben aus der UI:
+- #B7792B
+- #8F5A1E
+- #F3E7D3
+- #D8C3A5
+- #FAF7F1, falls sie als warmer Ton verwendet wird
+- alle ähnlichen warmen Gold/Bronze/Sand Farben
+
+Stattdessen soll das Design-System auf Royal Blue, Dunkelblau/Schwarz, Grau und Weiß basieren.
+
+Bitte verwende dieses zentrale Farb-System:
+
+Primary / Royal Blue:
+primary: #2F6FED
+primaryHover: #255ED0
+primaryActive: #1E4EAD
+
+Deep Blue:
+deepBlue: #162B55
+deepBlueDark: #0B1220
+
+Dark:
+dark: #0B1220
+graphite: #111827
+slate: #1F2937
+
+Backgrounds:
+background: #F8FAFC
+backgroundAlt: #F1F5F9
+surface: #FFFFFF
+surfaceMuted: #F8FAFC
+
+Text:
+text: #111827
+bodyText: #4B5563
+mutedText: #6B7280
+subtleText: #9CA3AF
+textOnDark: #FFFFFF
+mutedTextOnDark: rgba(255,255,255,0.78)
+
+Borders:
+border: #E5E7EB
+borderStrong: #CBD5E1
+borderDark: rgba(255,255,255,0.16)
+
+States:
+hoverBg: #EFF6FF
+activeBg: #DBEAFE
+selectedBg: #E0ECFF
+selectedText: #1E4EAD
+
+Forms:
+inputBg: #FFFFFF
+inputBorder: #CBD5E1
+inputHoverBorder: #2F6FED
+inputFocusBorder: #2F6FED
+inputFocusShadow: 0 0 0 3px rgba(47,111,237,0.16)
+
+Status:
+success: #16A34A
+warning: #F59E0B
+error: #DC2626
+info: #2F6FED
+
+Bitte lege diese Farben zentral ab, z. B. in:
+
+src/theme/colors.ts
+
+mit folgendem Inhalt:
+
+export const colors = {
+  primary: "#2F6FED",
+  primaryHover: "#255ED0",
+  primaryActive: "#1E4EAD",
+
+  deepBlue: "#162B55",
+  deepBlueDark: "#0B1220",
+
+  dark: "#0B1220",
+  graphite: "#111827",
+  slate: "#1F2937",
+
+  background: "#F8FAFC",
+  backgroundAlt: "#F1F5F9",
+  surface: "#FFFFFF",
+  surfaceMuted: "#F8FAFC",
+
+  text: "#111827",
+  bodyText: "#4B5563",
+  mutedText: "#6B7280",
+  subtleText: "#9CA3AF",
+  textOnDark: "#FFFFFF",
+  mutedTextOnDark: "rgba(255,255,255,0.78)",
+
+  border: "#E5E7EB",
+  borderStrong: "#CBD5E1",
+  borderDark: "rgba(255,255,255,0.16)",
+
+  hoverBg: "#EFF6FF",
+  activeBg: "#DBEAFE",
+  selectedBg: "#E0ECFF",
+  selectedText: "#1E4EAD",
+
+  inputBg: "#FFFFFF",
+  inputBorder: "#CBD5E1",
+  inputHoverBorder: "#2F6FED",
+  inputFocusBorder: "#2F6FED",
+  inputFocusShadow: "0 0 0 3px rgba(47,111,237,0.16)",
+
+  success: "#16A34A",
+  warning: "#F59E0B",
+  error: "#DC2626",
+  info: "#2F6FED",
+};
+
+Bitte lege zusätzlich CSS-Variablen in der globalen CSS-Datei an:
+
+:root {
+  --color-primary: #2F6FED;
+  --color-primary-hover: #255ED0;
+  --color-primary-active: #1E4EAD;
+
+  --color-deep-blue: #162B55;
+  --color-deep-blue-dark: #0B1220;
+
+  --color-dark: #0B1220;
+  --color-graphite: #111827;
+  --color-slate: #1F2937;
+
+  --color-background: #F8FAFC;
+  --color-background-alt: #F1F5F9;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F8FAFC;
+
+  --color-text: #111827;
+  --color-body-text: #4B5563;
+  --color-muted-text: #6B7280;
+  --color-subtle-text: #9CA3AF;
+  --color-text-on-dark: #FFFFFF;
+  --color-muted-text-on-dark: rgba(255,255,255,0.78);
+
+  --color-border: #E5E7EB;
+  --color-border-strong: #CBD5E1;
+  --color-border-dark: rgba(255,255,255,0.16);
+
+  --color-hover-bg: #EFF6FF;
+  --color-active-bg: #DBEAFE;
+  --color-selected-bg: #E0ECFF;
+  --color-selected-text: #1E4EAD;
+
+  --shadow-soft: 0 12px 34px rgba(15, 23, 42, 0.08);
+  --shadow-medium: 0 18px 48px rgba(15, 23, 42, 0.14);
+  --shadow-dark: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+Bitte verwende diese Farben auch im Ant Design ConfigProvider.
+
+AntD Theme:
+- colorPrimary: #2F6FED
+- colorLink: #2F6FED
+- colorSuccess: #16A34A
+- colorWarning: #F59E0B
+- colorError: #DC2626
+- colorText: #111827
+- colorTextSecondary: #6B7280
+- colorBgBase: #F8FAFC
+- colorBgContainer: #FFFFFF
+- colorBorder: #E5E7EB
+- borderRadius: 10
+- fontFamily: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+
+Komponenten-Regeln:
+
+Header:
+- Hintergrund: #FFFFFF oder rgba(255,255,255,0.92) mit blur.
+- Border unten: #E5E7EB.
+- Text: #111827.
+- Navigation Hover: #2F6FED.
+- Aktiver Menüpunkt: #2F6FED.
+- Hover Underline: #2F6FED.
+- Social Icons neutral, Hover mit #EFF6FF und #2F6FED.
+- Sprache Select soll zum System passen.
+- Kein Gold/Bronze mehr.
+
+Hero:
+- Hero bleibt ein großer Banner mit Auto-Bild als Full-Width Background.
+- Overlay mit #0B1220, #111827 und #162B55.
+- Text auf Hero: #FFFFFF.
+- Beschreibung: rgba(255,255,255,0.78).
+- Hero Badge:
+  - Background: rgba(47,111,237,0.14)
+  - Border: rgba(47,111,237,0.38)
+  - Text: #FFFFFF oder #DBEAFE
+- Hero CTA auf dunklem Hintergrund:
+  - Background #FFFFFF
+  - Text #0B1220
+  - Hover Background #EFF6FF
+  - Hover Text #1E4EAD
+- Kein Gold/Bronze Badge mehr.
+- Kein WhatsApp Button.
+
+Buttons:
+1. CTA Light auf dunklem Hintergrund:
+- Background #FFFFFF
+- Text #0B1220
+- Hover Background #EFF6FF
+- Hover Text #1E4EAD
+- Border rgba(255,255,255,0.35)
+- Border Radius 8px bis 10px
+- Hover transform translateY(-2px)
+- Shadow verstärken
+
+2. CTA Primary auf hellem Hintergrund:
+- Background #2F6FED
+- Text #FFFFFF
+- Hover Background #255ED0
+- Active Background #1E4EAD
+- Border #2F6FED
+- Border Radius 8px bis 10px
+
+3. Secondary Button:
+- Background #FFFFFF
+- Text #2F6FED
+- Border #CBD5E1
+- Hover Background #EFF6FF
+- Hover Border #2F6FED
+- Hover Text #1E4EAD
+
+Cards:
+- Background #FFFFFF.
+- Border #E5E7EB.
+- Border Radius 18px bis 24px.
+- Shadow weich.
+- Hover:
+  - transform translateY(-4px) oder translateY(-6px)
+  - border-color rgba(47,111,237,0.35)
+  - shadow stärker.
+- Icons können #2F6FED oder weiß auf dunklem Gradient sein.
+- Keine Gold/Bronze Badges mehr.
+
+Gradient Cards:
+Für Cards wie Services kann dieser Look verwendet werden:
+- Gradient: linear-gradient(135deg, #0B1220 0%, #162B55 55%, #2F6FED 100%)
+- Icons auf halbtransparentem weißem Hintergrund.
+- Labels/Badges bitte in Weiß/hellblau statt Gelb/Gold.
+- Badge Background rgba(255,255,255,0.16)
+- Badge Text #FFFFFF oder #DBEAFE
+- Badge Border rgba(255,255,255,0.22)
+
+Dropdowns:
+- Background #FFFFFF.
+- Border #E5E7EB.
+- Border Radius 6px bis 8px.
+- Shadow dezent.
+- Item Text #111827.
+- Item Hover Background #EFF6FF.
+- Item Hover Text #2F6FED.
+- Selected Background #E0ECFF.
+- Selected Text #1E4EAD.
+- Services Dropdown soll nur Titel zeigen:
+  Auto Beratung
+  Auto verkaufen
+- Keine Untertexte.
+- Keine Gold/Bronze Hover-Farben.
+
+Forms / Inputs / Selects:
+- Background #FFFFFF.
+- Border #CBD5E1.
+- Text #111827.
+- Placeholder #9CA3AF.
+- Hover Border #2F6FED.
+- Focus Border #2F6FED.
+- Focus Shadow 0 0 0 3px rgba(47,111,237,0.16).
+- Selected Option Background #E0ECFF.
+- Selected Option Text #1E4EAD.
+- Keine Gold/Bronze Selection-Farben.
+
+Trust Bar:
+- Background #FFFFFF.
+- Border #E5E7EB.
+- Icons #2F6FED.
+- Text #111827.
+- Hover Background #EFF6FF.
+- Kein Gold/Bronze.
+
+FAQ / Accordion:
+- Background #FFFFFF.
+- Border #E5E7EB.
+- Header Text #111827.
+- Body Text #4B5563.
+- Hover Background #EFF6FF.
+- Active Accent #2F6FED.
+- Icons #2F6FED.
+
+Footer:
+- Background #0B1220 oder Gradient #0B1220 zu #162B55.
+- Text #FFFFFF.
+- Secondary Text rgba(255,255,255,0.72).
+- Borders rgba(255,255,255,0.16).
+- Links Hover #DBEAFE oder #FFFFFF.
+- Social Icons Hover #2F6FED.
+
+Sections:
+- Normale Sections hell halten:
+  #F8FAFC, #F1F5F9 oder #FFFFFF.
+- Dunkle Sections nur für Hero, Footer und gezielte CTA-Bereiche.
+- Keine warmen Beige/Gold-Flächen mehr.
+- Viel Weißraum und klare Kartenstruktur.
+
+Bitte entferne überall:
+- Gold/Bronze/Sand/Champagne Farben
+- gelbe Badges
+- gelbe Texte
+- goldene Borders
+- warme Hover-Flächen
+- WhatsApp Buttons
+- zu große Hero-Headline
+- Services Dropdown Untertexte
+
+Neue allgemeine Regel für zukünftige Komponenten:
+- Primary Action oder Fokus: Royal Blue #2F6FED.
+- Hover/Selected/Active: helle Blautöne #EFF6FF, #DBEAFE, #E0ECFF.
+- Dark Premium Areas: #0B1220, #111827, #162B55.
+- Cards/Forms/Dropdowns: Weiß, neutrale Border, dezenter Schatten.
+- Text: #111827 und #4B5563.
+- Keine Gold/Bronze-Farben mehr verwenden.
+
+Am Ende bitte visuell prüfen:
+Die App soll wie eine moderne digitale Auto-Vermittlungsplattform wirken:
+dunkler Hero mit Fahrzeugbild, Royal-Blue-Akzenten, weiße Cards, klare Navigation, helle Sections, keine Gold-Optik.

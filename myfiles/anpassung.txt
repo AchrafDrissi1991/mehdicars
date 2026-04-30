@@ -1,0 +1,706 @@
+Bitte überarbeite unsere bestehende React + TypeScript + Ant Design Landingpage strukturell und visuell. Orientiere dich an der Seitenstruktur und dem Aufbau von gaillardauto.com, aber kopiere keine Texte, keine Marke, keine fremden Inhalte und keine fremden Bewertungen.
+
+Wichtig:
+Unsere App bleibt „Mehdi Cars“.
+Unsere bestehende Menüstruktur bleibt erhalten.
+Unsere bestehenden Texte/Inhalte sollen nicht durch fremde Inhalte ersetzt werden.
+Die Website gaillardauto.com dient nur als Struktur- und Layout-Inspiration.
+
+Unsere Menüstruktur bleibt:
+
+Home
+Leistungen
+  - Auto Beratung
+  - Auto verkaufen
+Ablauf
+FAQ
+Kontakt
+Social Icons: YouTube, Instagram, TikTok
+Sprache: DE / FR Select
+
+Bitte keine neuen Menüpunkte wie „Mon compte“, „Voiture occasion“, „Pourquoi acheter en Allemagne?“ oder ähnliche fremde Navigation übernehmen.
+
+Unsere Farbwelt bleibt:
+- Royal Blue
+- Dunkelblau
+- Schwarz / Graphit
+- Weiß
+- Hellgrau
+- neutrale Grautöne
+
+Bitte KEIN Gold, KEIN Bronze, KEIN Braun, KEIN Beige verwenden.
+
+Farbsystem:
+primary: #2F6FED
+primaryHover: #255ED0
+primaryActive: #1E4EAD
+
+deepBlue: #162B55
+deepBlueDark: #0B1220
+
+dark: #0B1220
+graphite: #111827
+slate: #1F2937
+
+background: #F8FAFC
+backgroundAlt: #F1F5F9
+surface: #FFFFFF
+surfaceMuted: #F8FAFC
+
+text: #111827
+bodyText: #4B5563
+mutedText: #6B7280
+subtleText: #9CA3AF
+
+textOnDark: #FFFFFF
+mutedTextOnDark: rgba(255,255,255,0.78)
+
+border: #E5E7EB
+borderStrong: #CBD5E1
+borderDark: rgba(255,255,255,0.16)
+
+hoverBg: #EFF6FF
+activeBg: #DBEAFE
+selectedBg: #E0ECFF
+selectedText: #1E4EAD
+
+Bitte diese Farben zentral in src/theme/colors.ts ablegen und zusätzlich als CSS-Variablen in der globalen CSS-Datei definieren.
+
+Ant Design Theme:
+Bitte Ant Design an unser Farbsystem anpassen:
+- colorPrimary: #2F6FED
+- colorLink: #2F6FED
+- colorText: #111827
+- colorTextSecondary: #6B7280
+- colorBgBase: #F8FAFC
+- colorBgContainer: #FFFFFF
+- colorBorder: #E5E7EB
+- borderRadius: 10
+- fontFamily: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+
+Bitte keine Default-AntD-Optik und keine warmen Farben verwenden.
+
+Ziel:
+Die Landingpage soll wie eine moderne Auto-Vermittlungsseite wirken:
+- seriös
+- klar
+- vertrauenswürdig
+- hochwertig
+- auto-orientiert
+- conversion-stark
+- gut strukturiert
+- mobil optimiert
+
+Bitte leite die Struktur aus gaillardauto.com ab, aber verwende unsere Inhalte.
+
+Neue Landingpage-Struktur:
+
+1. Header
+2. Hero Banner
+3. Trust / Proof Bar
+4. Vertrauens- und Erklärungsteil
+5. Import-/Vermittlungs-Vorteile
+6. Anfrageformular / Funnel Section
+7. Beispielhafte Fahrzeug-/Import-Cards oder Wunschauto-Section
+8. Video-/Erklärsektion
+9. Kundenbewertungen
+10. Warum Deutschland / Warum Vermittlung sinnvoll ist
+11. Ablauf / So funktioniert es
+12. FAQ
+13. Final CTA
+14. Footer
+
+1. Header:
+Der Header soll professionell und hochwertig wirken.
+
+Anforderungen:
+- sticky Header
+- weißer oder leicht transparenter Hintergrund
+- backdrop-filter blur
+- dezente Border unten
+- Logo links
+- Navigation rechts oder mittig-rechts
+- Social Icons rechts
+- Sprache Select DE / FR rechts
+- Mobile: Burger Drawer
+- Services/Leistungen im Drawer aufklappbar
+
+Navigation:
+Home
+Leistungen
+Ablauf
+FAQ
+Kontakt
+
+Leistungen Dropdown:
+- kompakt
+- rechteckig
+- keine Untertexte
+- keine großen Cards
+- nur:
+  Auto Beratung
+  Auto verkaufen
+
+Dropdown Design:
+- background #FFFFFF
+- border #E5E7EB
+- border-radius 6px bis 8px
+- shadow dezent
+- width ca. 190–220px
+- item height 44–48px
+- item hover background #EFF6FF
+- item hover text #2F6FED
+
+2. Hero Banner:
+Der Hero soll von der Struktur an gaillardauto.com erinnern:
+- großes klares Leistungsversprechen
+- starke Headline
+- kurze Subheadline
+- ein klarer CTA
+- Auto-Bild als Banner-Hintergrund
+- Trust-Elemente direkt darunter oder im Hero-Bereich
+
+Wichtig:
+Das Auto-Bild soll als Full-Width Background-Banner verwendet werden.
+Kein kleines Bild rechts.
+Kein Bild in einer Card.
+Kein Hero mit Bild-Box.
+
+Hero Aufbau:
+- full width
+- min-height Desktop ca. 620–700px
+- min-height Mobile ca. 560–640px
+- Hintergrundbild mit dunklem Overlay
+- Text links im Container
+- nur ein CTA Button
+
+Hero Text:
+Bitte unsere bestehenden Texte verwenden.
+Wenn ein französischer Beispieltext gebraucht wird:
+
+Eyebrow:
+Mehdi Cars
+
+Headline:
+Trouvez votre voiture, simplement.
+
+Subheadline:
+Décrivez votre projet en quelques minutes. Nous structurons votre demande et vous accompagnons dans la recherche du véhicule adapté.
+
+CTA:
+Commencer ma demande
+
+Deutsch:
+Eyebrow:
+Mehdi Cars
+
+Headline:
+Finden Sie Ihr Fahrzeug, einfach und transparent.
+
+Subheadline:
+Beschreiben Sie Ihr Wunschfahrzeug in wenigen Minuten. Wir strukturieren Ihre Anfrage und begleiten Sie bei der Suche nach dem passenden Auto.
+
+CTA:
+Jetzt anfragen
+
+Hero Styling:
+background-image:
+linear-gradient(
+  90deg,
+  rgba(11,18,32,0.96) 0%,
+  rgba(11,18,32,0.82) 38%,
+  rgba(11,18,32,0.42) 68%,
+  rgba(11,18,32,0.82) 100%
+),
+url("/hero-car.jpg");
+
+background-size: cover;
+background-position: center right;
+
+Hero Headline:
+font-size: clamp(36px, 4.4vw, 58px);
+line-height: 1.05;
+letter-spacing: -0.04em;
+font-weight: 800;
+max-width: 620px;
+
+Hero Subheadline:
+font-size: 16px;
+line-height: 1.7;
+max-width: 560px;
+color: rgba(255,255,255,0.78);
+
+Hero Badge:
+- background rgba(47,111,237,0.14)
+- border rgba(47,111,237,0.38)
+- text #DBEAFE oder #FFFFFF
+- no gold/brown/beige
+
+Hero Button:
+- background #FFFFFF
+- text #0B1220
+- hover background #EFF6FF
+- hover text #1E4EAD
+- border rgba(255,255,255,0.35)
+- border-radius 8px
+- height ca. 46px
+
+Bitte alle WhatsApp Buttons entfernen.
+Es bleibt nur:
+DE: Jetzt anfragen
+FR: Commencer ma demande
+
+3. Trust / Proof Bar:
+Direkt unter dem Hero soll eine Trust Bar entstehen, inspiriert vom Proof-Bereich auf gaillardauto.com.
+
+Nicht deren Zahlen kopieren.
+Bitte mit unseren eigenen neutralen Proof-Elementen arbeiten.
+
+Beispiele:
+- Deutschland ↔ Frankreich
+- Persönliche Begleitung
+- Strukturierte Anfrage
+- Transparenter Prozess
+
+Design:
+- weiße Box
+- leicht über Hero gezogen
+- border #E5E7EB
+- shadow soft
+- border-radius 18px bis 24px
+- 3 oder 4 Spalten Desktop
+- Mobile als Stack oder horizontal scroll
+- Icons #2F6FED
+- Text #111827
+
+4. Vertrauens- und Erklärungsteil:
+Nach der Trust Bar soll eine Section kommen, die erklärt, warum die Vermittlung sinnvoll ist.
+
+Inspiration:
+gaillardauto.com hat einen Abschnitt, der Vertrauen erklärt und typische Probleme beim Autokauf adressiert.
+
+Bitte für uns eine eigene Section bauen:
+
+FR Beispiel:
+Titre:
+Un accompagnement clair pour votre projet automobile
+
+Texte:
+Acheter une voiture à distance peut être compliqué : annonces difficiles à comparer, informations incomplètes, budget, kilométrage, motorisation et livraison. Avec Mehdi Cars, vous décrivez votre besoin et nous transformons votre demande en un résumé clair pour vous accompagner efficacement.
+
+Bullet Points:
+- Demande structurée
+- Critères clairement définis
+- Communication simple
+- Accompagnement personnalisé
+
+DE Beispiel:
+Titel:
+Klare Begleitung für Ihre Fahrzeugsuche
+
+Text:
+Ein Auto aus der Ferne zu suchen kann kompliziert sein: viele Anzeigen, unklare Informationen, Budgetfragen, Kilometerstand, Ausstattung und Zielort. Mit Mehdi Cars beschreiben Sie Ihren Bedarf, und wir erstellen daraus eine klare Anfrageübersicht.
+
+Bullet Points:
+- Strukturierte Anfrage
+- Klare Fahrzeugkriterien
+- Einfache Kommunikation
+- Persönliche Begleitung
+
+Design:
+- zweispaltig Desktop
+- links Text
+- rechts Bild, Video-Placeholder oder Info-Card
+- helle Fläche
+- hochwertige Cards
+- kein Gold/Bronze
+
+5. Vorteile / Warum Vermittlung:
+Bitte eine Section erstellen, die Vorteile ähnlich strukturiert wie bei gaillardauto.com erklärt, aber mit unseren Inhalten.
+
+Cards:
+1. Zeit sparen
+2. Klarere Auswahl
+3. Persönliche Begleitung
+4. Strukturierter Bericht
+
+Design:
+- 4 Cards Desktop
+- 2x2 Tablet
+- 1 Spalte Mobile
+- Icons Royal Blue
+- Cards weiß
+- Hover Lift
+- border #E5E7EB
+- hover border rgba(47,111,237,0.35)
+
+6. Anfrageformular / Funnel Section:
+Gaillardauto hat eine starke „Parlez-nous de votre projet“-Section mit Formularfeldern für Marke, Modell, Baujahr, Kilometer, Budget, Kontakt usw.
+
+Bitte diese Idee für unsere App übernehmen:
+Ein geführter Anfrage-Funnel direkt auf der Landingpage oder als eigene Funnel-Section.
+
+Wichtig:
+Nicht als langweiliges langes Formular bauen.
+Es soll sauber, modern und Typeform-ähnlich sein.
+
+Felder/Fragen:
+- Welche Marke suchen Sie?
+- Welches Modell?
+- Fahrzeugtyp
+- Baujahr ab
+- Kilometer maximal
+- Budget
+- Getriebe
+- Kraftstoff
+- Zielort
+- Name
+- E-Mail
+- Telefon
+- Kaufzeitraum
+- Zusätzliche Wünsche oder Link zu einer Anzeige
+
+FR:
+- Quelle marque recherchez-vous ?
+- Quel modèle ?
+- Quel type de véhicule ?
+- Année minimum
+- Kilométrage maximum
+- Votre budget
+- Boîte de vitesses
+- Carburant
+- Ville / région de livraison
+- Prénom et nom
+- E-mail
+- Téléphone
+- Prévision d’achat
+- Informations complémentaires ou lien d’annonce
+
+Design:
+- große weiße Card
+- links kurze Erklärung
+- rechts oder darunter Funnel
+- Fortschritt sichtbar
+- Step-by-step
+- große Inputs / Selects
+- Antwort-Cards bei Auswahlfragen
+- selected background #E0ECFF
+- selected border #2F6FED
+- selected text #1E4EAD
+- focus border #2F6FED
+- no gold
+
+Buttons im Funnel:
+- Weiter
+- Zurück
+- Absenden
+
+FR:
+Suivant
+Précédent
+Envoyer
+
+DE:
+Weiter
+Zurück
+Absenden
+
+7. Beispielhafte Fahrzeug-/Import-Cards oder Wunschauto-Section:
+gaillardauto.com zeigt importierte Fahrzeuge und Angebote. Wir sollen nicht deren Fahrzeuge kopieren.
+
+Bitte eine Section bauen, die visuell ähnlich eine Fahrzeugwelt zeigt, aber mit neutralen Platzhalterkarten oder unserer eigenen Struktur.
+
+Option A:
+„Beliebte Suchkriterien“
+
+Cards:
+- SUV
+- Kombi
+- Limousine
+- Elektro / Hybrid
+- Familienauto
+- Premiumfahrzeug
+
+Option B:
+„So könnte Ihre Anfrage aussehen“
+
+Beispielkarten:
+- BMW 3er, ab 2019, max. 80.000 km
+- Audi Q5, Automatik, Diesel oder Hybrid
+- Mercedes C-Klasse, Budget bis 30.000 €
+
+Wichtig:
+Keine echten fremden Angebote kopieren.
+Keine Preise oder Fahrzeugdaten von gaillardauto.com übernehmen.
+
+Design:
+- Auto Cards mit Bildplatzhalter
+- Specs als kleine Chips
+- CTA „Anfrage starten“
+- Hover-Lift
+- clean white cards
+
+8. Video-/Erklärsektion:
+gaillardauto.com nutzt eine Video-Erklärung. Bitte für uns eine Video-/Erklärsektion einbauen.
+
+Inhalt:
+- Video Placeholder oder eingebettetes YouTube-Video, falls verfügbar
+- Titel:
+  FR: Comment fonctionne la demande avec Mehdi Cars ?
+  DE: So funktioniert die Anfrage mit Mehdi Cars
+- Kurzer Text
+- CTA „Commencer ma demande“ / „Jetzt anfragen“
+
+Design:
+- dunkler oder heller Bereich möglich
+- Video Card mit abgerundeten Ecken
+- Play Button in Royal Blue
+- keine Goldfarben
+
+9. Kundenbewertungen:
+gaillardauto.com nutzt eine starke Review-Section mit Bewertung und vielen Kundenstimmen. Bitte diese Idee übernehmen, aber keine fremden Bewertungen kopieren.
+
+Section:
+FR:
+Déjà des clients accompagnés dans leur projet automobile
+
+DE:
+Kunden, die wir bei ihrer Fahrzeugsuche begleiten
+
+Design:
+- Bewertungsübersicht oben, z. B. „Avis clients“ ohne konkrete falsche Zahl, wenn keine echte Zahl vorhanden ist
+- Review Cards
+- Kundenname als Platzhalter oder echte Inhalte, falls vorhanden
+- keine Fake-Google-Claims
+- keine fremden Namen/Texte übernehmen
+
+Stars:
+Bitte nicht gold.
+Nutze Royal Blue oder neutrale dunkle Sterne.
+Alternativ kleine Quote-Icons in #2F6FED.
+
+Cards:
+- background #FFFFFF
+- border #E5E7EB
+- shadow soft
+- horizontal scroll auf Mobile möglich
+
+10. Warum Deutschland / Warum Vermittlung sinnvoll ist:
+gaillardauto.com hat eine Section über Vorteile des deutschen Automarkts. Bitte eine eigene allgemeine Section bauen, ohne rechtlich riskante Aussagen oder fremde Texte.
+
+Titel FR:
+Pourquoi chercher une voiture en Allemagne ?
+
+Titel DE:
+Warum ein Fahrzeug aus Deutschland interessant sein kann
+
+Textidee:
+Deutschland bietet einen großen Fahrzeugmarkt mit vielen Marken, Ausstattungen und unterschiedlichen Preisbereichen. Wichtig ist dabei eine strukturierte Auswahl und Prüfung der passenden Angebote.
+
+Bullet Points:
+- Große Auswahl
+- Viele Ausstattungsvarianten
+- Strukturierte Suche
+- Unterstützung bei Kommunikation und Auswahl
+
+Bitte vorsichtig formulieren:
+Keine Garantieversprechen.
+Keine Aussagen wie „immer günstiger“.
+Keine rechtlich riskanten Versprechen.
+
+Design:
+- zweispaltig
+- Bild links oder rechts
+- Text + Bullet Cards
+- dunkler Akzentbereich möglich mit #0B1220/#162B55
+
+11. Ablauf / So funktioniert es:
+Bitte unsere Ablauf-Section verbessern.
+
+Schritte:
+1. Anfrage starten
+2. Fahrzeugwunsch beschreiben
+3. Bericht wird intern erstellt
+4. Persönliche Rückmeldung erhalten
+
+FR:
+1. Commencer la demande
+2. Décrire le véhicule recherché
+3. Résumé interne généré
+4. Recevoir les prochaines étapes
+
+Design:
+- 4 Step Cards
+- Nummern-Badge in #E0ECFF mit Text #1E4EAD
+- Icons #2F6FED
+- Hover Lift
+- Desktop 4 Spalten
+- Mobile 1 Spalte
+
+12. FAQ:
+Bitte FAQ modern als Accordion bauen.
+
+FR Fragen:
+- Comment fonctionne la recherche de voiture ?
+- Est-ce que je peux faire une demande depuis la France ?
+- Combien de temps faut-il pour recevoir une réponse ?
+- Quelles informations dois-je fournir ?
+- Est-ce que je dois créer un compte ?
+- Comment mes informations sont-elles utilisées ?
+
+DE Fragen:
+- Wie funktioniert die Fahrzeugsuche?
+- Kann ich aus Frankreich anfragen?
+- Wie schnell bekomme ich eine Rückmeldung?
+- Welche Informationen muss ich angeben?
+- Muss ich ein Konto erstellen?
+- Wie werden meine Informationen verwendet?
+
+Design:
+- links Erklärung
+- rechts Accordion
+- hover background #EFF6FF
+- active accent #2F6FED
+- keine Goldfarben
+
+13. Final CTA:
+Am Ende eine starke CTA-Box.
+
+FR:
+Titre:
+Prêt à commencer votre demande ?
+
+Texte:
+Décrivez votre projet en quelques minutes et recevez les prochaines étapes.
+
+Button:
+Commencer ma demande
+
+DE:
+Titel:
+Bereit, Ihre Anfrage zu starten?
+
+Text:
+Beschreiben Sie Ihr Wunschfahrzeug in wenigen Minuten und erhalten Sie die nächsten Schritte.
+
+Button:
+Jetzt anfragen
+
+Design:
+- dunkler Gradient:
+linear-gradient(135deg, #0B1220 0%, #162B55 65%, #2F6FED 100%)
+- Text weiß
+- Button weiß
+- kein WhatsApp Button
+
+14. Footer:
+Footer dunkel und hochwertig.
+
+Inhalte:
+- Mehdi Cars Logo / Name
+- kurze Beschreibung
+- Navigation
+- Leistungen
+- Social Icons
+- Impressum
+- Datenschutz
+
+Design:
+- background #0B1220 oder Gradient zu #162B55
+- text #FFFFFF
+- secondary text rgba(255,255,255,0.72)
+- borders rgba(255,255,255,0.16)
+- links hover #DBEAFE
+- social icons hover #2F6FED
+
+Allgemeine Button-Regeln:
+Primary auf heller Fläche:
+- background #2F6FED
+- text #FFFFFF
+- hover #255ED0
+- active #1E4EAD
+- border-radius 8px bis 10px
+
+Primary auf dunkler Fläche:
+- background #FFFFFF
+- text #0B1220
+- hover background #EFF6FF
+- hover text #1E4EAD
+
+Secondary:
+- background #FFFFFF
+- text #2F6FED
+- border #CBD5E1
+- hover background #EFF6FF
+- hover border #2F6FED
+
+Bitte überall WhatsApp Buttons entfernen.
+Nur der Haupt-CTA bleibt:
+DE: Jetzt anfragen
+FR: Commencer ma demande
+
+Allgemeine Card-Regeln:
+- background #FFFFFF
+- border #E5E7EB
+- border-radius 18px bis 24px
+- shadow soft
+- hover transform translateY(-4px)
+- hover border rgba(47,111,237,0.35)
+- hover shadow medium
+
+Forms / Inputs / Selects:
+- background #FFFFFF
+- border #CBD5E1
+- text #111827
+- placeholder #9CA3AF
+- hover border #2F6FED
+- focus border #2F6FED
+- focus shadow 0 0 0 3px rgba(47,111,237,0.16)
+- selected option background #E0ECFF
+- selected option text #1E4EAD
+
+Layout:
+- max container width: min(1120px, calc(100% - 32px))
+- section padding desktop: 88px bis 112px
+- section padding mobile: 56px bis 72px
+- viel Weißraum
+- klare Section-Trennung
+- hochwertige Card-Abstände
+- responsive mobile Darstellung
+
+Animationen:
+- nav hover underline
+- card hover lift
+- button hover lift
+- smooth scroll zu Sections
+- FAQ transition
+- Dropdown hover
+- keine übertriebenen Animationen
+
+Mobile:
+- Header mit Burger Drawer
+- Leistungen im Drawer aufklappbar
+- Social Icons und Language Select im Drawer
+- Hero Text gut lesbar
+- Hero nicht zu riesig
+- Cards einspaltig
+- Trust Bar mobil sauber umbrechen
+- CTA Buttons full width auf Mobile
+- Funnel sehr mobilfreundlich
+
+Bitte am Ende prüfen:
+- Unsere Marke bleibt Mehdi Cars.
+- Unsere Menüstruktur bleibt erhalten.
+- Unsere Texte werden nicht durch fremde Texte ersetzt.
+- gaillardauto.com wird nur als Struktur-Inspiration verwendet.
+- Keine fremden Bewertungen, Fahrzeugangebote, Namen, Markenclaims oder rechtlichen Aussagen kopieren.
+- Kein Gold, Bronze, Braun oder Beige.
+- Kein WhatsApp Button.
+- Hero ist ein echtes Background-Banner.
+- Landingpage erklärt klar:
+  1. Was Mehdi Cars macht
+  2. Warum der Service sinnvoll ist
+  3. Wie die Anfrage funktioniert
+  4. Welche Informationen der Kunde eingibt
+  5. Was nach dem Absenden passiert
+- Die Seite wirkt moderner, vertrauenswürdiger und stärker wie eine professionelle Auto-Vermittlung.

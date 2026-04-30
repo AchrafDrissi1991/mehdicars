@@ -1,0 +1,4 @@
+
+> auto-vermittlung-lead-funnel@0.1.0 lint
+> eslint .
+

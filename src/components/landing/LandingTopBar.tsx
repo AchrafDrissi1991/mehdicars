@@ -1,0 +1,126 @@
+import { Button, Drawer } from 'antd';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useParams } from 'react-router-dom';
+import { LanguageSwitch } from '../common/LanguageSwitch';
+import { SocialLinks } from '../common/SocialLinks';
+
+export function LandingTopBar() {
+  const { t } = useTranslation();
+  const { lang = 'fr' } = useParams();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    function handleScroll() {
+      setIsScrolled(window.scrollY > 8);
+    }
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  function closeDrawer() {
+    setDrawerOpen(false);
+  }
+
+  return (
+    <header className={`landing-topbar ${isScrolled ? 'is-scrolled' : ''}`}>
+      <div className="landing-topbar__inner">
+        <Link className="brand" to={`/${lang}`}>
+          <span className="brand-mark">{t('landing.brandMark')}</span>
+          <span>{t('landing.brand')}</span>
+        </Link>
+
+        <nav aria-label={t('landing.nav.label')} className="landing-nav">
+          <a className="nav-link" href="#home">
+            {t('landing.nav.home')}
+          </a>
+          <div className="nav-services">
+            <button className="nav-link nav-dropdown-trigger" type="button">
+              {t('landing.nav.services')}
+              <ChevronDown size={15} />
+            </button>
+            <div className="services-dropdown">
+              <a className="service-menu-card" href="#services">
+                {t('landing.servicesMenu.advisory.title')}
+              </a>
+              <a className="service-menu-card" href="#services">
+                {t('landing.servicesMenu.sell.title')}
+              </a>
+            </div>
+          </div>
+          <a className="nav-link" href="#process">
+            {t('landing.nav.process')}
+          </a>
+          <a className="nav-link" href="#faq">
+            {t('landing.nav.faq')}
+          </a>
+          <a className="nav-link" href="#contact">
+            {t('landing.nav.contact')}
+          </a>
+        </nav>
+
+        <div className="topbar-actions">
+          <SocialLinks />
+          <LanguageSwitch />
+        </div>
+
+        <Button
+          aria-label={t('landing.nav.openMenu')}
+          className="mobile-menu-button"
+          icon={<Menu size={22} />}
+          onClick={() => setDrawerOpen(true)}
+          type="text"
+        />
+      </div>
+
+      <Drawer
+        className="mobile-nav-drawer"
+        closeIcon={<X size={22} />}
+        onClose={closeDrawer}
+        open={drawerOpen}
+        placement="right"
+        title={t('landing.brand')}
+        width={340}
+      >
+        <nav aria-label={t('landing.nav.mobileLabel')} className="mobile-nav">
+          <a href="#home" onClick={closeDrawer}>
+            {t('landing.nav.home')}
+          </a>
+          <button className="mobile-services-toggle" onClick={() => setServicesOpen((current) => !current)} type="button">
+            {t('landing.nav.services')}
+            <ChevronDown className={servicesOpen ? 'is-open' : ''} size={17} />
+          </button>
+          {servicesOpen && (
+            <div className="mobile-services-panel">
+              <a href="#services" onClick={closeDrawer}>
+                {t('landing.servicesMenu.advisory.title')}
+              </a>
+              <a href="#services" onClick={closeDrawer}>
+                {t('landing.servicesMenu.sell.title')}
+              </a>
+            </div>
+          )}
+          <a href="#process" onClick={closeDrawer}>
+            {t('landing.nav.process')}
+          </a>
+          <a href="#faq" onClick={closeDrawer}>
+            {t('landing.nav.faq')}
+          </a>
+          <a href="#contact" onClick={closeDrawer}>
+            {t('landing.nav.contact')}
+          </a>
+        </nav>
+
+        <div className="mobile-nav-actions">
+          <SocialLinks />
+          <LanguageSwitch />
+        </div>
+      </Drawer>
+    </header>
+  );
+}

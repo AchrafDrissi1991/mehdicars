@@ -836,8 +836,7 @@
 .advantage-card,
 .process-card,
 .review-card,
-.vehicle-card,
-.funnel-preview-card {
+.vehicle-card {
   border: 1px solid var(--color-border);
   background: #ffffff;
   box-shadow: 0 16px 42px rgba(15, 23, 42, 0.07);
@@ -1010,105 +1009,96 @@
   margin-top: 28px;
 }
 
-.funnel-preview-card {
+.funnel-steps-preview {
   display: grid;
-  gap: 22px;
-  padding: 30px;
-  border-radius: 28px;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.11);
 }
 
-.preview-progress-row {
-  display: grid;
-  gap: 8px;
+.funnel-steps-preview__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.preview-progress-row span {
+.funnel-steps-preview__header span {
   color: var(--color-muted-text);
   font-size: 13px;
   font-weight: 850;
+  text-transform: uppercase;
 }
 
-.funnel-preview-card h3 {
-  max-width: 520px;
-  margin: 0;
-  color: var(--color-dark);
-  font-size: 30px;
-  line-height: 1.12;
-}
-
-.preview-answer-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.preview-answer-grid span,
-.preview-input,
-.preview-summary {
-  border: 1px solid var(--color-border);
-  border-radius: 18px;
-  background: var(--color-background);
-}
-
-.preview-answer-grid span {
-  padding: 16px;
-  color: #374151;
-  font-weight: 800;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-.preview-answer-grid span:first-child {
-  border-color: rgba(47, 111, 237, 0.34);
+.funnel-steps-preview__header strong {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: var(--color-selected-bg);
   color: var(--color-primary-active);
+  font-size: 22px;
+  font-weight: 900;
 }
 
-.preview-input {
+.funnel-step-list {
   display: grid;
-  gap: 6px;
-  padding: 16px;
-}
-
-.preview-input small {
-  color: var(--color-muted-text);
-  font-weight: 800;
-}
-
-.preview-input strong {
-  color: var(--color-dark);
-  font-size: 18px;
-}
-
-.preview-summary {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  color: #374151;
-  font-weight: 850;
-}
-
-.preview-summary svg {
-  color: var(--color-primary);
-}
-
-.request-field-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
-.request-field-grid span {
-  min-height: 42px;
-  display: flex;
+.funnel-step-preview {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
   align-items: center;
-  padding: 0 13px;
+  gap: 14px;
+  min-height: 82px;
+  padding: 14px;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: #ffffff;
-  color: var(--color-muted-text);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.funnel-step-preview:hover {
+  border-color: rgba(47, 111, 237, 0.32);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.09);
+  transform: translateY(-2px);
+}
+
+.funnel-step-preview__number {
+  color: var(--color-primary-active);
   font-size: 13px;
-  font-weight: 750;
+  font-weight: 900;
+}
+
+.funnel-step-preview__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--color-selected-bg);
+  color: var(--color-primary);
+}
+
+.funnel-step-preview h3 {
+  margin: 0 0 4px;
+  color: var(--color-dark);
+  font-size: 17px;
+  line-height: 1.18;
+}
+
+.funnel-step-preview p {
+  margin: 0;
+  color: var(--color-muted-text);
+  font-size: 14px;
+  line-height: 1.45;
 }
 
 .vehicle-section {
@@ -1544,7 +1534,7 @@
   }
 
   .intro-card,
-  .funnel-preview-card,
+  .funnel-steps-preview,
   .final-cta-card {
     padding: 24px;
     border-radius: 24px;
@@ -1566,8 +1556,7 @@
   .germany-bullets,
   .process-grid,
   .reviews-grid,
-  .request-field-grid,
-  .preview-answer-grid,
+  .funnel-step-preview,
   .footer-grid {
     grid-template-columns: 1fr;
   }
@@ -1584,8 +1573,11 @@
     min-height: 220px;
   }
 
-  .video-placeholder strong,
-  .funnel-preview-card h3 {
+  .video-placeholder strong {
     font-size: 24px;
+  }
+
+  .funnel-step-preview {
+    align-items: start;
   }
 }

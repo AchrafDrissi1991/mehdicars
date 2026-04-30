@@ -141,23 +141,24 @@ export const resources = {
           title: 'Parlez-nous de votre projet automobile',
           description:
             'Répondez à quelques questions essentielles. Votre demande est structurée pour préparer une recherche plus ciblée.',
-          progress: 'Étape 2 sur 5',
-          question: 'Quel véhicule recherchez-vous ?',
-          answerOne: 'SUV',
-          answerTwo: 'Berline',
-          answerThree: 'Hybride / électrique',
-          fieldLabel: 'Budget et destination',
-          fieldValue: '30 000 € · Lyon',
-          summary: 'Résumé clair prêt pour la suite',
-          fields: {
-            brand: 'Marque',
-            budget: 'Budget',
-            fuel: 'Carburant',
-            gearbox: 'Boîte',
-            mileage: 'Kilométrage max.',
-            model: 'Modèle',
-            place: 'Ville / région',
-            year: 'Année min.',
+          stepHint: 'Les mêmes 4 étapes que dans votre demande',
+          steps: {
+            brand: {
+              title: 'Marque et modèle',
+              description: 'Choisissez une marque et précisez le modèle recherché si vous avez déjà une idée.',
+            },
+            criteria: {
+              title: 'Critères de recherche',
+              description: 'Définissez le budget, l’année minimum, le kilométrage et le lieu de livraison.',
+            },
+            technical: {
+              title: 'Préférences techniques',
+              description: 'Indiquez vos préférences pour la boîte, le carburant et le délai d’achat.',
+            },
+            contact: {
+              title: 'Contact et précisions',
+              description: 'Ajoutez vos coordonnées et les détails utiles pour préparer la suite.',
+            },
           },
         },
         vehicles: {
@@ -367,23 +368,24 @@ export const resources = {
           title: 'Erzählen Sie uns von Ihrem Fahrzeugprojekt',
           description:
             'Beantworten Sie wenige wichtige Fragen. Daraus entsteht eine strukturierte Anfrage für die gezielte Vorbereitung.',
-          progress: 'Schritt 2 von 5',
-          question: 'Welches Fahrzeug suchen Sie?',
-          answerOne: 'SUV',
-          answerTwo: 'Limousine',
-          answerThree: 'Hybrid / Elektro',
-          fieldLabel: 'Budget und Zielort',
-          fieldValue: '30.000 € · Lyon',
-          summary: 'Klare Übersicht für die nächsten Schritte',
-          fields: {
-            brand: 'Marke',
-            budget: 'Budget',
-            fuel: 'Kraftstoff',
-            gearbox: 'Getriebe',
-            mileage: 'Kilometer max.',
-            model: 'Modell',
-            place: 'Stadt / Region',
-            year: 'Baujahr ab',
+          stepHint: 'Dieselben 4 Schritte wie in Ihrer Anfrage',
+          steps: {
+            brand: {
+              title: 'Marke und Modell',
+              description: 'Wählen Sie eine Marke und nennen Sie ein Modell, falls Sie schon eines im Blick haben.',
+            },
+            criteria: {
+              title: 'Suchkriterien',
+              description: 'Legen Sie Budget, Mindestbaujahr, Kilometerstand und Zielort fest.',
+            },
+            technical: {
+              title: 'Technische Wünsche',
+              description: 'Ergänzen Sie Getriebe, Kraftstoffart und den gewünschten Kaufzeitraum.',
+            },
+            contact: {
+              title: 'Kontakt und Details',
+              description: 'Hinterlassen Sie Ihre Kontaktdaten und wichtige Hinweise für die nächsten Schritte.',
+            },
           },
         },
         vehicles: {

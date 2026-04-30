@@ -1,4 +1,4 @@
-import { Button, Collapse, Progress } from 'antd';
+import { Button, Collapse } from 'antd';
 import {
   ArrowRight,
   BadgeCheck,
@@ -70,15 +70,31 @@ export function LandingPage() {
     },
   ];
 
-  const requestFields = [
-    t('landing.funnelPreview.fields.brand'),
-    t('landing.funnelPreview.fields.model'),
-    t('landing.funnelPreview.fields.year'),
-    t('landing.funnelPreview.fields.mileage'),
-    t('landing.funnelPreview.fields.budget'),
-    t('landing.funnelPreview.fields.place'),
-    t('landing.funnelPreview.fields.gearbox'),
-    t('landing.funnelPreview.fields.fuel'),
+  const landingFunnelSteps = [
+    {
+      description: t('landing.funnelPreview.steps.brand.description'),
+      icon: <CarFront size={22} />,
+      step: '01',
+      title: t('landing.funnelPreview.steps.brand.title'),
+    },
+    {
+      description: t('landing.funnelPreview.steps.criteria.description'),
+      icon: <Search size={22} />,
+      step: '02',
+      title: t('landing.funnelPreview.steps.criteria.title'),
+    },
+    {
+      description: t('landing.funnelPreview.steps.technical.description'),
+      icon: <BadgeCheck size={22} />,
+      step: '03',
+      title: t('landing.funnelPreview.steps.technical.title'),
+    },
+    {
+      description: t('landing.funnelPreview.steps.contact.description'),
+      icon: <FileText size={22} />,
+      step: '04',
+      title: t('landing.funnelPreview.steps.contact.title'),
+    },
   ];
 
   const vehicleCards = [
@@ -190,29 +206,22 @@ export function LandingPage() {
               <ArrowRight size={18} />
             </Button>
           </div>
-          <div className="funnel-preview-card" aria-hidden="true">
-            <div className="preview-progress-row">
-              <span>{t('landing.funnelPreview.progress')}</span>
-              <Progress percent={50} showInfo={false} />
+          <div className="funnel-steps-preview" aria-label={t('landing.funnelPreview.stepHint')}>
+            <div className="funnel-steps-preview__header">
+              <span>{t('landing.funnelPreview.stepHint')}</span>
+              <strong>4</strong>
             </div>
-            <h3>{t('landing.funnelPreview.question')}</h3>
-            <div className="preview-answer-grid">
-              <span>{t('landing.funnelPreview.answerOne')}</span>
-              <span>{t('landing.funnelPreview.answerTwo')}</span>
-              <span>{t('landing.funnelPreview.answerThree')}</span>
-            </div>
-            <div className="preview-input">
-              <small>{t('landing.funnelPreview.fieldLabel')}</small>
-              <strong>{t('landing.funnelPreview.fieldValue')}</strong>
-            </div>
-            <div className="request-field-grid">
-              {requestFields.map((field) => (
-                <span key={field}>{field}</span>
+            <div className="funnel-step-list">
+              {landingFunnelSteps.map((item) => (
+                <article className="funnel-step-preview" key={item.step}>
+                  <span className="funnel-step-preview__number">{item.step}</span>
+                  <span className="funnel-step-preview__icon">{item.icon}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
               ))}
-            </div>
-            <div className="preview-summary">
-              <FileText size={18} />
-              {t('landing.funnelPreview.summary')}
             </div>
           </div>
         </div>

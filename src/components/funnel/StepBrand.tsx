@@ -1,5 +1,5 @@
 import { Input, Select } from 'antd';
-import { carBrands, popularCarBrands } from '../../data/carBrands';
+import { carBrands } from '../../data/carBrands';
 import type { SupportedLanguage } from '../../types/i18n';
 import type { LeadFormDraft } from '../../types/lead';
 
@@ -61,14 +61,6 @@ export function StepBrand({ data, errors, language, updateFormData }: StepProps)
           placeholder={language === 'fr' ? 'Ex. Q5, Série 3, Golf...' : 'z. B. Q5, 3er, Golf...'}
           onChange={(event) => updateFormData({ model: event.target.value })}
         />
-      </div>
-
-      <div className="quick-chip-row" aria-label="Popular brands">
-        {popularCarBrands.map((brand) => (
-          <button key={brand} type="button" onClick={() => updateFormData({ brand, otherBrand: '' })}>
-            {brand}
-          </button>
-        ))}
       </div>
     </div>
   );

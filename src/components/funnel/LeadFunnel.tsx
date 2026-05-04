@@ -19,6 +19,9 @@ interface LeadFunnelProps {
 }
 
 const totalSteps = 4;
+const currentYear = new Date().getFullYear();
+const initialMaxMileage = 80000;
+const initialBudget = 30000;
 
 function isBlank(value: unknown) {
   return typeof value !== 'string' || value.trim().length === 0;
@@ -32,6 +35,9 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
     fuel: '',
     fullName: '',
     language,
+    minYear: currentYear,
+    maxMileage: initialMaxMileage,
+    budget: initialBudget,
     phone: '',
     purchaseTimeline: '',
   });

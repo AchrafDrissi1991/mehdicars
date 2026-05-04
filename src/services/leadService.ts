@@ -13,17 +13,34 @@ export interface CreatedLead {
   leadId: string;
   reportToken: string;
   internalReportUrl: string;
+  reportEmailRecipient: string;
 }
 
 const mockReportToken = 'mock-9cb7bb4f-ec9d-4a33-8924-52bc3e';
+const reportEmailRecipient = 'achraf.elbouzaidi@gmail.com';
+const defaultReportEmailEndpoint = `https://formsubmit.co/ajax/${reportEmailRecipient}`;
+const reportSenderName = 'Mehdi Cars';
 
 export async function createLead(payload: CreateLeadPayload): Promise<CreatedLead> {
   localStorage.setItem('lastLeadPayload', JSON.stringify(payload));
+  const leadId = `mock-lead-${Date.now()}`;
+  const reportText = buildReportText(payload);
+  const reportToken = payload.token || mockReportToken;
+  const internalReportUrl = `/internal/report/${reportToken}`;
+
+  await sendReportEmail({
+    internalReportUrl,
+    leadId,
+    payload,
+    reportText,
+    reportToken,
+  });
 
   return {
-    leadId: 'mock-lead-001',
-    reportToken: mockReportToken,
-    internalReportUrl: `/internal/report/${mockReportToken}`,
+    leadId,
+    reportEmailRecipient,
+    reportToken,
+    internalReportUrl,
   };
 }
 
@@ -36,6 +53,71 @@ export async function getReportByToken(reportToken: string) {
     lead,
     reportText: buildReportText(lead),
   };
+}
+
+async function sendReportEmail({
+  internalReportUrl,
+  leadId,
+  payload,
+  reportText,
+  reportToken,
+}: {
+  internalReportUrl: string;
+  leadId: string;
+  payload: CreateLeadPayload;
+  reportText: string;
+  reportToken: string;
+}) {
+  const reportEmailEndpoint = import.meta.env.VITE_REPORT_EMAIL_ENDPOINT?.trim() || defaultReportEmailEndpoint;
+  const subject = `Neue Fahrzeuganfrage - ${payload.lead?.fullName || payload.answers?.firstName || leadId}`;
+  const customerEmail = payload.lead?.email?.trim();
+
+  try {
+    const response = await fetch(reportEmailEndpoint, {
+      body: JSON.stringify({
+        _captcha: 'false',
+        ...(customerEmail ? { _cc: customerEmail, _replyto: customerEmail } : {}),
+        _subject: subject,
+        _template: 'table',
+        brand: reportSenderName,
+        customerEmail: customerEmail || '-',
+        email: customerEmail || reportEmailRecipient,
+        internalReportUrl,
+        leadId,
+        message: reportText,
+        name: reportSenderName,
+        ownerEmail: reportEmailRecipient,
+        recipientEmails: customerEmail ? [reportEmailRecipient, customerEmail].join(', ') : reportEmailRecipient,
+        reportText,
+        reportToken,
+        replyTo: customerEmail || reportEmailRecipient,
+        source: payload.source || 'landing',
+        subject,
+        to: reportEmailRecipient,
+      }),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Report email request failed with status ${response.status}`);
+    }
+
+    localStorage.removeItem('lastLeadEmailError');
+  } catch (error) {
+    console.error('Der Report konnte nicht per E-Mail gesendet werden.', error);
+    localStorage.setItem(
+      'lastLeadEmailError',
+      JSON.stringify({
+        at: new Date().toISOString(),
+        message: error instanceof Error ? error.message : 'Unbekannter Fehler',
+        recipient: reportEmailRecipient,
+      }),
+    );
+  }
 }
 
 function buildReportText(payload: CreateLeadPayload | undefined) {

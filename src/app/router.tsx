@@ -1,5 +1,6 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from '../components/common/AppLayout';
+import { AdvisoryPage } from '../pages/public/AdvisoryPage';
 import { InternalReportPage } from '../pages/internal/InternalReportPage';
 import { FunnelPage } from '../pages/public/FunnelPage';
 import { LandingPage } from '../pages/public/LandingPage';
@@ -27,6 +28,8 @@ export const router = createBrowserRouter([
       { path: 'demande/:token', element: <FunnelPage /> },
       { path: 'anfrage', element: <FunnelPage /> },
       { path: 'anfrage/:token', element: <FunnelPage /> },
+      { path: 'conseil', element: <AdvisoryPage /> },
+      { path: 'beratung', element: <AdvisoryPage /> },
       { path: 'merci', element: <ThankYouPage /> },
       { path: 'danke', element: <ThankYouPage /> },
       { path: 'impressum', element: <LegalPage type="imprint" /> },

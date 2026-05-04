@@ -35,12 +35,12 @@ export const resources = {
         },
         servicesMenu: {
           advisory: {
-            title: 'Auto Beratung',
-            description: 'Accompagnement dans le choix, l’évaluation et la décision d’achat.',
+            title: 'Acheter une voiture',
+            description: 'Accompagnement pour trouver, comparer et acheter le bon vehicule.',
           },
           sell: {
-            title: 'Auto verkaufen',
-            description: 'Accompagnement pour vendre votre véhicule plus sereinement.',
+            title: 'Reserver un conseil',
+            description: 'Prenez un rendez-vous de conseil pour clarifier votre projet auto.',
           },
         },
         hero: {
@@ -48,15 +48,17 @@ export const resources = {
           title: 'Trouvez votre voiture, simplement.',
           subtitle:
             'Décrivez votre projet en quelques minutes. Nous structurons votre demande et vous accompagnons dans la recherche du véhicule adapté.',
+          buyCta: 'Acheter une voiture',
+          advisoryCta: 'Reserver un conseil',
           imageAlt: 'SUV moderne sur une route en Allemagne',
           overlayKicker: 'Recherche active',
-          overlayTitle: 'Allemagne vers France',
+          overlayTitle: 'Allemagne vers Europe',
           overlayText: 'Critères clairs, suivi personnel et prochaines étapes structurées.',
           overlayMetaOne: 'Résumé structuré',
           overlayMetaTwo: 'Contact direct',
         },
         trust: {
-          germany: 'Allemagne vers France',
+          germany: 'Allemagne vers Europe',
           guidance: 'Accompagnement personnalisé',
           process: 'Processus transparent',
           structured: 'Demande structurée',
@@ -113,27 +115,27 @@ export const resources = {
           },
         },
         process: {
-          title: 'Comment ça marche',
-          subtitle: 'Un processus simple, clair et pensé pour gagner du temps.',
+          title: 'Vos avantages avec Mehdi',
+          subtitle: 'Simple, rapide et fiable: nous rendons le marche auto d\'occasion plus clair, que vous achetiez ou vendiez.',
         },
         services: {
           eyebrow: 'Services',
-          title: 'Deux accompagnements pour avancer sereinement',
+          title: 'Deux services pour avancer sereinement',
           subtitle:
-            'Que vous cherchiez un véhicule en Allemagne ou que vous souhaitiez vendre le vôtre, le processus reste clair, personnel et structuré.',
+            'Que vous vouliez acheter une voiture ou reserver un conseil, le processus reste clair, personnel et structure.',
           advisory: {
-            cta: 'Commencer une recherche',
+            cta: 'Acheter une voiture',
             description:
-              'Pour les clients qui recherchent un véhicule adapté et souhaitent être accompagnés dans le choix, l’évaluation et la décision d’achat.',
-            label: 'Recherche',
-            title: 'Auto Beratung',
+              'Pour les clients qui recherchent un vehicule adapte et souhaitent etre accompagnes dans le choix et l’achat.',
+            label: 'Achat',
+            title: 'Acheter une voiture',
           },
           sell: {
-            cta: 'Préparer une vente',
+            cta: 'Reserver un conseil',
             description:
-              'Pour les clients qui souhaitent vendre leur véhicule plus sereinement avec un accompagnement structuré.',
-            label: 'Vente',
-            title: 'Auto verkaufen',
+              'Pour les clients qui veulent un accompagnement personnalise avant de lancer leur projet automobile.',
+            label: 'Conseil',
+            title: 'Reserver un conseil',
           },
         },
         funnelPreview: {
@@ -167,6 +169,16 @@ export const resources = {
           subtitle:
             'Ces exemples montrent comment une demande peut être cadrée. Ils ne représentent pas des offres réelles.',
           cta: 'Démarrer avec mes critères',
+          buy: {
+            title: 'Votre voiture de rêve vous attend !',
+            description: 'Dites-nous ce que vous cherchez – nous trouvons les meilleures offres pour vous. Sans stress, seulement des résultats qui correspondent.',
+            cta: 'Acheter une voiture',
+          },
+          advisory: {
+            title: 'Besoin de conseils ?',
+            description: 'Réservez un entretien personnalisé pour clarifier votre projet automobile avec un expert.',
+            cta: 'Réserver un conseil',
+          },
           electric: {
             title: 'Électrique / hybride',
             specs: ['Usage quotidien', 'Équipement moderne', 'Budget défini'],
@@ -228,8 +240,11 @@ export const resources = {
         privacy:
           'J’accepte que mes informations soient enregistrées et utilisées pour traiter ma demande et me contacter.',
         required: 'Ce champ est obligatoire.',
-      },
-      thankYou: {
+      },      advisory: {
+        title: 'Reserver un conseil',
+        subtitle: 'Prenez un rendez-vous avec nos experts pour clarifier votre projet automobile.',
+        comingSoon: 'Cette page est en préparation. Veuillez revenir bientôt.',
+      },      thankYou: {
         title: 'Merci pour votre demande !',
         subtitle: 'Nous avons reçu vos informations et préparons les prochaines étapes.',
       },
@@ -262,12 +277,12 @@ export const resources = {
         },
         servicesMenu: {
           advisory: {
-            title: 'Auto Beratung',
-            description: 'Unterstützung bei Auswahl, Bewertung und Kaufentscheidung.',
+            title: 'Auto kaufen',
+            description: 'Begleitung bei Suche, Vergleich und Kaufentscheidung.',
           },
           sell: {
-            title: 'Auto verkaufen',
-            description: 'Unterstützung beim stressfreien Verkauf Ihres Fahrzeugs.',
+            title: 'Beratung buchen',
+            description: 'Buchen Sie ein Beratungsgespraech fuer Ihr Fahrzeugprojekt.',
           },
         },
         hero: {
@@ -275,15 +290,17 @@ export const resources = {
           title: 'Finden Sie Ihr Fahrzeug in Deutschland, einfach und transparent.',
           subtitle:
             'Beschreiben Sie Ihr Wunschfahrzeug in wenigen Minuten. Wir strukturieren Ihre Anfrage und begleiten Sie bei der Suche nach dem passenden Auto.',
+          buyCta: 'Auto kaufen',
+          advisoryCta: 'Beratung buchen',
           imageAlt: 'Moderner SUV auf einer Straße in Deutschland',
           overlayKicker: 'Aktive Suche',
-          overlayTitle: 'Deutschland nach Frankreich',
+          overlayTitle: 'Deutschland nach Europa',
           overlayText: 'Klare Kriterien, persönliche Begleitung und strukturierte nächste Schritte.',
           overlayMetaOne: 'Strukturierter Bericht',
           overlayMetaTwo: 'Direkter Kontakt',
         },
         trust: {
-          germany: 'Deutschland nach Frankreich',
+          germany: 'Deutschland nach Europa',
           guidance: 'Persönliche Begleitung',
           process: 'Transparenter Prozess',
           structured: 'Strukturierte Anfrage',
@@ -340,27 +357,27 @@ export const resources = {
           },
         },
         process: {
-          title: 'So funktioniert es',
-          subtitle: 'Ein einfacher, klarer Prozess, der Zeit spart.',
+          title: 'Deine Vorteile mit Mehdi',
+          subtitle: 'Stressfrei, schnell und zuverlaessig: Wir machen den Gebrauchtwagenmarkt fuer dich deutlich einfacher.',
         },
         services: {
           eyebrow: 'Leistungen',
-          title: 'Zwei Wege zu mehr Klarheit rund ums Fahrzeug',
+          title: 'Zwei Services fuer Ihr Fahrzeugprojekt',
           subtitle:
-            'Ob Sie ein Fahrzeug in Deutschland suchen oder Ihr eigenes verkaufen möchten: Der Ablauf bleibt klar, persönlich und strukturiert.',
+            'Ob Sie ein Auto kaufen oder eine Beratung buchen moechten: Der Ablauf bleibt klar, persoenlich und strukturiert.',
           advisory: {
-            cta: 'Suche starten',
+            cta: 'Auto kaufen',
             description:
-              'Für Kunden, die ein passendes Fahrzeug suchen und Unterstützung bei Auswahl, Bewertung und Kaufentscheidung brauchen.',
-            label: 'Suche',
-            title: 'Auto Beratung',
+              'Fuer Kunden, die ein passendes Fahrzeug suchen und Unterstuetzung bei Auswahl und Kaufentscheidung brauchen.',
+            label: 'Kauf',
+            title: 'Auto kaufen',
           },
           sell: {
-            cta: 'Verkauf vorbereiten',
+            cta: 'Beratung buchen',
             description:
-              'Für Kunden, die ein Fahrzeug stressfrei verkaufen möchten und Unterstützung bei Prozess, Bewertung und Kommunikation brauchen.',
-            label: 'Verkauf',
-            title: 'Auto verkaufen',
+              'Fuer Kunden, die vor dem Start eine persoenliche Beratung zu Kriterien, Budget und naechsten Schritten wollen.',
+            label: 'Beratung',
+            title: 'Beratung buchen',
           },
         },
         funnelPreview: {
@@ -394,6 +411,16 @@ export const resources = {
           subtitle:
             'Diese Beispiele zeigen, wie eine Anfrage strukturiert werden kann. Sie sind keine echten Fahrzeugangebote.',
           cta: 'Mit meinen Kriterien starten',
+          buy: {
+            title: 'Dein Traumwagen wartet!',
+            description: 'Sag uns, was du suchst – wir finden die besten Angebote für dich. Kein Stress, nur Ergebnisse die passen.',
+            cta: 'Auto kaufen',
+          },
+          advisory: {
+            title: 'Beratung buchen',
+            description: 'Buche jetzt ein persönliches Beratungsgespräch und kläre dein Fahrzeugprojekt Schritt für Schritt.',
+            cta: 'Beratung buchen',
+          },
           electric: {
             title: 'Elektro / Hybrid',
             specs: ['Alltagstauglich', 'Moderne Ausstattung', 'Budget definiert'],
@@ -455,6 +482,11 @@ export const resources = {
         privacy:
           'Ich stimme zu, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert und zur Kontaktaufnahme verwendet werden.',
         required: 'Dieses Feld ist erforderlich.',
+      },
+      advisory: {
+        title: 'Beratung buchen',
+        subtitle: 'Vereinbaren Sie einen Termin mit unseren Experten, um Ihr Fahrzeugprojekt zu besprechen.',
+        comingSoon: 'Diese Seite wird vorbereitet. Bitte versuchen Sie es später erneut.',
       },
       thankYou: {
         title: 'Danke fuer Ihre Anfrage!',

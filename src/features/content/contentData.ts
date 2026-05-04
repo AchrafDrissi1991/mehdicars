@@ -2,31 +2,31 @@ import type { FAQItem, ProcessStep, Testimonial } from '../../types/content';
 
 export const processSteps: ProcessStep[] = [
   {
-    title: { fr: 'Commencer la demande', de: 'Anfrage starten' },
+    title: { fr: 'Gagner du temps', de: 'Zeit gewinnen' },
     description: {
-      fr: 'Vous lancez une demande guidée avec les informations essentielles.',
-      de: 'Sie starten eine geführte Anfrage mit den wichtigsten Angaben.',
+      fr: 'Au lieu de comparer des annonces pendant des heures, nous filtrons le marche pour vous et retenons seulement les vehicules pertinents.',
+      de: 'Statt endlos Angebote zu vergleichen, filtern wir den Markt fuer Sie vor und zeigen nur Fahrzeuge, die wirklich zu Ihrem Profil passen.',
     },
   },
   {
-    title: { fr: 'Décrire le véhicule recherché', de: 'Fahrzeugwunsch beschreiben' },
+    title: { fr: 'Profiter d\'un regard expert', de: 'Expertenwissen nutzen' },
     description: {
-      fr: 'Vous précisez marque, modèle, budget, kilométrage et destination.',
-      de: 'Sie beschreiben Marke, Modell, Budget, Kilometer und Zielort.',
+      fr: 'Nous analysons les details qui font la difference: motorisation, finition, historique et potentiel de revente.',
+      de: 'Sie profitieren von Marktkenntnis bei Motoren, Ausstattung, Historie und Preisentwicklung, um Fehlkaeufe zu vermeiden.',
     },
   },
   {
-    title: { fr: 'Résumé interne généré', de: 'Bericht wird intern erstellt' },
+    title: { fr: 'Obtenir les meilleures opportunites', de: 'Top-Angebote sichern' },
     description: {
-      fr: 'Votre demande devient un résumé clair pour préparer les prochaines étapes.',
-      de: 'Aus Ihrer Anfrage entsteht eine klare Übersicht für die nächsten Schritte.',
+      fr: 'Que ce soit pour acheter ou vendre, l\'objectif reste le meme: trouver le meilleur prix avec une strategie claire.',
+      de: 'Ob Kauf oder Verkauf: Wir arbeiten auf ein starkes Preis-Leistungs-Verhaeltnis hin und holen das beste Angebot fuer Sie heraus.',
     },
   },
   {
-    title: { fr: 'Recevoir les prochaines étapes', de: 'Persönliche Rückmeldung erhalten' },
+    title: { fr: 'Un service simple et direct', de: 'Einfacher Service' },
     description: {
-      fr: 'Vous recevez une réponse personnalisée et les points à clarifier.',
-      de: 'Sie erhalten eine persönliche Rückmeldung und die offenen Punkte.',
+      fr: 'Pas de processus complique: echanges rapides, suivi clair et coordination directe via WhatsApp.',
+      de: 'Kurze Wege statt komplizierter Ablaufe: schnelle Abstimmung, klare Updates und direkte Kommunikation ueber WhatsApp.',
     },
   },
 ];

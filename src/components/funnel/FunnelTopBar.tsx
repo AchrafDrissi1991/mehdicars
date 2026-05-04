@@ -7,9 +7,10 @@ import './funnel.css';
 interface FunnelTopBarProps {
   current: number;
   total: number;
+  showProgress?: boolean;
 }
 
-export function FunnelTopBar({ current, total }: FunnelTopBarProps) {
+export function FunnelTopBar({ current, total, showProgress = true }: FunnelTopBarProps) {
   const { t } = useTranslation();
   const { lang = 'fr' } = useParams();
 
@@ -19,12 +20,14 @@ export function FunnelTopBar({ current, total }: FunnelTopBarProps) {
         <span className="brand-mark">{t('landing.brandMark')}</span>
         <span>{t('landing.brand')}</span>
       </Link>
-      <div className="funnel-progress">
-        <span>
-          {current}/{total}
-        </span>
-        <Progress percent={Math.round((current / total) * 100)} showInfo={false} />
-      </div>
+      {showProgress && (
+        <div className="funnel-progress">
+          <span>
+            {current}/{total}
+          </span>
+          <Progress percent={Math.round((current / total) * 100)} showInfo={false} />
+        </div>
+      )}
       <div className="funnel-help">
         <LanguageSwitch />
       </div>

@@ -23,6 +23,8 @@ import { faqItems, processSteps, testimonials } from '../../features/content/con
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import heroImageUrl from '../../../images/banner.png';
+import cardAutoKaufenImageUrl from '../../../images/cardautokaufen.png';
+import beratungFotoImageUrl from '../../../images/beratungfoto.png';
 import './landingPage.css';
 
 export function LandingPage() {
@@ -97,20 +99,7 @@ export function LandingPage() {
     },
   ];
 
-  const vehicleCards = [
-    {
-      title: t('landing.vehicles.suv.title'),
-      specs: t('landing.vehicles.suv.specs', { returnObjects: true }) as string[],
-    },
-    {
-      title: t('landing.vehicles.premium.title'),
-      specs: t('landing.vehicles.premium.specs', { returnObjects: true }) as string[],
-    },
-    {
-      title: t('landing.vehicles.electric.title'),
-      specs: t('landing.vehicles.electric.specs', { returnObjects: true }) as string[],
-    },
-  ];
+
 
   const germanyBullets = [
     t('landing.germany.bullets.choice'),
@@ -136,7 +125,11 @@ export function LandingPage() {
             <p>{t('landing.hero.subtitle')}</p>
             <div className="hero-actions">
               <Button className="primary-cta hero-primary" type="primary" size="large" href={funnelPath}>
-                {t('common.startRequest')}
+                {t('landing.hero.buyCta')}
+                <ArrowRight size={18} />
+              </Button>
+              <Button className="ghost-cta hero-secondary" size="large" href="#contact">
+                {t('landing.hero.advisoryCta')}
                 <ArrowRight size={18} />
               </Button>
             </div>
@@ -144,18 +137,67 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="trust-strip" aria-label="Trust">
-        <div className="section-inner trust-items">
-          {trustItems.map((item) => (
-            <span className="trust-item" key={item.key}>
-              {item.icon}
-              {item.label}
-            </span>
-          ))}
+     
+
+      <section className="content-section vehicle-section">
+        <div className="section-inner">
+          <div className="vehicle-grid">
+            <article className="vehicle-card vehicle-card--buy card-hover">
+              <div className="vehicle-card__media" aria-hidden="true">
+                <img alt="" loading="lazy" src={cardAutoKaufenImageUrl} />
+              </div>
+              <div className="vehicle-card__body">
+                <h3 className="vehicle-card__title">{t('landing.vehicles.buy.title')}</h3>
+                <p>{t('landing.vehicles.buy.description')}</p>
+                <Button className="ghost-cta" size="large" href={funnelPath}>
+                  {t('landing.vehicles.buy.cta')}
+                  <ArrowRight size={17} />
+                </Button>
+              </div>
+            </article>
+            <article className="vehicle-card vehicle-card--advisory card-hover">
+              <div className="vehicle-card__media" aria-hidden="true">
+                <img alt="" loading="lazy" src={beratungFotoImageUrl} />
+              </div>
+              <div className="vehicle-card__body">
+                <h3 className="vehicle-card__title">{t('landing.vehicles.advisory.title')}</h3>
+                <p>{t('landing.vehicles.advisory.description')}</p>
+                <Button className="ghost-cta" size="large" href="#contact">
+                  {t('landing.vehicles.advisory.cta')}
+                  <ArrowRight size={17} />
+                </Button>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
+          <section id="process" className="content-section process-section">
+        <div className="section-inner">
+          <div className="section-heading section-heading--center">
+            <span className="eyebrow">{t('landing.nav.process')}</span>
+            <h2>{t('landing.process.title')}</h2>
+            <p>{t('landing.process.subtitle')}</p>
+          </div>
+          <div className="process-grid">
+            {processSteps.map((step, index) => {
+              const StepIcon = processIcons[index] ?? ClipboardCheck;
 
-      <section className="intro-section explanation-section">
+              return (
+                <article className={`process-item ${index % 2 === 1 ? 'process-item--right' : ''}`} key={step.title.fr}>
+                  <h3>
+                    <span className="process-title-icon">
+                      <StepIcon size={20} />
+                    </span>
+                    {pickText(step.title, language)}
+                  </h3>
+                  <p>{pickText(step.description, language)}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      {/* <section className="intro-section explanation-section">
         <div className="section-inner intro-card explanation-card">
           <div className="intro-copy">
             <span className="eyebrow">{t('landing.explanation.eyebrow')}</span>
@@ -174,7 +216,7 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="content-section services-section" id="services">
         <div className="section-inner">
@@ -194,7 +236,7 @@ export function LandingPage() {
           </div>
         </div>
       </section>
-
+{/* 
       <section className="content-section funnel-preview-section">
         <div className="section-inner funnel-preview-grid">
           <div className="funnel-preview-copy">
@@ -225,36 +267,9 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section className="content-section vehicle-section">
-        <div className="section-inner">
-          <div className="section-heading">
-            <span className="eyebrow">{t('landing.vehicles.eyebrow')}</span>
-            <h2>{t('landing.vehicles.title')}</h2>
-            <p>{t('landing.vehicles.subtitle')}</p>
-          </div>
-          <div className="vehicle-grid">
-            {vehicleCards.map((vehicle) => (
-              <article className="vehicle-card card-hover" key={vehicle.title}>
-                <div className="vehicle-visual">
-                  <CarFront size={42} />
-                </div>
-                <h3>{vehicle.title}</h3>
-                <div className="vehicle-specs">
-                  {vehicle.specs.map((spec) => (
-                    <span key={spec}>{spec}</span>
-                  ))}
-                </div>
-                <Button className="ghost-cta" href={funnelPath}>
-                  {t('landing.vehicles.cta')}
-                  <ArrowRight size={17} />
-                </Button>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       <section className="content-section video-section">
         <div className="section-inner video-grid">
@@ -299,7 +314,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="content-section germany-section">
+      {/* <section className="content-section germany-section">
         <div className="section-inner germany-grid">
           <div className="germany-panel">
             <Search size={34} />
@@ -318,33 +333,9 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section id="process" className="content-section process-section">
-        <div className="section-inner">
-          <div className="section-heading section-heading--center">
-            <span className="eyebrow">{t('landing.nav.process')}</span>
-            <h2>{t('landing.process.title')}</h2>
-            <p>{t('landing.process.subtitle')}</p>
-          </div>
-          <div className="process-grid">
-            {processSteps.map((step, index) => {
-              const StepIcon = processIcons[index] ?? ClipboardCheck;
-
-              return (
-                <article className="process-card card-hover" key={step.title.fr}>
-                  <span className="step-number">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="step-icon">
-                    <StepIcon size={24} />
-                  </span>
-                  <h3>{pickText(step.title, language)}</h3>
-                  <p>{pickText(step.description, language)}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      
 
       <section id="faq" className="content-section faq-section">
         <div className="section-inner faq-grid">
@@ -402,7 +393,7 @@ export function LandingPage() {
           </div>
           <div>
             <h3>{t('landing.footer.services')}</h3>
-            <a href="#services">{t('landing.services.advisory.title')}</a>
+            <a href={funnelPath}>{t('landing.services.advisory.title')}</a>
             <a href="#services">{t('landing.services.sell.title')}</a>
           </div>
           <div>

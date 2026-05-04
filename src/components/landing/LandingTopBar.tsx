@@ -9,6 +9,8 @@ import { SocialLinks } from '../common/SocialLinks';
 export function LandingTopBar() {
   const { t } = useTranslation();
   const { lang = 'fr' } = useParams();
+  const funnelPath = `/${lang}/${lang === 'de' ? 'anfrage' : 'demande'}`;
+  const advisoryPath = `/${lang}/${lang === 'de' ? 'beratung' : 'conseil'}`;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,12 +47,12 @@ export function LandingTopBar() {
               <ChevronDown size={15} />
             </button>
             <div className="services-dropdown">
-              <a className="service-menu-card" href="#services">
+              <Link className="service-menu-card" to={funnelPath}>
                 {t('landing.servicesMenu.advisory.title')}
-              </a>
-              <a className="service-menu-card" href="#services">
+              </Link>
+              <Link className="service-menu-card" to={advisoryPath}>
                 {t('landing.servicesMenu.sell.title')}
-              </a>
+              </Link>
             </div>
           </div>
           <a className="nav-link" href="#process">
@@ -97,12 +99,12 @@ export function LandingTopBar() {
           </button>
           {servicesOpen && (
             <div className="mobile-services-panel">
-              <a href="#services" onClick={closeDrawer}>
+              <Link onClick={closeDrawer} to={funnelPath}>
                 {t('landing.servicesMenu.advisory.title')}
-              </a>
-              <a href="#services" onClick={closeDrawer}>
+              </Link>
+              <Link onClick={closeDrawer} to={advisoryPath}>
                 {t('landing.servicesMenu.sell.title')}
-              </a>
+              </Link>
             </div>
           )}
           <a href="#process" onClick={closeDrawer}>

@@ -412,16 +412,171 @@
   gap: 14px;
 }
 
+.funnel-hero {
+  position: relative;
+  min-height: 360px;
+  padding: 52px 0;
+  background:
+    linear-gradient(110deg, rgba(11, 18, 32, 0.78), rgba(22, 43, 85, 0.68)),
+    radial-gradient(circle at 74% 16%, rgba(47, 111, 237, 0.34), transparent 48%),
+    var(--funnel-hero-image) center / cover no-repeat;
+  color: #ffffff;
+}
+
+.funnel-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 18, 32, 0.12), rgba(11, 18, 32, 0.46));
+}
+
+.funnel-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.funnel-hero__copy {
+  display: grid;
+  gap: 14px;
+  max-width: 760px;
+}
+
+.funnel-hero__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.funnel-hero__copy h1 {
+  margin: 0;
+  font-size: clamp(38px, 6vw, 64px);
+  font-weight: 850;
+  line-height: 1.04;
+}
+
+.funnel-hero__copy p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
 .funnel-content {
   display: grid;
-  min-height: calc(100vh - 72px);
+  min-height: auto;
   align-items: center;
-  padding: 64px 24px;
+  padding: 46px 24px 64px;
 }
 
 .lead-funnel-shell {
   width: min(900px, 100%);
   margin: 0 auto;
+}
+
+.funnel-advantages {
+  padding: 12px 0 72px;
+  border-top: 1px solid #dbe3ee;
+  background: #edf2f8;
+}
+
+.funnel-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-deep-blue) 100%);
+  color: #ffffff;
+}
+
+.funnel-footer__inner {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 36px;
+}
+
+.funnel-footer .social-links {
+  gap: 14px;
+}
+
+.funnel-footer .social-link {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.funnel-footer .social-link:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.funnel-advantages .section-inner {
+  width: min(1120px, calc(100% - 32px));
+}
+
+.funnel-advantages__heading {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+  margin-bottom: 26px;
+}
+
+.funnel-advantages__heading span {
+  color: #2f6fed;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.funnel-advantages__heading h2 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 850;
+  line-height: 1.08;
+}
+
+.funnel-advantages__heading p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.funnel-advantages__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.funnel-advantages__item {
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.funnel-advantages__item h3 {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 22px;
+}
+
+.funnel-advantages__item p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.7;
 }
 
 .lead-funnel-card,
@@ -686,6 +841,20 @@
 }
 
 @media (max-width: 720px) {
+  .funnel-hero {
+    min-height: 300px;
+    padding: 38px 0;
+    background-position: 68% center;
+  }
+
+  .funnel-hero__copy h1 {
+    font-size: 42px;
+  }
+
+  .funnel-hero__copy p {
+    font-size: 16px;
+  }
+
   .funnel-topbar {
     grid-template-columns: 1fr auto;
     padding: 10px 16px;
@@ -704,6 +873,14 @@
   .funnel-content {
     align-items: start;
     padding: 40px 16px;
+  }
+
+  .funnel-advantages {
+    padding: 6px 0 46px;
+  }
+
+  .funnel-advantages__grid {
+    grid-template-columns: 1fr;
   }
 
   .lead-funnel-card {

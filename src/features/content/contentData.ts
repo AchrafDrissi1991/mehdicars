@@ -1,4 +1,10 @@
-import type { FAQItem, ProcessStep, Testimonial } from '../../types/content';
+import type { FAQItem, GalleryItem, MediaItem, ProcessStep, Testimonial } from '../../types/content';
+import banner2ImageUrl from '../../../images/banner2.png';
+import bannerBmwImageUrl from '../../../images/bannerbmw.png';
+import designerImageUrl from '../../../images/Designerimg.png';
+import serviceImage1Url from '../../../images/imgservice1.png';
+import serviceImage2Url from '../../../images/imgservice2.png';
+import serviceImage3Url from '../../../images/imgservice3.png';
 
 export const processSteps: ProcessStep[] = [
   {
@@ -30,7 +36,40 @@ export const processSteps: ProcessStep[] = [
     },
   },
 ];
-
+export const mediaItems: MediaItem[] = [
+  {
+    id: 'video-1',
+    title: { fr: 'Inspection complète d\'un véhicule', de: 'Umfassende Fahrzeuginspection' },
+    description: { fr: 'Découvrez notre processus complet d\'inspection', de: 'Entdecken Sie unseren umfassenden Inspektionsprozess' },
+    youtubeId: '_My65ts9MA0',
+    duration: '5:32',
+    category: { fr: 'Inspection', de: 'Inspektion' },
+  },
+  {
+    id: 'video-2',
+    title: { fr: 'Guide d\'achat automobiles en Allemagne', de: 'Leitfaden zum Autokauf in Deutschland' },
+    description: { fr: 'Conseils pratiques pour l\'achat en Allemagne', de: 'Praktische Tipps zum Kaufen in Deutschland' },
+    youtubeId: 'qglmGWu16Rk',
+    duration: '8:15',
+    category: { fr: 'Guide', de: 'Anleitung' },
+  },
+  {
+    id: 'video-3',
+    title: { fr: 'Témoignages clients', de: 'Kundenbewertungen' },
+    description: { fr: 'Écoutez nos clients satisfaits', de: 'Hören Sie von unseren zufriedenen Kunden' },
+    youtubeId: 'wTpZaLVz2yk',
+    duration: '6:48',
+    category: { fr: 'Témoignage', de: 'Bewertung' },
+  },
+  {
+    id: 'video-4',
+    title: { fr: 'Guide d\'achat automobiles en Allemagne', de: 'Leitfaden zum Autokauf in Deutschland' },
+    description: { fr: 'Conseils pratiques pour l\'achat en Allemagne', de: 'Praktische Tipps zum Kaufen in Deutschland' },
+    youtubeId: 'qglmGWu16Rk',
+    duration: '8:15',
+    category: { fr: 'Guide', de: 'Anleitung' },
+  },
+];
 export const testimonials: Testimonial[] = [
   {
     name: 'Jean D.',
@@ -112,5 +151,44 @@ export const faqItems: FAQItem[] = [
       fr: 'Vos informations servent à comprendre votre projet automobile, structurer la demande et préparer une réponse adaptée.',
       de: 'Ihre Angaben werden genutzt, um Ihren Fahrzeugwunsch zu verstehen, die Anfrage zu strukturieren und eine passende Rückmeldung vorzubereiten.',
     },
+  },
+];
+
+export const galleryItems: GalleryItem[] = [
+  {
+    id: 'gallery-1',
+    title: { fr: 'Inspection voiture 1', de: 'Fahrzeuginspection 1' },
+    image: serviceImage1Url,
+    alt: { fr: 'Vue avant du véhicule', de: 'Vorderansicht des Fahrzeugs' },
+  },
+  {
+    id: 'gallery-2',
+    title: { fr: 'Inspection voiture 2', de: 'Fahrzeuginspection 2' },
+    image: serviceImage2Url,
+    alt: { fr: 'Vue intérieure du véhicule', de: 'Innenansicht des Fahrzeugs' },
+  },
+  {
+    id: 'gallery-3',
+    title: { fr: 'Inspection voiture 3', de: 'Fahrzeuginspection 3' },
+    image: serviceImage3Url,
+    alt: { fr: 'Détails du moteur', de: 'Motordetails' },
+  },
+  {
+    id: 'gallery-4',
+    title: { fr: 'Inspection voiture 4', de: 'Fahrzeuginspection 4' },
+    image: bannerBmwImageUrl,
+    alt: { fr: 'Vue arrière du véhicule', de: 'Hinteransicht des Fahrzeugs' },
+  },
+  {
+    id: 'gallery-5',
+    title: { fr: 'Inspection voiture 5', de: 'Fahrzeuginspection 5' },
+    image: banner2ImageUrl,
+    alt: { fr: 'Intérieur luxe', de: 'Luxus-Interieur' },
+  },
+  {
+    id: 'gallery-6',
+    title: { fr: 'Inspection voiture 6', de: 'Fahrzeuginspection 6' },
+    image: designerImageUrl,
+    alt: { fr: 'Inspection des pneus', de: 'Reifeninspektion' },
   },
 ];

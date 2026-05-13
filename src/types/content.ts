@@ -16,3 +16,20 @@ export interface FAQItem {
   question: LocalizedText;
   answer: LocalizedText;
 }
+
+export interface MediaItem {
+  id: string;
+  title: LocalizedText;
+  description: LocalizedText;
+  youtubeId: string;
+  thumbnail?: string;
+  duration?: string;
+  category: LocalizedText;
+}
+
+export interface GalleryItem {
+  id: string;
+  title: LocalizedText;
+  image: string;
+  alt: LocalizedText;
+}

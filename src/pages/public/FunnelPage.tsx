@@ -54,7 +54,7 @@ export function FunnelPage() {
         </div>
       </section>
 
-      <section className="funnel-advantages">
+      {/* <section className="funnel-advantages">
         <div className="section-inner">
           <div className="funnel-advantages__heading">
             <span>{t('landing.advantages.eyebrow')}</span>
@@ -71,7 +71,7 @@ export function FunnelPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <footer className="funnel-footer">
         <div className="section-inner funnel-footer__inner">

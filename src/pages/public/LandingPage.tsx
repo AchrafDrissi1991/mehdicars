@@ -3,6 +3,8 @@ import {
   ArrowRight,
   BadgeCheck,
   CarFront,
+  ChevronLeft,
+  ChevronRight,
   CheckCircle2,
   ClipboardCheck,
   FileText,
@@ -15,11 +17,12 @@ import {
   Star,
 } from 'lucide-react';
 import type { CSSProperties } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
 import { LandingTopBar } from '../../components/landing/LandingTopBar';
-import { faqItems, processSteps, testimonials } from '../../features/content/contentData';
+import { faqItems, galleryItems, mediaItems, processSteps, testimonials } from '../../features/content/contentData';
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import heroImageUrl from '../../../images/banner.png';
@@ -34,6 +37,17 @@ export function LandingPage() {
   const funnelPath = `/${language}/${language === 'de' ? 'anfrage' : 'demande'}`;
   const privacyPath = `/${language}/${language === 'de' ? 'datenschutz' : 'confidentialite'}`;
   const heroStyle = { '--hero-image': `url(${heroImageUrl})` } as CSSProperties;
+
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  const handleGalleryPrev = () => {
+    setGalleryIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
+  };
+
+  const handleGalleryNext = () => {
+    setGalleryIndex((prev) => (prev === galleryItems.length - 1 ? 0 : prev + 1));
+  };
 
   const trustItems = [
     { icon: <MapPin size={19} />, key: 'germany', label: t('landing.trust.germany') },
@@ -110,6 +124,46 @@ export function LandingPage() {
 
   const processIcons = [ClipboardCheck, BadgeCheck, Search, FileText];
 
+  const serviceDetailsSectionCopy = {
+    eyebrow: { de: 'Service-Details', fr: 'Details du service' },
+    title: { de: 'So funktioniert der Fahrzeugservice', fr: 'Comment fonctionne le service vehicule' },
+  };
+
+  const serviceDetailsSteps = [
+    {
+      description: {
+        de: 'Fahrzeug auf mobile.de, AutoScout24 oder einer anderen Boerse finden und den Link zur Pruefung einsenden.',
+        fr: 'Trouvez le vehicule sur mobile.de, AutoScout24 ou une autre bourse et envoyez le lien pour verification.',
+      },
+      title: { de: 'Fahrzeugsuche', fr: 'Recherche du vehicule' },
+    },
+    {
+      description: {
+        de: 'Der Haendler wird direkt kontaktiert und alle wichtigen Daten geprueft: Unfallhistorie, Servicehistorie, Vorbesitzer, technischer Zustand und Laufleistung.',
+        fr: 'Le vendeur est contacte et les points cles verifies: historique des accidents, entretien, anciens proprietaires, etat technique et kilometrage.',
+      },
+      title: { de: 'Haendlerkontakt & Informationspruefung', fr: 'Contact vendeur & verification des informations' },
+    },
+    {
+      description: {
+        de: 'Das Fahrzeug wird persoenlich vor Ort geprueft: Karosserie, Motor, Innenraum, Reifen, Bremsen, Elektronik und eventuelle Maengel.',
+        fr: 'Le vehicule est inspecte sur place: carrosserie, moteur, interieur, pneus, freins, electronique et eventuels defauts.',
+      },
+      note: {
+        de: 'Zusaetzlich erhalten Sie Fotos, Videos sowie eine ehrliche Einschaetzung zum Fahrzeugzustand.',
+        fr: 'En plus, vous recevez des photos, des videos et une evaluation honnete de l\'etat du vehicule.',
+      },
+      title: { de: 'Vor-Ort-Fahrzeugpruefung', fr: 'Inspection du vehicule sur place' },
+    },
+    {
+      description: {
+        de: 'Alle Unterlagen werden vorbereitet und der Kauf abgewickelt: Vertrag, Dokumente, Reservierung und Abstimmung bis zur Fahrzeugabholung.',
+        fr: 'Tous les documents sont prepares et l\'achat finalise: contrat, documents, reservation et coordination jusqu\'au retrait du vehicule.',
+      },
+      title: { de: 'Kaufabwicklung', fr: 'Finalisation de l\'achat' },
+    },
+  ];
+
   return (
     <main className="page-shell landing-page">
       <LandingTopBar />
@@ -139,7 +193,7 @@ export function LandingPage() {
 
      
 
-      <section className="content-section vehicle-section">
+      <section className="content-section vehicle-section section-tone-light">
         <div className="section-inner">
           <div className="vehicle-grid">
             <article className="vehicle-card vehicle-card--buy card-hover">
@@ -171,7 +225,35 @@ export function LandingPage() {
           </div>
         </div>
       </section>
-          <section id="process" className="content-section process-section">
+
+      <section className="content-section process-section service-details-section section-tone-soft">
+        <div className="section-inner">
+          <div className="section-heading section-heading--center service-details-heading">
+            <span className="eyebrow">{pickText(serviceDetailsSectionCopy.eyebrow, language)}</span>
+            <h2>{pickText(serviceDetailsSectionCopy.title, language)}</h2>
+          </div>
+          <div className="service-details-simple">
+            <div className="service-details-list" role="list">
+              {serviceDetailsSteps.map((step, index) => (
+                <article className="service-details-item" key={step.title.de} role="listitem">
+                  <span className="service-details-item__number">{index + 1}</span>
+                  <div className="service-details-item__text">
+                    <h3>{pickText(step.title, language).replace(/^\d+\.\s*/, '')}</h3>
+                    <p>{pickText(step.description, language)}</p>
+                    {step.note && <p>{pickText(step.note, language)}</p>}
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="service-details-visual" aria-hidden="true">
+              <img alt="" loading="lazy" src={beratungFotoImageUrl} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" className="content-section process-section section-tone-light">
         <div className="section-inner">
           <div className="section-heading section-heading--center">
             <span className="eyebrow">{t('landing.nav.process')}</span>
@@ -218,7 +300,7 @@ export function LandingPage() {
         </div>
       </section> */}
 
-      <section className="content-section services-section" id="services">
+      {/* <section className="content-section services-section" id="services">
         <div className="section-inner">
           <div className="section-heading">
             <span className="eyebrow">{t('landing.advantages.eyebrow')}</span>
@@ -235,7 +317,9 @@ export function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+
+    
 {/* 
       <section className="content-section funnel-preview-section">
         <div className="section-inner funnel-preview-grid">
@@ -271,7 +355,7 @@ export function LandingPage() {
 
      
 
-      <section className="content-section video-section">
+      {/* <section className="content-section video-section section-tone-soft">
         <div className="section-inner video-grid">
           <div className="video-placeholder">
             <PlayCircle size={48} />
@@ -291,28 +375,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="content-section reviews-section">
-        <div className="section-inner">
-          <div className="section-heading">
-            <span className="eyebrow">{t('landing.reviews.eyebrow')}</span>
-            <h2>{t('landing.reviews.title')}</h2>
-          </div>
-          <div className="reviews-grid">
-            {testimonials.map((testimonial) => (
-              <article className="review-card card-hover" key={testimonial.name}>
-                <div className="stars" aria-label={`${testimonial.rating}/5`}>
-                  {Array.from({ length: testimonial.rating }).map((_, index) => (
-                    <Star fill="currentColor" key={index} size={17} />
-                  ))}
-                </div>
-                <p>{pickText(testimonial.text, language)}</p>
-                <strong>{testimonial.name}</strong>
-                <span>{testimonial.country}</span>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+  
 
       {/* <section className="content-section germany-section">
         <div className="section-inner germany-grid">
@@ -335,9 +398,133 @@ export function LandingPage() {
         </div>
       </section> */}
 
-      
+      <section className="content-section media-section section-tone-soft">
+        <div className="section-inner">
+          <div className="section-heading section-heading--center">
+            <span className="eyebrow">
+              {language === 'de' ? 'Video & Medien' : 'Vidéo & Médias'}
+            </span>
+            <h2>
+              {language === 'de' ? 'Entdecken Sie unsere Video-Inhalte' : 'Découvrez nos contenus vidéo'}
+            </h2>
+            <p>
+              {language === 'de'
+                ? 'Leitfäden, Tipps und Einblicke in unser Fahrzeuginspektionsverfahren'
+                : 'Guides, conseils et aperçus de notre processus d\'inspection'}
+            </p>
+          </div>
+          <div className="media-grid">
+            {mediaItems.map((media) => (
+              <article className="media-card card-hover" key={media.id}>
+                <button
+                  className="media-card__thumbnail"
+                  type="button"
+                  onClick={() => setActiveVideo(media.youtubeId)}
+                  aria-label={pickText(media.title, language)}
+                >
+                  <img
+                    alt={pickText(media.title, language)}
+                    loading="lazy"
+                    src={`https://img.youtube.com/vi/${media.youtubeId}/maxresdefault.jpg`}
+                  />
+                  <span className="media-card__play">
+                    <PlayCircle size={48} />
+                  </span>
+                  {media.duration && <span className="media-card__duration">{media.duration}</span>}
+                </button>
+                <div className="media-card__content">
+                  <span className="media-card__category">{pickText(media.category, language)}</span>
+                  <h3>{pickText(media.title, language)}</h3>
+                  <p>{pickText(media.description, language)}</p>
+                </div>
+              </article>
+            ))}
+          </div>
 
-      <section id="faq" className="content-section faq-section">
+          {activeVideo && (
+            <div className="video-modal-overlay" onClick={() => setActiveVideo(null)}>
+              <div className="video-modal" onClick={(e) => e.stopPropagation()}>
+                <button
+                  className="video-modal__close"
+                  type="button"
+                  onClick={() => setActiveVideo(null)}
+                  aria-label="Schließen"
+                >
+                  ✕
+                </button>
+                <iframe
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1`}
+                  title="YouTube video"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="content-section gallery-section section-tone-light">
+        <div className="section-inner">
+          <div className="section-heading section-heading--center">
+            <span className="eyebrow">{language === 'de' ? 'Album-Katalog' : 'Catalogue Album'}</span>
+            <h2>{language === 'de' ? 'Unsere Fahrzeugalben' : 'Nos albums vehicules'}</h2>
+            <p>
+              {language === 'de'
+                ? 'Entdecken Sie unser Album und erleben Sie besondere Momente rund um unsere Fahrzeuge.'
+                : 'Découvrez notre album et explorez nos véhicules sous tous les angles.'}
+            </p>
+          </div>
+
+          <div className="gallery-catalog">
+            <button
+              className="gallery-nav gallery-nav--prev"
+              type="button"
+              onClick={handleGalleryPrev}
+              aria-label={language === 'de' ? 'Vorheriges Bild' : 'Image precedente'}
+            >
+              <ChevronLeft size={22} />
+            </button>
+
+            <div className="gallery-catalog__frame">
+              <img
+                alt={pickText(galleryItems[galleryIndex].alt, language)}
+                loading="lazy"
+                src={galleryItems[galleryIndex].image}
+              />
+              <span className="gallery-catalog__count">
+                {galleryIndex + 1} / {galleryItems.length}
+              </span>
+            </div>
+
+            <button
+              className="gallery-nav gallery-nav--next"
+              type="button"
+              onClick={handleGalleryNext}
+              aria-label={language === 'de' ? 'Naechstes Bild' : 'Image suivante'}
+            >
+              <ChevronRight size={22} />
+            </button>
+          </div>
+
+          <div className="gallery-strip" role="tablist" aria-label={language === 'de' ? 'Bilderliste' : 'Liste images'}>
+            {galleryItems.map((item, index) => (
+              <button
+                key={item.id}
+                className={`gallery-thumb ${index === galleryIndex ? 'gallery-thumb--active' : ''}`}
+                type="button"
+                onClick={() => setGalleryIndex(index)}
+                aria-label={pickText(item.title, language)}
+              >
+                <img alt={pickText(item.alt, language)} loading="lazy" src={item.image} />
+                <span>{pickText(item.title, language)}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="content-section faq-section section-tone-soft">
         <div className="section-inner faq-grid">
           <div className="faq-copy">
             <span className="eyebrow">{t('landing.faq.eyebrow')}</span>

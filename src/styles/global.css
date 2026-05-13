@@ -1,8 +1,9 @@
 :root {
-  --color-primary: #2751a5;
+  --color-primary: #2F6FED;
   --color-primary-hover: #255ED0;
   --color-primary-active: #1E4EAD;
 
+  --color-dark-secondary: #111827;
   --color-deep-blue: #162B55;
   --color-deep-blue-dark: #0B1220;
 
@@ -20,6 +21,7 @@
   --color-muted-text: #6B7280;
   --color-subtle-text: #9CA3AF;
   --color-text-on-dark: #FFFFFF;
+  --color-text-on-dark-muted: rgba(255,255,255,0.78);
   --color-muted-text-on-dark: rgba(255,255,255,0.78);
 
   --color-border: #E5E7EB;
@@ -31,9 +33,24 @@
   --color-selected-bg: #E0ECFF;
   --color-selected-text: #1E4EAD;
 
+  --color-input-bg: #FFFFFF;
+  --color-input-border: #CBD5E1;
+  --color-input-hover-border: #2F6FED;
+  --color-input-focus-border: #2F6FED;
+
+  --shadow-focus: 0 0 0 3px rgba(47,111,237,0.16);
+
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-error: #DC2626;
+
   --shadow-soft: 0 12px 34px rgba(15, 23, 42, 0.08);
   --shadow-medium: 0 18px 48px rgba(15, 23, 42, 0.14);
   --shadow-dark: 0 18px 48px rgba(0, 0, 0, 0.28);
+
+  --gradient-hero: linear-gradient(135deg, #0B1220 0%, #162B55 58%, #2F6FED 100%);
+  --gradient-dark: linear-gradient(135deg, #0B1220 0%, #111827 100%);
+  --gradient-card: linear-gradient(135deg, #111827 0%, #162B55 60%, #2F6FED 100%);
 
   color: var(--color-text);
   background: var(--color-background);
@@ -118,13 +135,13 @@ select {
 .ant-input:hover,
 .ant-input-number:hover,
 .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
-  border-color: var(--color-primary) !important;
+  border-color: var(--color-input-hover-border) !important;
 }
 
 .ant-input:focus,
 .ant-input-focused,
 .ant-input-number-focused,
 .ant-select-focused .ant-select-selector {
-  border-color: var(--color-primary) !important;
-  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.16) !important;
+  border-color: var(--color-input-focus-border) !important;
+  box-shadow: var(--shadow-focus) !important;
 }

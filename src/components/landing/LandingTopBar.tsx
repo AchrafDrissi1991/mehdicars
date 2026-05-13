@@ -1,5 +1,5 @@
 import { Button, Drawer } from 'antd';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, ShoppingCart, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -78,6 +78,9 @@ export function LandingTopBar() {
           onClick={() => setDrawerOpen(true)}
           type="text"
         />
+        <Link aria-label="Warenkorb" className="mobile-cart-button" to={funnelPath}>
+          <ShoppingCart size={20} />
+        </Link>
       </div>
 
       <Drawer

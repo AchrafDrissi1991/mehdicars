@@ -331,11 +331,29 @@
   }
 
   .funnel-topbar {
-    grid-template-columns: 1fr auto;
-    padding: 10px 16px 0;
+    grid-template-columns: auto 1fr auto;
+    padding: 10px 16px;
+    gap: 12px;
   }
 
-  .funnel-help .language-select {
+  .funnel-topbar__menu {
+    display: flex;
+  }
+
+  .funnel-topbar__brand {
+    justify-self: center;
+    flex: 0 1 auto;
+  }
+
+  .funnel-topbar__brand .brand-mark {
+    display: inline;
+  }
+
+  .funnel-progress {
+    display: none;
+  }
+
+  .funnel-topbar__actions .language-select {
     display: none;
   }
 
@@ -369,7 +387,7 @@
 /* New compact 4-step lead funnel */
 .funnel-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  background: linear-gradient(180deg, var(--color-background) 0%, var(--color-background-alt) 100%);
 }
 
 .funnel-topbar {
@@ -388,20 +406,51 @@
 }
 
 .funnel-topbar .brand {
-  color: #0b1220;
+  color: var(--color-dark);
   font-weight: 850;
+}
+
+.funnel-topbar__menu {
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--color-dark);
+  cursor: pointer;
+}
+
+.funnel-topbar__brand {
+  color: var(--color-dark);
+  font-weight: 850;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.funnel-topbar__brand .brand-mark {
+  display: none;
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.funnel-topbar__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  color: var(--color-dark);
 }
 
 .funnel-progress {
   display: grid;
   gap: 6px;
-  color: #6b7280;
+  color: var(--color-muted-text);
   font-weight: 700;
   text-align: center;
 }
 
 .funnel-progress span {
-  color: #111827;
+  color: var(--color-text);
   font-size: 13px;
 }
 
@@ -482,8 +531,8 @@
 
 .funnel-advantages {
   padding: 12px 0 72px;
-  border-top: 1px solid #dbe3ee;
-  background: #edf2f8;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background-alt);
 }
 
 .funnel-footer {
@@ -531,7 +580,7 @@
 }
 
 .funnel-advantages__heading span {
-  color: #2f6fed;
+  color: var(--color-primary);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -540,7 +589,7 @@
 
 .funnel-advantages__heading h2 {
   margin: 0;
-  color: #111827;
+  color: var(--color-text);
   font-size: clamp(30px, 4vw, 44px);
   font-weight: 850;
   line-height: 1.08;
@@ -548,7 +597,7 @@
 
 .funnel-advantages__heading p {
   margin: 0;
-  color: #4b5563;
+  color: var(--color-body-text);
   font-size: 17px;
   line-height: 1.65;
 }
@@ -561,29 +610,29 @@
 
 .funnel-advantages__item {
   padding: 22px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 18px;
-  background: #ffffff;
+  background: var(--color-surface);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
 }
 
 .funnel-advantages__item h3 {
   margin: 0 0 8px;
-  color: #111827;
+  color: var(--color-text);
   font-size: 22px;
 }
 
 .funnel-advantages__item p {
   margin: 0;
-  color: #4b5563;
+  color: var(--color-body-text);
   line-height: 1.7;
 }
 
 .lead-funnel-card,
 .success-step {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 24px;
-  background: #ffffff;
+  background: var(--color-surface);
   box-shadow: 0 18px 48px rgba(15, 23, 42, 0.1);
 }
 
@@ -599,7 +648,7 @@
 }
 
 .lead-funnel-progress span {
-  color: #111827;
+  color: var(--color-text);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -621,15 +670,15 @@
   width: 42px;
   height: 42px;
   border-radius: 999px;
-  background: #e0ecff;
-  color: #1e4ead;
+  background: var(--color-selected-bg);
+  color: var(--color-primary-active);
   font-weight: 900;
 }
 
 .lead-step-heading h1 {
   max-width: 720px;
   margin: 0;
-  color: #111827;
+  color: var(--color-text);
   font-size: clamp(32px, 4.8vw, 52px);
   font-weight: 850;
   letter-spacing: 0;
@@ -644,14 +693,14 @@
 .lead-field label,
 .choice-section > label,
 .lead-slider label {
-  color: #111827;
+  color: var(--color-text);
   font-weight: 850;
 }
 
 .lead-field .ant-input,
 .lead-field .ant-select-selector,
 .lead-field .ant-input-affix-wrapper {
-  border-color: #cbd5e1 !important;
+  border-color: var(--color-input-border) !important;
 }
 
 .lead-field .ant-input-lg,
@@ -676,19 +725,19 @@
 .quick-chip-row button {
   height: 36px;
   padding: 0 13px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--color-border-strong);
   border-radius: 999px;
-  background: #ffffff;
-  color: #111827;
+  background: var(--color-surface);
+  color: var(--color-text);
   cursor: pointer;
   font-weight: 750;
   transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
 .quick-chip-row button:hover {
-  border-color: #2f6fed;
-  background: #eff6ff;
-  color: #1e4ead;
+  border-color: var(--color-primary);
+  background: var(--color-hover-bg);
+  color: var(--color-primary-active);
 }
 
 .slider-grid {
@@ -700,9 +749,9 @@
   display: grid;
   gap: 12px;
   padding: 18px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border);
   border-radius: 16px;
-  background: #f8fafc;
+  background: var(--color-surface-muted);
 }
 
 .lead-slider > div {
@@ -713,7 +762,7 @@
 }
 
 .lead-slider strong {
-  color: #1e4ead;
+  color: var(--color-primary-active);
   white-space: nowrap;
 }
 
@@ -738,10 +787,10 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--color-border-strong);
   border-radius: 16px;
-  background: #ffffff;
-  color: #111827;
+  background: var(--color-surface);
+  color: var(--color-text);
   cursor: pointer;
   font-weight: 850;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -749,9 +798,9 @@
 
 .choice-grid button:hover,
 .choice-grid button.is-selected {
-  border-color: #2f6fed;
-  background: #e0ecff;
-  color: #1e4ead;
+  border-color: var(--color-primary);
+  background: var(--color-selected-bg);
+  color: var(--color-primary-active);
 }
 
 .choice-grid button:hover {
@@ -759,7 +808,7 @@
 }
 
 .choice-grid button svg {
-  color: #2f6fed;
+  color: var(--color-primary);
 }
 
 .contact-grid {
@@ -781,7 +830,7 @@
 }
 
 .lead-funnel-navigation span {
-  color: #111827;
+  color: var(--color-text);
   font-size: 12px;
   font-weight: 850;
   letter-spacing: 0.08em;
@@ -796,30 +845,45 @@
 .lead-funnel-navigation .ant-btn-primary {
   justify-self: end;
   min-width: 132px;
-  background: #2f6fed;
-  box-shadow: 0 14px 32px rgba(47, 111, 237, 0.24);
+  border: 0;
+  background: #9CD5F5;
+  color: #2F3A45;
+  box-shadow: none;
+  text-transform: uppercase;
 }
 
 .lead-funnel-navigation .ant-btn-primary:hover {
-  background: #255ed0 !important;
+  background: #89C8EC !important;
+  color: #1F2937 !important;
+}
+
+.lead-funnel-navigation .ant-btn-primary:focus-visible {
+  background: #89C8EC !important;
+  color: #1F2937 !important;
+}
+
+.lead-funnel-navigation .ant-btn-primary:disabled,
+.lead-funnel-navigation .ant-btn-primary.ant-btn-loading {
+  background: var(--color-border) !important;
+  color: var(--color-subtle-text) !important;
 }
 
 .funnel-prev-button {
   justify-self: start;
   min-width: 132px;
-  border-color: #2f6fed;
-  color: #2f6fed;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .funnel-prev-button:hover {
-  border-color: #2f6fed !important;
-  background: #eff6ff !important;
-  color: #1e4ead !important;
+  border-color: var(--color-primary) !important;
+  background: var(--color-hover-bg) !important;
+  color: var(--color-primary-active) !important;
 }
 
 .funnel-prev-button:disabled {
-  border-color: #cbd5e1 !important;
-  color: #9ca3af !important;
+  border-color: var(--color-border-strong) !important;
+  color: var(--color-subtle-text) !important;
   opacity: 0.45;
   cursor: not-allowed;
 }
@@ -829,15 +893,25 @@
 }
 
 .ant-slider-track {
-  background: #2f6fed !important;
+  background: var(--color-primary) !important;
 }
 
 .ant-slider-rail {
-  background: #cbd5e1 !important;
+  background: var(--color-border-strong) !important;
 }
 
 .ant-slider-handle::after {
-  box-shadow: 0 0 0 2px #2f6fed !important;
+  box-shadow: 0 0 0 2px var(--color-primary) !important;
+}
+
+.funnel-progress .ant-progress .ant-progress-bg,
+.lead-funnel-progress .ant-progress .ant-progress-bg {
+  background: #9CD5F5 !important;
+}
+
+.funnel-progress .ant-progress .ant-progress-inner,
+.lead-funnel-progress .ant-progress .ant-progress-inner {
+  background: var(--color-selected-bg) !important;
 }
 
 @media (max-width: 720px) {

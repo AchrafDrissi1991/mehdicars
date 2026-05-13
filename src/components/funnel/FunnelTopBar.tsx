@@ -1,4 +1,5 @@
 import { Progress } from 'antd';
+import { Menu, ShoppingCart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { LanguageSwitch } from '../common/LanguageSwitch';
@@ -16,10 +17,15 @@ export function FunnelTopBar({ current, total, showProgress = true }: FunnelTopB
 
   return (
     <header className="funnel-topbar">
-      <Link className="brand" to={`/${lang}`}>
+      <div className="funnel-topbar__menu">
+        <Menu size={24} />
+      </div>
+      
+      <Link className="funnel-topbar__brand" to={`/${lang}`}>
         <span className="brand-mark">{t('landing.brandMark')}</span>
         <span>{t('landing.brand')}</span>
       </Link>
+
       {showProgress && (
         <div className="funnel-progress">
           <span>
@@ -28,7 +34,9 @@ export function FunnelTopBar({ current, total, showProgress = true }: FunnelTopB
           <Progress percent={Math.round((current / total) * 100)} showInfo={false} />
         </div>
       )}
-      <div className="funnel-help">
+
+      <div className="funnel-topbar__actions">
+        <ShoppingCart size={20} />
         <LanguageSwitch />
       </div>
     </header>

@@ -2692,6 +2692,11 @@
     font-size: 24px;
   }
 
+  .landing-page .process-item h3 {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+
   .landing-page .service-detail-card__step {
     font-size: 22px;
   }

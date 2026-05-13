@@ -1,5 +1,5 @@
-import { useState, type CSSProperties, type FormEvent } from 'react';
-import { CalendarDays, CheckCircle2, CreditCard, Phone, ShieldCheck } from 'lucide-react';
+import { useMemo, useState, type CSSProperties, type FormEvent } from 'react';
+import { CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Clock3, CreditCard, Mail, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
@@ -12,16 +12,47 @@ export function AdvisoryPage() {
   const { t } = useTranslation();
   const { lang = 'fr' } = useParams();
   const language = lang as SupportedLanguage;
+  const locale = language === 'de' ? 'de-DE' : 'fr-FR';
+  const formatDateKey = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const slotTemplates = useMemo(() => {
+    const slots: string[] = [];
+    for (let hour = 9; hour < 20; hour += 1) {
+      const from = `${String(hour).padStart(2, '0')}:00`;
+      const to = `${String(hour + 1).padStart(2, '0')}:00`;
+      slots.push(`${from} - ${to}`);
+    }
+
+    return slots;
+  }, []);
+
+  const [viewDate, setViewDate] = useState(() => new Date());
+  const [selectedDate, setSelectedDate] = useState(() => new Date());
+  const [reservedSlotsByDate, setReservedSlotsByDate] = useState<Record<string, string[]>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     phone: '',
-    date: '',
+    email: '',
+    date: formatDateKey(new Date()),
     time: '',
     paymentMethod: 'Visa',
     question: '',
   });
+
+  const validatePhone = (value: string) => {
+    const cleaned = value.replace(/\s/g, '');
+    return /^[+]?[0-9]{7,15}$/.test(cleaned);
+  };
 
   const advisoryCopy = {
     introTitle: {
@@ -72,6 +103,14 @@ export function AdvisoryPage() {
       de: 'Telefonnummer',
       fr: 'Numéro de téléphone',
     },
+    phoneError: {
+      de: 'Bitte eine gueltige Telefonnummer eingeben (nur Ziffern, z.B. +41791234567).',
+      fr: 'Veuillez saisir un numéro de téléphone valide (ex: +41791234567).',
+    },
+    email: {
+      de: 'E-Mail-Adresse',
+      fr: 'Adresse e-mail',
+    },
     date: {
       de: 'Termin (Datum)',
       fr: 'Date du rendez-vous',
@@ -104,18 +143,158 @@ export function AdvisoryPage() {
       de: 'Danke! Ihre Anfrage ist vorbereitet. Naechster Schritt: sichere Online-Zahlung.',
       fr: 'Merci ! Votre demande est prête. Prochaine étape: paiement en ligne sécurisé.',
     },
+    successBanner: {
+      de: 'Buchung bestätigt! Eine Bestätigungsmail wurde an',
+      fr: 'Réservation confirmée ! Un e-mail de confirmation a été envoyé à',
+    },
+    successBannerSuffix: {
+      de: 'gesendet.',
+      fr: 'envoyé.',
+    },
+    schedulerTitle: {
+      de: 'Termin-Kalender',
+      fr: 'Calendrier des rendez-vous',
+    },
+    schedulerSubtitle: {
+      de: 'Verfuegbare Termine am',
+      fr: 'Créneaux disponibles le',
+    },
+    slotButton: {
+      de: 'Termin buchen',
+      fr: 'Réserver',
+    },
+    noSlots: {
+      de: 'Keine freien Termine an diesem Tag.',
+      fr: 'Aucun créneau libre ce jour.',
+    },
+    reserved: {
+      de: 'Reserviert',
+      fr: 'Réservé',
+    },
+    availableOne: {
+      de: '1 Platz verfuegbar',
+      fr: '1 place disponible',
+    },
+    selectedSlotText: {
+      de: 'Ausgewaehlter Termin:',
+      fr: 'Créneau sélectionné:',
+    },
+    dateReadonlyHint: {
+      de: 'Wird ueber den Kalender ausgewaehlt',
+      fr: 'Sélectionné via le calendrier',
+    },
+    selectSlotHint: {
+      de: 'Bitte zuerst einen freien Termin auswaehlen.',
+      fr: 'Veuillez d\'abord choisir un créneau libre.',
+    },
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const monthLabel = useMemo(
+    () => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(viewDate),
+    [locale, viewDate],
+  );
+
+  const selectedDateLabel = useMemo(
+    () => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(selectedDate),
+    [locale, selectedDate],
+  );
+
+  const weekDays = language === 'de'
+    ? ['MO', 'DI', 'MI', 'DO', 'FR', 'SA', 'SO']
+    : ['LU', 'MA', 'ME', 'JE', 'VE', 'SA', 'DI'];
+
+  const calendarDays = useMemo(() => {
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const firstOfMonth = new Date(year, month, 1);
+    const firstWeekday = (firstOfMonth.getDay() + 6) % 7;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const prevMonthDays = new Date(year, month, 0).getDate();
+    const totalCells = 42;
+
+    return Array.from({ length: totalCells }, (_, index) => {
+      const dayOffset = index - firstWeekday + 1;
+      const inCurrentMonth = dayOffset > 0 && dayOffset <= daysInMonth;
+      const date = inCurrentMonth
+        ? new Date(year, month, dayOffset)
+        : dayOffset <= 0
+          ? new Date(year, month - 1, prevMonthDays + dayOffset)
+          : new Date(year, month + 1, dayOffset - daysInMonth);
+
+      return {
+        date,
+        inCurrentMonth,
+        isSelected: formatDateKey(date) === formatDateKey(selectedDate),
+        availableCount: inCurrentMonth
+          ? slotTemplates.length - (reservedSlotsByDate[formatDateKey(date)]?.length ?? 0)
+          : 0,
+      };
+    });
+  }, [reservedSlotsByDate, selectedDate, slotTemplates, viewDate]);
+
+  const availableSlots = useMemo(() => {
+    const reservedForDay = reservedSlotsByDate[formatDateKey(selectedDate)] ?? [];
+
+    return slotTemplates.map((range) => ({
+      range,
+      available: !reservedForDay.includes(range),
+    }));
+  }, [reservedSlotsByDate, selectedDate, slotTemplates]);
+
+  const handleSelectDate = (date: Date) => {
+    setSelectedDate(date);
+    setFormData((prev) => ({ ...prev, date: formatDateKey(date), time: '' }));
+    setSelectedSlot('');
+  };
+
+  const handleBookSlot = (range: string) => {
+    const [start] = range.split(' - ');
+    setSelectedSlot(range);
+    setFormData((prev) => ({
+      ...prev,
+      date: formatDateKey(selectedDate),
+      time: start,
+    }));
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!selectedSlot) {
+      setIsSubmitted(false);
+      return;
+    }
+    if (!validatePhone(formData.phone)) {
+      setPhoneError(pickText(advisoryCopy.phoneError, language));
+      return;
+    }
+    setPhoneError('');
+
+    const dayKey = formatDateKey(selectedDate);
+    setReservedSlotsByDate((prev) => ({
+      ...prev,
+      [dayKey]: Array.from(new Set([...(prev[dayKey] ?? []), selectedSlot])),
+    }));
+
+    setSelectedSlot('');
+    setFormData((prev) => ({ ...prev, time: '' }));
     setIsSubmitted(true);
   };
 
   return (
     <main className="funnel-page advisory-page">
       <FunnelTopBar current={1} total={1} showProgress={false} />
+
+      {isSubmitted && (
+        <div className="advisory-success-banner" role="alert">
+          <CheckCircle2 size={28} />
+          <span>
+            {pickText(advisoryCopy.successBanner, language)}{' '}
+            <strong>{formData.email}</strong>{' '}
+            {pickText(advisoryCopy.successBannerSuffix, language)}
+          </span>
+          <button type="button" onClick={() => setIsSubmitted(false)} aria-label="Schließen">✕</button>
+        </div>
+      )}
 
       <section className="funnel-hero" style={{ '--funnel-hero-image': `url(${designerHeroImageUrl})` } as CSSProperties}>
         <div className="section-inner funnel-hero__inner">
@@ -157,6 +336,104 @@ export function AdvisoryPage() {
               <h2>{pickText(advisoryCopy.bookingTitle, language)}</h2>
               <p>{pickText(advisoryCopy.bookingSubtitle, language)}</p>
 
+              <div className="booking-scheduler">
+                <div className="booking-scheduler__calendar">
+                  <div className="booking-scheduler__header">
+                    <strong>{pickText(advisoryCopy.schedulerTitle, language)}</strong>
+                    <div className="booking-scheduler__month-nav">
+                      <button
+                        type="button"
+                        aria-label="Previous month"
+                        onClick={() => setViewDate((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1))}
+                      >
+                        <ChevronLeft size={16} />
+                      </button>
+                      <span>{monthLabel}</span>
+                      <button
+                        type="button"
+                        aria-label="Next month"
+                        onClick={() => setViewDate((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1))}
+                      >
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="booking-scheduler__weekdays">
+                    {weekDays.map((day) => (
+                      <span key={day}>{day}</span>
+                    ))}
+                  </div>
+
+                  <div className="booking-scheduler__grid" role="grid">
+                    {calendarDays.map((dayItem) => {
+                      const label = new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(dayItem.date);
+                      return (
+                        <button
+                          key={`${formatDateKey(dayItem.date)}-${dayItem.inCurrentMonth ? 'current' : 'other'}`}
+                          className={[
+                            'booking-day',
+                            dayItem.inCurrentMonth ? 'booking-day--current' : 'booking-day--muted',
+                            dayItem.isSelected ? 'booking-day--selected' : '',
+                          ].join(' ').trim()}
+                          type="button"
+                          aria-label={label}
+                          onClick={() => handleSelectDate(dayItem.date)}
+                        >
+                          <span>{dayItem.date.getDate()}</span>
+                          {dayItem.inCurrentMonth && dayItem.availableCount > 0 && (
+                            <small>{dayItem.availableCount}</small>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="booking-scheduler__slots">
+                  <h3>
+                    {pickText(advisoryCopy.schedulerSubtitle, language)} <span>{selectedDateLabel}</span>
+                  </h3>
+
+                  <div className="booking-slot-list">
+                    {availableSlots.some((slot) => slot.available) ? (
+                      availableSlots.map((slot) => (
+                        <article className="booking-slot-item" key={slot.range}>
+                          <div>
+                            <strong>
+                              <Clock3 size={15} />
+                              {slot.range}
+                            </strong>
+                            <small>
+                              {slot.available
+                                ? pickText(advisoryCopy.availableOne, language)
+                                : pickText(advisoryCopy.reserved, language)}
+                            </small>
+                          </div>
+                          <button
+                            type="button"
+                            disabled={!slot.available}
+                            onClick={() => handleBookSlot(slot.range)}
+                          >
+                            {pickText(advisoryCopy.slotButton, language)}
+                          </button>
+                        </article>
+                      ))
+                    ) : (
+                      <p className="booking-slot-list__empty">{pickText(advisoryCopy.noSlots, language)}</p>
+                    )}
+                  </div>
+
+                  {!selectedSlot && <p className="booking-slot-list__empty">{pickText(advisoryCopy.selectSlotHint, language)}</p>}
+
+                  {selectedSlot && (
+                    <p className="booking-scheduler__selected">
+                      {pickText(advisoryCopy.selectedSlotText, language)} <strong>{selectedSlot}</strong>
+                    </p>
+                  )}
+                </div>
+              </div>
+
               <form className="advisory-form" onSubmit={handleSubmit}>
                 <div className="advisory-form-grid">
                   <label>
@@ -185,8 +462,27 @@ export function AdvisoryPage() {
                       type="tel"
                       required
                       value={formData.phone}
-                      onChange={(event) => setFormData((prev) => ({ ...prev, phone: event.target.value }))}
+                      placeholder="+41 79 123 45 67"
+                      onChange={(event) => {
+                        setFormData((prev) => ({ ...prev, phone: event.target.value }));
+                        if (phoneError) setPhoneError('');
+                      }}
                     />
+                    {phoneError && <span className="advisory-field-error">{phoneError}</span>}
+                  </label>
+
+                  <label>
+                    {pickText(advisoryCopy.email, language)}
+                    <div className="advisory-input-icon-wrap">
+                      <Mail size={18} />
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        placeholder="name@example.com"
+                        onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                      />
+                    </div>
                   </label>
 
                   <label>
@@ -196,22 +492,24 @@ export function AdvisoryPage() {
                       <input
                         type="date"
                         required
-                        min={today}
+                        readOnly
                         value={formData.date}
-                        onChange={(event) => setFormData((prev) => ({ ...prev, date: event.target.value }))}
+                        aria-readonly="true"
                       />
                     </div>
+                    <small>{pickText(advisoryCopy.dateReadonlyHint, language)}</small>
                   </label>
 
                   <label>
                     {pickText(advisoryCopy.time, language)}
                     <div className="advisory-input-icon-wrap">
-                      <Phone size={18} />
+                      <Clock3 size={18} />
                       <input
                         type="time"
                         required
+                        readOnly
                         value={formData.time}
-                        onChange={(event) => setFormData((prev) => ({ ...prev, time: event.target.value }))}
+                        aria-readonly="true"
                       />
                     </div>
                   </label>
@@ -253,7 +551,6 @@ export function AdvisoryPage() {
                   </button>
 
                   <small>{pickText(advisoryCopy.legalNote, language)}</small>
-                  {isSubmitted && <p className="advisory-success">{pickText(advisoryCopy.success, language)}</p>}
                 </div>
               </form>
             </article>

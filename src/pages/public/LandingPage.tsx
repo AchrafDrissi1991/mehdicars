@@ -35,6 +35,7 @@ export function LandingPage() {
   const { lang = 'fr' } = useParams();
   const language = lang as SupportedLanguage;
   const funnelPath = `/${language}/${language === 'de' ? 'anfrage' : 'demande'}`;
+  const advisoryPath = `/${language}/${language === 'de' ? 'beratung' : 'conseil'}`;
   const privacyPath = `/${language}/${language === 'de' ? 'datenschutz' : 'confidentialite'}`;
   const heroStyle = { '--hero-image': `url(${heroImageUrl})` } as CSSProperties;
 
@@ -182,7 +183,7 @@ export function LandingPage() {
                 {t('landing.hero.buyCta')}
                 <ArrowRight size={18} />
               </Button>
-              <Button className="ghost-cta hero-secondary" size="large" href="#contact">
+              <Button className="ghost-cta hero-secondary" size="large" href={advisoryPath}>
                 {t('landing.hero.advisoryCta')}
                 <ArrowRight size={18} />
               </Button>
@@ -216,7 +217,7 @@ export function LandingPage() {
               <div className="vehicle-card__body">
                 <h3 className="vehicle-card__title">{t('landing.vehicles.advisory.title')}</h3>
                 <p>{t('landing.vehicles.advisory.description')}</p>
-                <Button className="ghost-cta" size="large" href="#contact">
+                <Button className="ghost-cta" size="large" href={advisoryPath}>
                   {t('landing.vehicles.advisory.cta')}
                   <ArrowRight size={17} />
                 </Button>

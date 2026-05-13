@@ -985,3 +985,485 @@
     text-align: center;
   }
 }
+
+.advisory-page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.advisory-info-card,
+.advisory-booking-card {
+  padding: 30px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.advisory-info-card h2,
+.advisory-booking-card h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 32px;
+  line-height: 1.08;
+}
+
+.advisory-info-card > p,
+.advisory-booking-card > p {
+  margin: 14px 0 0;
+  color: var(--color-body-text);
+  line-height: 1.65;
+}
+
+.advisory-bullet-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.advisory-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.advisory-bullet svg {
+  margin-top: 2px;
+  color: var(--color-primary);
+  flex: 0 0 auto;
+}
+
+.advisory-price-box {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 16px;
+  background: linear-gradient(140deg, #0B1220 0%, #162B55 100%);
+  color: #ffffff;
+}
+
+.advisory-price-box__tag {
+  display: inline-flex;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(156, 213, 245, 0.24);
+  color: #dbeafe;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.advisory-price-box p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.advisory-price-box__values {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.advisory-price-box__values strong {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.advisory-price-box__values del {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 20px;
+}
+
+.advisory-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.advisory-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.advisory-form-grid label {
+  display: grid;
+  gap: 8px;
+  color: var(--color-text);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.advisory-form-grid input,
+.advisory-form-grid textarea {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 12px;
+  padding: 0 12px;
+  font: inherit;
+  color: var(--color-text);
+  background: #ffffff;
+}
+
+.advisory-form-grid textarea {
+  min-height: 110px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.advisory-form-grid__full {
+  grid-column: 1 / -1;
+}
+
+.advisory-input-icon-wrap {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.advisory-input-icon-wrap svg {
+  color: var(--color-primary);
+  flex: 0 0 auto;
+}
+
+.advisory-input-icon-wrap input {
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.advisory-payment-box {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface-muted);
+}
+
+.advisory-payment-box h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: var(--color-text);
+  font-size: 18px;
+}
+
+.advisory-payment-box h3 svg {
+  color: var(--color-primary);
+}
+
+.advisory-payment-box p,
+.advisory-payment-box small {
+  margin: 0;
+  color: var(--color-body-text);
+}
+
+.advisory-payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.advisory-payment-chip {
+  cursor: pointer;
+}
+
+.advisory-payment-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.advisory-payment-chip span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 700;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.advisory-payment-chip input:checked + span {
+  border-color: var(--color-primary);
+  background: var(--color-hover-bg);
+  color: var(--color-primary-active);
+}
+
+.advisory-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border: 0;
+  border-radius: 10px;
+  background: #9CD5F5;
+  color: #2F3A45;
+  font-size: 14px;
+  font-weight: 850;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s ease;
+}
+
+.advisory-submit:hover,
+.advisory-submit:focus-visible {
+  background: #89C8EC;
+}
+
+.advisory-success {
+  margin: 4px 0 0;
+  color: #157347;
+  font-weight: 700;
+}
+
+@media (max-width: 920px) {
+  .advisory-page-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .advisory-info-card,
+  .advisory-booking-card {
+    padding: 22px;
+    border-radius: 16px;
+  }
+
+  .advisory-info-card h2,
+  .advisory-booking-card h2 {
+    font-size: 28px;
+  }
+
+  .advisory-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .advisory-submit {
+    width: 100%;
+  }
+}
+
+/* Advisory page aligned with landing page visual language */
+.advisory-page.funnel-page {
+  background: #EEF2F5;
+  color: #353F4B;
+}
+
+.advisory-page .funnel-topbar {
+  border-bottom: 1px solid rgba(229, 231, 235, 0.82);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.advisory-page .funnel-hero {
+  min-height: clamp(520px, 68vh, 700px);
+  padding: 88px 0 92px;
+  background:
+    linear-gradient(90deg, rgba(5, 10, 18, 0.74) 0%, rgba(11, 18, 32, 0.42) 42%, rgba(11, 18, 32, 0.14) 72%, rgba(11, 18, 32, 0.24) 100%),
+    var(--funnel-hero-image);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center, 76% center;
+}
+
+.advisory-page .funnel-hero__copy h1 {
+  max-width: 720px;
+  font-size: clamp(44px, 6.1vw, 78px);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.advisory-page .funnel-hero__copy p {
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+.advisory-page .funnel-hero__eyebrow {
+  border: 1px solid rgba(156, 213, 245, 0.45);
+  background: rgba(156, 213, 245, 0.14);
+  color: #DBEAFE;
+}
+
+.advisory-page .funnel-content {
+  padding: 72px 24px 84px;
+}
+
+.advisory-page .advisory-info-card,
+.advisory-page .advisory-booking-card {
+  border: 1px solid #E5E7EB;
+  border-radius: 0;
+  background: #FFFFFF;
+  box-shadow: none;
+}
+
+.advisory-page .advisory-info-card h2,
+.advisory-page .advisory-booking-card h2 {
+  margin: 0;
+  color: #2E3642;
+  font-size: clamp(34px, 4.2vw, 54px);
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.advisory-page .advisory-info-card > p,
+.advisory-page .advisory-booking-card > p {
+  margin-top: 14px;
+  color: #353F4B;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.advisory-page .advisory-bullet {
+  color: #374151;
+  font-weight: 700;
+}
+
+.advisory-page .advisory-bullet svg {
+  color: #2F6FED;
+}
+
+.advisory-page .advisory-price-box {
+  border-radius: 0;
+  background: linear-gradient(135deg, #0B1220 0%, #162B55 58%, #2F6FED 100%);
+}
+
+.advisory-page .advisory-price-box__tag {
+  background: rgba(156, 213, 245, 0.22);
+  color: #DBEAFE;
+}
+
+.advisory-page .advisory-form-grid label {
+  color: #2E3642;
+  font-size: 14px;
+  font-weight: 780;
+  text-transform: uppercase;
+}
+
+.advisory-page .advisory-form-grid input,
+.advisory-page .advisory-form-grid textarea,
+.advisory-page .advisory-input-icon-wrap {
+  border: 1px solid #D5DCE6;
+  border-radius: 0;
+  color: #2F3A45;
+}
+
+.advisory-page .advisory-form-grid input:focus,
+.advisory-page .advisory-form-grid textarea:focus {
+  outline: none;
+  border-color: #9CD5F5;
+}
+
+.advisory-page .advisory-input-icon-wrap svg,
+.advisory-page .advisory-payment-box h3 svg {
+  color: #2F6FED;
+}
+
+.advisory-page .advisory-payment-box {
+  border: 1px solid #DCE3EB;
+  border-radius: 0;
+  background: #F6F9FC;
+}
+
+.advisory-page .advisory-payment-box h3 {
+  color: #2E3642;
+  font-size: 20px;
+}
+
+.advisory-page .advisory-payment-box p,
+.advisory-page .advisory-payment-box small {
+  color: #4B5563;
+  font-size: 15px;
+}
+
+.advisory-page .advisory-payment-chip span {
+  border: 1px solid #D5DCE6;
+  border-radius: 0;
+  background: #FFFFFF;
+  color: #2F3A45;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+.advisory-page .advisory-payment-chip input:checked + span {
+  border-color: #9CD5F5;
+  background: #E8F4FC;
+  color: #2F3A45;
+}
+
+.advisory-page .advisory-submit {
+  min-height: 52px;
+  border-radius: 0;
+  background: #9CD5F5;
+  color: #2F3A45;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.advisory-page .advisory-submit:hover,
+.advisory-page .advisory-submit:focus-visible {
+  background: #89C8EC;
+  color: #1F2937;
+}
+
+.advisory-page .advisory-success {
+  color: #157347;
+  font-size: 15px;
+}
+
+@media (max-width: 720px) {
+  .advisory-page .funnel-hero {
+    min-height: 520px;
+    padding: 66px 0 74px;
+    background-position: center, center;
+  }
+
+  .advisory-page .funnel-hero__copy h1 {
+    font-size: clamp(36px, 10.5vw, 50px);
+    line-height: 0.98;
+  }
+
+  .advisory-page .funnel-hero__copy p {
+    font-size: 16px;
+  }
+
+  .advisory-page .funnel-content {
+    padding: 48px 16px 60px;
+  }
+
+  .advisory-page .advisory-info-card,
+  .advisory-page .advisory-booking-card {
+    border-radius: 0;
+    padding: 22px;
+  }
+
+  .advisory-page .advisory-info-card h2,
+  .advisory-page .advisory-booking-card h2 {
+    font-size: clamp(30px, 8vw, 38px);
+  }
+}

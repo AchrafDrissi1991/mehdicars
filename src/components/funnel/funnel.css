@@ -505,16 +505,20 @@
 
 .funnel-hero__copy h1 {
   margin: 0;
-  font-size: clamp(38px, 6vw, 64px);
-  font-weight: 850;
+  font-size: clamp(38px, 5.5vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
   line-height: 1.04;
+  font-family: var(--font-heading);
 }
 
 .funnel-hero__copy p {
   margin: 0;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 18px;
-  line-height: 1.65;
+  font-size: 17px;
+  line-height: 1.75;
+  font-weight: 300;
+  letter-spacing: 0.01em;
 }
 
 .funnel-content {
@@ -594,9 +598,11 @@
 .funnel-advantages__heading h2 {
   margin: 0;
   color: var(--color-text);
-  font-size: clamp(30px, 4vw, 44px);
-  font-weight: 850;
-  line-height: 1.08;
+  font-size: clamp(28px, 3.8vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-family: var(--font-heading);
 }
 
 .funnel-advantages__heading p {
@@ -683,10 +689,11 @@
   max-width: 720px;
   margin: 0;
   color: var(--color-text);
-  font-size: clamp(32px, 4.8vw, 52px);
-  font-weight: 850;
-  letter-spacing: 0;
-  line-height: 1.05;
+  font-size: clamp(30px, 4.5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-family: var(--font-heading);
 }
 
 .lead-field {
@@ -698,7 +705,8 @@
 .choice-section > label,
 .lead-slider label {
   color: var(--color-text);
-  font-weight: 850;
+  font-weight: 600;
+  letter-spacing: 0.005em;
 }
 
 .lead-field .ant-input,
@@ -1010,8 +1018,11 @@
 .advisory-booking-card h2 {
   margin: 0;
   color: var(--color-text);
-  font-size: 32px;
-  line-height: 1.08;
+  font-size: clamp(24px, 3.2vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-family: var(--font-heading);
 }
 
 .advisory-info-card > p,
@@ -1778,8 +1789,9 @@
   }
 
   .advisory-page .funnel-hero__copy h1 {
-    font-size: clamp(36px, 10.5vw, 50px);
-    line-height: 0.98;
+    font-size: clamp(34px, 10vw, 50px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
   }
 
   .advisory-page .funnel-hero__copy p {

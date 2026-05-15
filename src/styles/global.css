@@ -52,13 +52,29 @@
   --gradient-dark: linear-gradient(135deg, #0B1220 0%, #111827 100%);
   --gradient-card: linear-gradient(135deg, #111827 0%, #162B55 60%, #2F6FED 100%);
 
+  --font-heading: 'Syne', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
   color: var(--color-text);
   background: var(--color-background);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+}
+
+p {
+  line-height: 1.7;
 }
 
 html {

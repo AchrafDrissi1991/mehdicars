@@ -170,25 +170,51 @@ export function LandingPage() {
       <LandingTopBar />
 
       <section className="hero-section" id="home" style={heroStyle}>
-        <div className="section-inner hero-grid">
+        <div className="hero-section__inner">
           <div className="hero-copy">
             <span className="eyebrow hero-eyebrow">
-              <Sparkles size={16} />
+              <Sparkles size={14} />
               {t('landing.hero.eyebrow')}
             </span>
-            <h1>{t('landing.hero.title')}</h1>
-            <p>{t('landing.hero.subtitle')}</p>
+
+            <h1 className="hero-headline" lang={language}>
+              {t('landing.hero.title')}
+            </h1>
+
+            <p className="hero-subline">{t('landing.hero.subtitle')}</p>
+
+            <div className="hero-proof">
+              <span className="hero-proof__item">
+                <CheckCircle2 size={15} />
+                {t('landing.hero.proofOne')}
+              </span>
+              <span className="hero-proof__sep" aria-hidden="true" />
+              <span className="hero-proof__item">
+                <CheckCircle2 size={15} />
+                {t('landing.hero.proofTwo')}
+              </span>
+              <span className="hero-proof__sep" aria-hidden="true" />
+              <span className="hero-proof__item">
+                <CheckCircle2 size={15} />
+                {t('landing.hero.proofThree')}
+              </span>
+            </div>
+
             <div className="hero-actions">
               <Button className="primary-cta hero-primary" type="primary" size="large" href={funnelPath}>
                 {t('landing.hero.buyCta')}
-                <ArrowRight size={18} />
+                <ArrowRight size={17} />
               </Button>
               <Button className="ghost-cta hero-secondary" size="large" href={advisoryPath}>
                 {t('landing.hero.advisoryCta')}
-                <ArrowRight size={18} />
+                <ArrowRight size={17} />
               </Button>
             </div>
           </div>
+        </div>
+
+        <div className="hero-scroll-hint" aria-hidden="true">
+          <span />
         </div>
       </section>
 

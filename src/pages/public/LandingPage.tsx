@@ -42,6 +42,42 @@ export function LandingPage() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [serviceExplanationVisible, setServiceExplanationVisible] = useState(false);
   const serviceExplanationRef = useRef<HTMLElement | null>(null);
+  const touchIntentRef = useRef({ startX: 0, startY: 0, moved: false });
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    if (!touch) {
+      return;
+    }
+
+    touchIntentRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      moved: false,
+    };
+  };
+
+  const handleTouchMove = (event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    if (!touch) {
+      return;
+    }
+
+    const deltaX = Math.abs(touch.clientX - touchIntentRef.current.startX);
+    const deltaY = Math.abs(touch.clientY - touchIntentRef.current.startY);
+
+    if (deltaX > 8 || deltaY > 8) {
+      touchIntentRef.current.moved = true;
+    }
+  };
+
+  const openVideoWithIntent = (youtubeId: string) => {
+    if (touchIntentRef.current.moved) {
+      return;
+    }
+
+    setActiveVideo(youtubeId);
+  };
 
   useEffect(() => {
     const sectionNode = serviceExplanationRef.current;
@@ -250,7 +286,9 @@ export function LandingPage() {
           <button
             className="service-explanation-video"
             type="button"
-            onClick={() => mediaItems[0] && setActiveVideo(mediaItems[0].youtubeId)}
+            onClick={() => mediaItems[0] && openVideoWithIntent(mediaItems[0].youtubeId)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             aria-label="Ouvrir la video de presentation"
           >
             <img alt="Accompagnement automobile premium en Allemagne" loading="lazy" src={beratungFotoImageUrl} />
@@ -495,7 +533,9 @@ export function LandingPage() {
                 <button
                   className="media-card__thumbnail"
                   type="button"
-                  onClick={() => setActiveVideo(media.youtubeId)}
+                  onClick={() => openVideoWithIntent(media.youtubeId)}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
                   aria-label={pickText(media.title, language)}
                 >
                   <img

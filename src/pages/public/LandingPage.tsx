@@ -16,7 +16,7 @@ import {
   Sparkles,
   Star,
 } from 'lucide-react';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, TouchEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -44,7 +44,7 @@ export function LandingPage() {
   const serviceExplanationRef = useRef<HTMLElement | null>(null);
   const touchIntentRef = useRef({ startX: 0, startY: 0, moved: false });
 
-  const handleTouchStart = (event: React.TouchEvent) => {
+  const handleTouchStart = (event: TouchEvent) => {
     const touch = event.touches[0];
     if (!touch) {
       return;
@@ -57,7 +57,7 @@ export function LandingPage() {
     };
   };
 
-  const handleTouchMove = (event: React.TouchEvent) => {
+  const handleTouchMove = (event: TouchEvent) => {
     const touch = event.touches[0];
     if (!touch) {
       return;

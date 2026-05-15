@@ -1,7 +1,7 @@
 import type { FAQItem, GalleryItem, MediaItem, ProcessStep, Testimonial } from '../../types/content';
 import banner2ImageUrl from '../../../images/banner2.png';
 import bannerBmwImageUrl from '../../../images/bannerbmw.png';
-import designerImageUrl from '../../../images/Designerimg.png';
+import beratungFotoImageUrl from '../../../images/beratungfoto.png';
 import serviceImage1Url from '../../../images/imgservice1.png';
 import serviceImage2Url from '../../../images/imgservice2.png';
 import serviceImage3Url from '../../../images/imgservice3.png';
@@ -188,7 +188,7 @@ export const galleryItems: GalleryItem[] = [
   {
     id: 'gallery-6',
     title: { fr: 'Inspection voiture 6', de: 'Fahrzeuginspection 6' },
-    image: designerImageUrl,
+    image: beratungFotoImageUrl,
     alt: { fr: 'Inspection des pneus', de: 'Reifeninspektion' },
   },
 ];

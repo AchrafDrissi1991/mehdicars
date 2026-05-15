@@ -17,7 +17,7 @@ import {
   Star,
 } from 'lucide-react';
 import type { CSSProperties } from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
@@ -26,7 +26,6 @@ import { faqItems, galleryItems, mediaItems, processSteps, testimonials } from '
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import heroImageUrl from '../../../images/banner.png';
-import cardAutoKaufenImageUrl from '../../../images/cardautokaufen.png';
 import beratungFotoImageUrl from '../../../images/beratungfoto.png';
 import './landingPage.css';
 
@@ -41,6 +40,29 @@ export function LandingPage() {
 
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [serviceExplanationVisible, setServiceExplanationVisible] = useState(false);
+  const serviceExplanationRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const sectionNode = serviceExplanationRef.current;
+    if (!sectionNode) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setServiceExplanationVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(sectionNode);
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleGalleryPrev = () => {
     setGalleryIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
@@ -220,35 +242,50 @@ export function LandingPage() {
 
      
 
-      <section className="content-section vehicle-section section-tone-light">
-        <div className="section-inner">
-          <div className="vehicle-grid">
-            <article className="vehicle-card vehicle-card--buy card-hover">
-              <div className="vehicle-card__media" aria-hidden="true">
-                <img alt="" loading="lazy" src={cardAutoKaufenImageUrl} />
-              </div>
-              <div className="vehicle-card__body">
-                <h3 className="vehicle-card__title">{t('landing.vehicles.buy.title')}</h3>
-                <p>{t('landing.vehicles.buy.description')}</p>
-                <Button className="ghost-cta" size="large" href={funnelPath}>
-                  {t('landing.vehicles.buy.cta')}
-                  <ArrowRight size={17} />
-                </Button>
-              </div>
-            </article>
-            <article className="vehicle-card vehicle-card--advisory card-hover">
-              <div className="vehicle-card__media" aria-hidden="true">
-                <img alt="" loading="lazy" src={beratungFotoImageUrl} />
-              </div>
-              <div className="vehicle-card__body">
-                <h3 className="vehicle-card__title">{t('landing.vehicles.advisory.title')}</h3>
-                <p>{t('landing.vehicles.advisory.description')}</p>
-                <Button className="ghost-cta" size="large" href={advisoryPath}>
-                  {t('landing.vehicles.advisory.cta')}
-                  <ArrowRight size={17} />
-                </Button>
-              </div>
-            </article>
+      <section
+        ref={serviceExplanationRef}
+        className={`content-section service-explanation-section section-tone-light ${serviceExplanationVisible ? 'is-visible' : ''}`}
+      >
+        <div className="section-inner service-explanation-shell">
+          <button
+            className="service-explanation-video"
+            type="button"
+            onClick={() => mediaItems[0] && setActiveVideo(mediaItems[0].youtubeId)}
+            aria-label="Ouvrir la video de presentation"
+          >
+            <img alt="Accompagnement automobile premium en Allemagne" loading="lazy" src={beratungFotoImageUrl} />
+            <span className="service-explanation-video__overlay" aria-hidden="true" />
+            <span className="service-explanation-video__play" aria-hidden="true">
+              <PlayCircle size={52} />
+            </span>
+            <span className="service-explanation-video__caption">Expertise automobile allemande</span>
+          </button>
+
+          <div className="service-explanation-copy">
+            <span className="eyebrow service-explanation-copy__eyebrow">ACCOMPAGNEMENT PREMIUM</span>
+            <h2>Nous trouvons votre véhicule idéal en Allemagne.</h2>
+            <p>
+              De la recherche du véhicule jusqu’à l’accompagnement administratif, nous simplifions chaque étape pour vous
+              offrir une expérience d’achat sereine, transparente et personnalisée.
+            </p>
+
+            <ul className="service-explanation-benefits">
+              <li>✓ Recherche personnalisée du véhicule</li>
+              <li>✓ Vérification des meilleures offres</li>
+              <li>✓ Assistance et négociation</li>
+              <li>✓ Accompagnement administratif complet</li>
+            </ul>
+
+            <div className="service-explanation-actions">
+              <Button className="primary-cta" type="primary" size="large" href={funnelPath}>
+                Commencer ma recherche
+                <ArrowRight size={17} />
+              </Button>
+              <a className="service-explanation-link" href="#process">
+                Découvrir notre méthode
+                <ArrowRight size={17} />
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -304,6 +341,18 @@ export function LandingPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="content-section editorial-moment editorial-moment--primary" aria-label="Editorial statement">
+        <div className="section-inner">
+          <p className="editorial-moment__eyebrow">
+            {language === 'de' ? 'Premium Begleitung' : 'Accompagnement premium'}
+          </p>
+          <h2>
+            {language === 'de' ? 'Der deutsche Markt.' : 'Le marche allemand.'}
+            <span>{language === 'de' ? 'Ohne Komplikationen.' : 'Sans complications.'}</span>
+          </h2>
         </div>
       </section>
       {/* <section className="intro-section explanation-section">
@@ -491,7 +540,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="content-section gallery-section section-tone-light">
+      {/* <section className="content-section gallery-section section-tone-light">
         <div className="section-inner">
           <div className="section-heading section-heading--center">
             <span className="eyebrow">{language === 'de' ? 'Album-Katalog' : 'Catalogue Album'}</span>
@@ -549,7 +598,7 @@ export function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section id="faq" className="content-section faq-section section-tone-soft">
         <div className="section-inner faq-grid">

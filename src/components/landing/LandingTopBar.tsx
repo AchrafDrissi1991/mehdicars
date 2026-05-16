@@ -80,8 +80,8 @@ export function LandingTopBar() {
               </Link>
             </div>
           </div>
-          <a className="nav-link" href="#process">
-            {t('landing.nav.process')}
+          <a className="nav-link" href="#service-details">
+            {lang === 'de' ? 'Service-Details' : 'Details du service'}
           </a>
           <a className="nav-link" href="#faq">
             {t('landing.nav.faq')}
@@ -140,8 +140,8 @@ export function LandingTopBar() {
               </Link>
             </div>
           )}
-          <a href="#process" onClick={closeDrawer}>
-            {t('landing.nav.process')}
+          <a href="#service-details" onClick={closeDrawer}>
+            {lang === 'de' ? 'Service-Details' : 'Details du service'}
           </a>
           <a href="#faq" onClick={closeDrawer}>
             {t('landing.nav.faq')}

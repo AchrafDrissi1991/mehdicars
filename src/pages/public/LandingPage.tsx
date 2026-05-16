@@ -3,18 +3,23 @@ import {
   ArrowRight,
   BadgeCheck,
   CarFront,
+  Check,
   ChevronLeft,
   ChevronRight,
   CheckCircle2,
   ClipboardCheck,
+  Eye,
+  FileCheck,
   FileText,
   Handshake,
   MapPin,
+  PhoneCall,
   PlayCircle,
   Search,
   ShieldCheck,
   Sparkles,
   Star,
+  User,
 } from 'lucide-react';
 import type { CSSProperties, TouchEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -22,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
 import { LandingTopBar } from '../../components/landing/LandingTopBar';
-import { faqItems, galleryItems, mediaItems, processSteps, testimonials } from '../../features/content/contentData';
+import { faqItems, galleryItems, mediaItems, testimonials } from '../../features/content/contentData';
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import heroImageUrl from '../../../images/banner.png';
@@ -40,10 +45,52 @@ export function LandingPage() {
 
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const [isServiceVideoOpen, setIsServiceVideoOpen] = useState(false);
   const [serviceExplanationVisible, setServiceExplanationVisible] = useState(false);
+  const [serviceJourneyVisible, setServiceJourneyVisible] = useState(false);
+  const [activeServiceStep, setActiveServiceStep] = useState(0);
+  const [serviceJourneyAutoPlay, setServiceJourneyAutoPlay] = useState(true);
   const serviceExplanationRef = useRef<HTMLElement | null>(null);
+  const serviceJourneyRef = useRef<HTMLElement | null>(null);
   const touchIntentRef = useRef({ startX: 0, startY: 0, moved: false });
+
+  const serviceDetailsSteps = [
+    {
+      id: 1,
+      label: { de: 'SCHRITT 01', fr: 'ÉTAPE 01' },
+      text: {
+        de: 'Finden Sie das Fahrzeug auf mobile.de oder AutoScout24 und senden Sie uns den Link. Wir uebernehmen den Rest.',
+        fr: 'Trouvez le véhicule sur mobile.de ou AutoScout24 et envoyez-nous le lien. Nous prenons en charge la suite.',
+      },
+      title: { de: 'Recherche des Fahrzeugs', fr: 'Recherche du véhicule' },
+    },
+    {
+      id: 2,
+      label: { de: 'SCHRITT 02', fr: 'ÉTAPE 02' },
+      text: {
+        de: 'Der Verkaeufer wird kontaktiert und die wichtigsten Punkte geprueft: Unfallhistorie, Wartung, Kilometerstand und technischer Zustand.',
+        fr: 'Le vendeur est contacté et les points clés vérifiés : historique des accidents, entretien, kilométrage et état technique.',
+      },
+      title: { de: 'Kontakt mit Verkaeufer & Pruefung', fr: 'Contact vendeur & vérification' },
+    },
+    {
+      id: 3,
+      label: { de: 'SCHRITT 03', fr: 'ÉTAPE 03' },
+      text: {
+        de: 'Vor-Ort-Inspektion: Karosserie, Motor, Innenraum, Reifen und Bremsen. Sie erhalten Fotos, Videos und einen ehrlichen Bericht.',
+        fr: 'Inspection complète sur place : carrosserie, moteur, intérieur, pneus et freins. Vous recevez photos, vidéos et rapport honnête.',
+      },
+      title: { de: 'Inspektion vor Ort', fr: 'Inspection sur place' },
+    },
+    {
+      id: 4,
+      label: { de: 'SCHRITT 04', fr: 'ÉTAPE 04' },
+      text: {
+        de: 'Alle Dokumente werden vorbereitet: Vertrag, Reservierung und komplette Koordination bis zur Fahrzeuguebergabe.',
+        fr: "Tous les documents sont préparés : contrat, réservation et coordination complète jusqu'au retrait du véhicule.",
+      },
+      title: { de: 'Abschluss des Kaufs', fr: "Finalisation de l'achat" },
+    },
+  ];
 
   const handleTouchStart = (event: TouchEvent) => {
     const touch = event.touches[0];
@@ -100,6 +147,39 @@ export function LandingPage() {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const sectionNode = serviceJourneyRef.current;
+    if (!sectionNode) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setServiceJourneyVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.22 }
+    );
+
+    observer.observe(sectionNode);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!serviceJourneyVisible || !serviceJourneyAutoPlay) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveServiceStep((prev) => (prev + 1) % serviceDetailsSteps.length);
+    }, 3200);
+
+    return () => window.clearInterval(intervalId);
+  }, [serviceJourneyVisible, serviceJourneyAutoPlay, serviceDetailsSteps.length]);
 
   const handleGalleryPrev = () => {
     setGalleryIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
@@ -182,12 +262,16 @@ export function LandingPage() {
     t('landing.germany.bullets.communication'),
   ];
 
-  const processIcons = [ClipboardCheck, BadgeCheck, Search, FileText];
-
   const serviceDetailsSectionCopy = {
-    eyebrow: { de: 'Service-Details', fr: 'Details du service' },
-    title: { de: 'So funktioniert der Fahrzeugservice', fr: 'Comment fonctionne le service vehicule' },
+    eyebrow: { de: 'Service-Details', fr: 'Détails du service' },
+    subtitle: {
+      de: '4 einfache Schritte, von der Suche bis zur Fahrzeuguebergabe.',
+      fr: '4 étapes simples, de la recherche à la remise des clés.',
+    },
+    title: { de: 'So funktioniert der Fahrzeugservice', fr: 'Comment fonctionne le service' },
   };
+
+  const serviceJourneyIcons = [Search, PhoneCall, Eye, FileCheck];
 
   const serviceExplanationSectionCopy = {
     eyebrow: { de: 'WILLKOMMEN', fr: 'BIENVENUE' },
@@ -198,38 +282,48 @@ export function LandingPage() {
     title: { de: 'Willkommen bei Mehdi Cars', fr: 'Bienvenue chez Mehdi Cars' },
   };
 
-  const serviceDetailsSteps = [
+  const editorialMetrics = [
     {
-      description: {
-        de: 'Fahrzeug auf mobile.de, AutoScout24 oder einer anderen Boerse finden und den Link zur Pruefung einsenden.',
-        fr: 'Trouvez le vehicule sur mobile.de, AutoScout24 ou une autre bourse et envoyez le lien pour verification.',
-      },
-      title: { de: 'Fahrzeugsuche', fr: 'Recherche du vehicule' },
+      key: 'inspected',
+      label: { de: 'Fahrzeuge geprueft', fr: 'vehicules inspectes' },
+      value: '500+',
     },
     {
-      description: {
-        de: 'Der Haendler wird direkt kontaktiert und alle wichtigen Daten geprueft: Unfallhistorie, Servicehistorie, Vorbesitzer, technischer Zustand und Laufleistung.',
-        fr: 'Le vendeur est contacte et les points cles verifies: historique des accidents, entretien, anciens proprietaires, etat technique et kilometrage.',
-      },
-      title: { de: 'Haendlerkontakt & Informationspruefung', fr: 'Contact vendeur & verification des informations' },
+      key: 'satisfaction',
+      label: { de: 'Kundenzufriedenheit', fr: 'satisfaction client' },
+      value: '4.9★',
     },
     {
-      description: {
-        de: 'Das Fahrzeug wird persoenlich vor Ort geprueft: Karosserie, Motor, Innenraum, Reifen, Bremsen, Elektronik und eventuelle Maengel.',
-        fr: 'Le vehicule est inspecte sur place: carrosserie, moteur, interieur, pneus, freins, electronique et eventuels defauts.',
-      },
-      note: {
-        de: 'Zusaetzlich erhalten Sie Fotos, Videos sowie eine ehrliche Einschaetzung zum Fahrzeugzustand.',
-        fr: 'En plus, vous recevez des photos, des videos et une evaluation honnete de l\'etat du vehicule.',
-      },
-      title: { de: 'Vor-Ort-Fahrzeugpruefung', fr: 'Inspection du vehicule sur place' },
+      key: 'response',
+      label: { de: 'Antwortzeit', fr: 'delai de reponse' },
+      value: '48h',
+    },
+  ];
+
+  const contactSteps = [
+    {
+      description:
+        language === 'de'
+          ? 'Fahrzeugwunsch in wenigen Minuten beschreiben'
+          : 'Décrivez votre besoin véhicule en quelques minutes',
+      number: '1',
+      title: language === 'de' ? 'Anfrage stellen' : 'Faire une demande',
     },
     {
-      description: {
-        de: 'Alle Unterlagen werden vorbereitet und der Kauf abgewickelt: Vertrag, Dokumente, Reservierung und Abstimmung bis zur Fahrzeugabholung.',
-        fr: 'Tous les documents sont prepares et l\'achat finalise: contrat, documents, reservation et coordination jusqu\'au retrait du vehicule.',
-      },
-      title: { de: 'Kaufabwicklung', fr: 'Finalisation de l\'achat' },
+      description:
+        language === 'de'
+          ? 'Wir melden uns innerhalb von 24 Stunden'
+          : 'Nous revenons vers vous sous 24 heures',
+      number: '2',
+      title: language === 'de' ? 'Rückmeldung erhalten' : 'Recevoir un retour',
+    },
+    {
+      description:
+        language === 'de'
+          ? 'Wir begleiten Sie bis zur Schlüsselübergabe'
+          : 'Nous vous accompagnons jusqu\'à la remise des clés',
+      number: '3',
+      title: language === 'de' ? 'Fahrzeug erhalten' : 'Recevoir votre véhicule',
     },
   ];
 
@@ -300,51 +394,20 @@ export function LandingPage() {
           </div>
 
           <div className="service-explanation-shell">
-          {!isServiceVideoOpen ? (
-            <button
-              className="service-explanation-video"
-              type="button"
-              onClick={() => {
-                if (touchIntentRef.current.moved) {
-                  return;
-                }
-                setIsServiceVideoOpen(true);
-              }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              aria-label={language === 'de' ? 'Präsentationsvideo öffnen' : 'Ouvrir la video de presentation'}
-            >
+            <div className="service-explanation-visual" aria-hidden="true">
               <img
-                alt={language === 'de' ? 'Premium Fahrzeugbegleitung in Deutschland' : 'Accompagnement automobile premium en Allemagne'}
+                alt={language === 'de' ? 'Mehdi Cars Beratung in Deutschland' : 'Conseil Mehdi Cars en Allemagne'}
                 loading="lazy"
                 src={beratungFotoImageUrl}
               />
-              <span className="service-explanation-video__overlay" aria-hidden="true" />
-              <span className="service-explanation-video__play" aria-hidden="true">
-                <PlayCircle size={52} />
+              <span className="service-explanation-visual__overlay" />
+              <span className="service-explanation-visual__placeholder">
+                <User size={36} />
+                <span>
+                  {language === 'de' ? 'Foto von Mehdi mit einem Fahrzeug in Deutschland' : 'Photo de Mehdi avec une voiture en Allemagne'}
+                </span>
               </span>
-              <span className="service-explanation-video__caption">
-                {language === 'de' ? 'Deutsche Automobil-Expertise' : 'Expertise automobile allemande'}
-              </span>
-            </button>
-          ) : (
-            <div className="service-explanation-video service-explanation-video--playing" role="region" aria-label="Service video player">
-              <iframe
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                src={`https://www.youtube.com/embed/${mediaItems[0]?.youtubeId}?autoplay=1&rel=0`}
-                title="Service video"
-              />
-              <button
-                className="service-explanation-video__close"
-                type="button"
-                onClick={() => setIsServiceVideoOpen(false)}
-                aria-label={language === 'de' ? 'Video schließen' : 'Fermer la video'}
-              >
-                ✕
-              </button>
             </div>
-          )}
 
           <div className="service-explanation-copy">
             <span className="eyebrow service-explanation-copy__eyebrow">
@@ -352,20 +415,40 @@ export function LandingPage() {
             </span>
             <h2>
               {language === 'de'
-                ? 'Wir finden Ihr Wunschfahrzeug in Deutschland.'
-                : 'Nous trouvons votre véhicule idéal en Allemagne.'}
+                ? <>Wir finden Ihr <span>Wunschfahrzeug</span> in Deutschland.</>
+                : <>Nous trouvons votre <span>véhicule idéal</span> en Allemagne.</>}
             </h2>
             <p>
               {language === 'de'
-                ? 'Von der Fahrzeugsuche bis zur administrativen Begleitung vereinfachen wir jeden Schritt für ein stressfreies, transparentes und persönliches Kauferlebnis.'
-                : "De la recherche du véhicule jusqu'à l'accompagnement administratif, nous simplifions chaque étape pour vous offrir une expérience d'achat sereine, transparente et personnalisée."}
+                ? 'Von der Suche bis zur Fahrzeuguebergabe wird jeder Schritt vereinfacht - fuer eine transparente und entspannte Erfahrung.'
+                : 'De la recherche jusqu\'a la remise des cles - chaque etape simplifiee pour une experience sereine et transparente.'}
             </p>
 
             <ul className="service-explanation-benefits">
-              <li>✓ {language === 'de' ? 'Persönliche Fahrzeugsuche' : 'Recherche personnalisée du véhicule'}</li>
-              <li>✓ {language === 'de' ? 'Prüfung der besten Angebote' : 'Vérification des meilleures offres'}</li>
-              <li>✓ {language === 'de' ? 'Unterstützung & Verhandlung' : 'Assistance et négociation'}</li>
-              <li>✓ {language === 'de' ? 'Vollständige administrative Begleitung' : 'Accompagnement administratif complet'}</li>
+              <li>
+                <span className="service-explanation-benefits__icon" aria-hidden="true">
+                  <Check size={12} />
+                </span>
+                {language === 'de' ? 'Personalisierte Fahrzeugsuche' : 'Recherche personnalisée du véhicule'}
+              </li>
+              <li>
+                <span className="service-explanation-benefits__icon" aria-hidden="true">
+                  <Check size={12} />
+                </span>
+                {language === 'de' ? 'Pruefung der besten Angebote' : 'Vérification des meilleures offres'}
+              </li>
+              <li>
+                <span className="service-explanation-benefits__icon" aria-hidden="true">
+                  <Check size={12} />
+                </span>
+                {language === 'de' ? 'Unterstuetzung und Verhandlung' : 'Assistance et négociation'}
+              </li>
+              <li>
+                <span className="service-explanation-benefits__icon" aria-hidden="true">
+                  <Check size={12} />
+                </span>
+                {language === 'de' ? 'Komplette administrative Begleitung' : 'Accompagnement administratif complet'}
+              </li>
             </ul>
 
             <div className="service-explanation-actions">
@@ -373,7 +456,7 @@ export function LandingPage() {
                 {language === 'de' ? 'Suche starten' : 'Commencer ma recherche'}
                 <ArrowRight size={17} />
               </Button>
-              <a className="service-explanation-link" href="#process">
+              <a className="service-explanation-link" href="#service-details">
                 {language === 'de' ? 'Unsere Methode entdecken' : 'Découvrir notre méthode'}
                 <ArrowRight size={17} />
               </a>
@@ -383,62 +466,74 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="content-section process-section service-details-section section-tone-soft">
+      <section
+        id="service-details"
+        ref={serviceJourneyRef}
+        className={`content-section service-journey-section section-tone-soft ${serviceJourneyVisible ? 'is-visible' : ''}`}
+      >
         <div className="section-inner">
           <div className="section-heading section-heading--center service-details-heading">
             <span className="eyebrow">{pickText(serviceDetailsSectionCopy.eyebrow, language)}</span>
             <h2>{pickText(serviceDetailsSectionCopy.title, language)}</h2>
+            <p>{pickText(serviceDetailsSectionCopy.subtitle, language)}</p>
           </div>
-          <div className="service-details-simple">
-            <div className="service-details-list" role="list">
-              {serviceDetailsSteps.map((step, index) => (
-                <article className="service-details-item" key={step.title.de} role="listitem">
-                  <span className="service-details-item__number">{index + 1}</span>
-                  <div className="service-details-item__text">
-                    <h3>{pickText(step.title, language).replace(/^\d+\.\s*/, '')}</h3>
-                    <p>{pickText(step.description, language)}</p>
-                    {step.note && <p>{pickText(step.note, language)}</p>}
-                  </div>
-                </article>
-              ))}
+          <div className="service-journey">
+            <div className="service-journey__line" aria-hidden="true" />
+            <div className="service-journey__steps" role="list">
+              {serviceDetailsSteps.map((step, index) => {
+                const StepIcon = serviceJourneyIcons[index] ?? ClipboardCheck;
+                const isActive = index === activeServiceStep;
+                const isCompleted = index < activeServiceStep;
+
+                return (
+                  <article
+                    className={`service-journey-step ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}`}
+                    key={step.id}
+                    role="listitem"
+                    style={{ '--step-index': String(index) } as CSSProperties}
+                  >
+                    <button
+                      type="button"
+                      className="service-journey-step__trigger"
+                      onClick={() => {
+                        setActiveServiceStep(index);
+                        setServiceJourneyAutoPlay(false);
+                      }}
+                      aria-expanded={isActive}
+                    >
+                      <span className="service-journey-step__left" aria-hidden="true">
+                        <span className="service-journey-step__icon">
+                          <StepIcon size={18} />
+                        </span>
+                        {index < serviceDetailsSteps.length - 1 && (
+                          <span className="service-journey-step__line">
+                            <span
+                              className={`service-journey-step__line-fill ${isCompleted || isActive ? 'is-filled' : ''}`}
+                            />
+                          </span>
+                        )}
+                      </span>
+                      <span className="service-journey-step__copy">
+                        <span className="service-journey-step__label">{pickText(step.label, language)}</span>
+                        <h3>{pickText(step.title, language).replace(/^\d+\.\s*/, '')}</h3>
+                      </span>
+                    </button>
+                    <div className="service-journey-step__content" aria-hidden={!isActive}>
+                      <p>{pickText(step.text, language)}</p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
-
-            <div className="service-details-visual" aria-hidden="true">
-              <img alt="" loading="lazy" src={beratungFotoImageUrl} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="process" className="content-section process-section section-tone-light">
-        <div className="section-inner">
-          <div className="section-heading section-heading--center">
-            <span className="eyebrow">{t('landing.nav.process')}</span>
-            <h2>{t('landing.process.title')}</h2>
-            <p>{t('landing.process.subtitle')}</p>
-          </div>
-          <div className="process-grid">
-            {processSteps.map((step, index) => {
-              const StepIcon = processIcons[index] ?? ClipboardCheck;
-
-              return (
-                <article className={`process-item ${index % 2 === 1 ? 'process-item--right' : ''}`} key={step.title.fr}>
-                  <h3>
-                    <span className="process-title-icon">
-                      <StepIcon size={20} />
-                    </span>
-                    {pickText(step.title, language)}
-                  </h3>
-                  <p>{pickText(step.description, language)}</p>
-                </article>
-              );
-            })}
           </div>
         </div>
       </section>
 
       <section className="content-section editorial-moment editorial-moment--primary" aria-label="Editorial statement">
         <div className="section-inner">
+          <span className="editorial-moment__mark" aria-hidden="true">
+            DE
+          </span>
           <p className="editorial-moment__eyebrow">
             {language === 'de' ? 'Premium Begleitung' : 'Accompagnement premium'}
           </p>
@@ -446,6 +541,22 @@ export function LandingPage() {
             {language === 'de' ? 'Der deutsche Markt.' : 'Le marche allemand.'}
             <span>{language === 'de' ? 'Ohne Komplikationen.' : 'Sans complications.'}</span>
           </h2>
+          <div
+            className="editorial-moment__metrics"
+            role="list"
+            aria-label={language === 'de' ? 'Vertrauenskennzahlen' : 'Indicateurs de confiance'}
+          >
+            {editorialMetrics.map((metric, index) => (
+              <div
+                className={`editorial-moment__metric ${index === 1 ? 'editorial-moment__metric--featured' : ''}`}
+                key={metric.key}
+                role="listitem"
+              >
+                <strong>{metric.value}</strong>
+                <span>{pickText(metric.label, language)}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       {/* <section className="intro-section explanation-section">
@@ -582,35 +693,99 @@ export function LandingPage() {
                 : 'Guides, conseils et aperçus de notre processus d\'inspection'}
             </p>
           </div>
-          <div className="media-grid">
-            {mediaItems.map((media) => (
-              <article className="media-card card-hover" key={media.id}>
+            <div className="media-showcase media-showcase--desktop">
+                <div className="media-grid media-grid--desktop-cards">
+                  {mediaItems.slice(1, 3).map((media) => (
+                  <article className="media-card media-card--secondary card-hover" key={media.id}>
+                    <button
+                      className="media-card__thumbnail"
+                      type="button"
+                      onClick={() => openVideoWithIntent(media.youtubeId)}
+                      onTouchStart={handleTouchStart}
+                      onTouchMove={handleTouchMove}
+                      aria-label={pickText(media.title, language)}
+                    >
+                      <img
+                        alt={pickText(media.title, language)}
+                        loading="lazy"
+                        src={`https://img.youtube.com/vi/${media.youtubeId}/maxresdefault.jpg`}
+                      />
+                      <span className="media-card__play">
+                        <PlayCircle size={48} />
+                      </span>
+                      {media.duration && <span className="media-card__duration">{media.duration}</span>}
+                    </button>
+                    <div className="media-card__content">
+                      <span className="media-card__category">{pickText(media.category, language)}</span>
+                      <h3>{pickText(media.title, language)}</h3>
+                      <p>{pickText(media.description, language)}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <article className="media-card media-card--featured card-hover" key={mediaItems[0]?.id}>
                 <button
-                  className="media-card__thumbnail"
+                  className="media-card__thumbnail media-card__thumbnail--featured"
                   type="button"
-                  onClick={() => openVideoWithIntent(media.youtubeId)}
+                  onClick={() => mediaItems[0] && openVideoWithIntent(mediaItems[0].youtubeId)}
                   onTouchStart={handleTouchStart}
                   onTouchMove={handleTouchMove}
-                  aria-label={pickText(media.title, language)}
+                  aria-label={mediaItems[0] ? pickText(mediaItems[0].title, language) : undefined}
                 >
                   <img
-                    alt={pickText(media.title, language)}
+                    alt={mediaItems[0] ? pickText(mediaItems[0].title, language) : ''}
                     loading="lazy"
-                    src={`https://img.youtube.com/vi/${media.youtubeId}/maxresdefault.jpg`}
+                    src={mediaItems[0] ? `https://img.youtube.com/vi/${mediaItems[0].youtubeId}/maxresdefault.jpg` : ''}
                   />
                   <span className="media-card__play">
                     <PlayCircle size={48} />
                   </span>
-                  {media.duration && <span className="media-card__duration">{media.duration}</span>}
+                  {mediaItems[0]?.duration && <span className="media-card__duration">{mediaItems[0].duration}</span>}
                 </button>
-                <div className="media-card__content">
-                  <span className="media-card__category">{pickText(media.category, language)}</span>
-                  <h3>{pickText(media.title, language)}</h3>
-                  <p>{pickText(media.description, language)}</p>
+                <div className="media-card__content media-card__content--featured">
+                  <span className="media-card__category">{mediaItems[0] ? pickText(mediaItems[0].category, language) : ''}</span>
+                  <h3>{mediaItems[0] ? pickText(mediaItems[0].title, language) : ''}</h3>
+                  <p>{mediaItems[0] ? pickText(mediaItems[0].description, language) : ''}</p>
                 </div>
               </article>
-            ))}
+            </div>
+
+            <div className="media-showcase media-showcase--mobile" aria-label={language === 'de' ? 'Video-Karussell' : 'Carrousel vidéo'}>
+              {mediaItems.map((media) => (
+                <article className="media-card media-card--mobile card-hover" key={media.id}>
+                  <button
+                    className="media-card__thumbnail"
+                    type="button"
+                    onClick={() => openVideoWithIntent(media.youtubeId)}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    aria-label={pickText(media.title, language)}
+                  >
+                    <img
+                      alt={pickText(media.title, language)}
+                      loading="lazy"
+                      src={`https://img.youtube.com/vi/${media.youtubeId}/maxresdefault.jpg`}
+                    />
+                    <span className="media-card__play">
+                      <PlayCircle size={48} />
+                    </span>
+                    {media.duration && <span className="media-card__duration">{media.duration}</span>}
+                  </button>
+                  <div className="media-card__content">
+                    <span className="media-card__category">{pickText(media.category, language)}</span>
+                    <h3>{pickText(media.title, language)}</h3>
+                    <p>{pickText(media.description, language)}</p>
+                  </div>
+                </article>
+              ))}
           </div>
+            <div className="media-carousel__dots" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
 
           {activeVideo && (
             <div className="video-modal-overlay" onClick={() => setActiveVideo(null)}>
@@ -698,6 +873,7 @@ export function LandingPage() {
       <section id="faq" className="content-section faq-section section-tone-light">
         <div className="section-inner faq-grid">
           <div className="faq-copy">
+            <span className="faq-deco-number" aria-hidden="true">06</span>
             <span className="eyebrow">{t('landing.faq.eyebrow')}</span>
             <h2>{t('landing.faq.title')}</h2>
             <p>{t('landing.faq.subtitle')}</p>
@@ -705,6 +881,7 @@ export function LandingPage() {
           <Collapse
             bordered={false}
             className="faq-collapse"
+            expandIcon={({ isActive }) => <span className={`faq-plus ${isActive ? 'is-active' : ''}`} aria-hidden="true" />}
             expandIconPosition="end"
             items={faqItems.map((item, index) => ({
               key: index,
@@ -715,19 +892,50 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section id="contact" className="final-cta">
-        <div className="section-inner final-cta-card">
-          <div>
+      <section id="contact" className="final-cta contact-section">
+        <div className="section-inner final-cta-card contact-card">
+          <span className="contact-card__menu" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+
+          <div className="contact-copy">
             <span className="eyebrow">{t('landing.nav.contact')}</span>
-            <h2>{t('landing.contact.title')}</h2>
+            <h2>
+              {language === 'de' ? (
+                <>
+                  Bereit, Ihre Anfrage zu <span>starten?</span>
+                </>
+              ) : (
+                <>{t('landing.contact.title')}</>
+              )}
+            </h2>
             <p>{t('landing.contact.text')}</p>
-          </div>
-          <div className="final-cta-actions">
-            <Button className="primary-cta" type="primary" size="large" href={funnelPath}>
-              {t('common.startRequest')}
+
+            <Button className="primary-cta contact-cta" type="primary" size="large" href={funnelPath}>
+              {language === 'de' ? 'Jetzt anfragen' : t('common.startRequest')}
               <ArrowRight size={18} />
             </Button>
-            <SocialLinks variant="dark" />
+          </div>
+
+          <div className="contact-details">
+            <ol className="contact-steps" role="list" aria-label={t('landing.nav.contact')}>
+              {contactSteps.map((step) => (
+                <li className="contact-step" key={step.number} role="listitem">
+                  <span className="contact-step__number">{step.number}</span>
+                  <div className="contact-step__copy">
+                    <strong>{step.title}</strong>
+                    <span>{step.description}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div className="contact-social">
+              <span className="contact-social__label">{language === 'de' ? 'FOLGEN SIE UNS' : 'SUIVEZ-NOUS'}</span>
+              <SocialLinks variant="dark" />
+            </div>
           </div>
         </div>
       </section>

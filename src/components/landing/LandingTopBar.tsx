@@ -25,6 +25,31 @@ export function LandingTopBar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  function releaseBodyScrollLock() {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const hasOpenDrawer = document.querySelector('.ant-drawer-open');
+    if (hasOpenDrawer) {
+      return;
+    }
+
+    document.body.classList.remove('ant-scrolling-effect');
+    document.body.style.overflow = '';
+    document.body.style.width = '';
+  }
+
+  useEffect(() => {
+    if (!drawerOpen) {
+      releaseBodyScrollLock();
+    }
+
+    return () => {
+      releaseBodyScrollLock();
+    };
+  }, [drawerOpen]);
+
   function closeDrawer() {
     setDrawerOpen(false);
   }
@@ -84,6 +109,11 @@ export function LandingTopBar() {
       </div>
 
       <Drawer
+        afterOpenChange={(open) => {
+          if (!open) {
+            releaseBodyScrollLock();
+          }
+        }}
         className="mobile-nav-drawer"
         closeIcon={<X size={22} />}
         onClose={closeDrawer}

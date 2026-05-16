@@ -188,6 +188,15 @@ export function LandingPage() {
     title: { de: 'So funktioniert der Fahrzeugservice', fr: 'Comment fonctionne le service vehicule' },
   };
 
+  const serviceExplanationSectionCopy = {
+    eyebrow: { de: 'WILLKOMMEN', fr: 'BIENVENUE' },
+    subtitle: {
+      de: 'Ein einfacherer, persönlicherer und entspannterer Weg, Ihr Fahrzeug in Deutschland zu finden.',
+      fr: 'Une approche plus simple, plus humaine et plus sereine pour trouver votre vehicule en Allemagne.',
+    },
+    title: { de: 'Willkommen bei Mehdi Cars', fr: 'Bienvenue chez Mehdi Cars' },
+  };
+
   const serviceDetailsSteps = [
     {
       description: {
@@ -282,48 +291,69 @@ export function LandingPage() {
         ref={serviceExplanationRef}
         className={`content-section service-explanation-section section-tone-light ${serviceExplanationVisible ? 'is-visible' : ''}`}
       >
-        <div className="section-inner service-explanation-shell">
+        <div className="section-inner">
+          <div className="section-heading section-heading--center service-explanation-heading">
+            <span className="eyebrow">{pickText(serviceExplanationSectionCopy.eyebrow, language)}</span>
+            <h2>{pickText(serviceExplanationSectionCopy.title, language)}</h2>
+            <p>{pickText(serviceExplanationSectionCopy.subtitle, language)}</p>
+          </div>
+
+          <div className="service-explanation-shell">
           <button
             className="service-explanation-video"
             type="button"
             onClick={() => mediaItems[0] && openVideoWithIntent(mediaItems[0].youtubeId)}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
-            aria-label="Ouvrir la video de presentation"
+            aria-label={language === 'de' ? 'Präsentationsvideo öffnen' : 'Ouvrir la video de presentation'}
           >
-            <img alt="Accompagnement automobile premium en Allemagne" loading="lazy" src={beratungFotoImageUrl} />
+            <img
+              alt={language === 'de' ? 'Premium Fahrzeugbegleitung in Deutschland' : 'Accompagnement automobile premium en Allemagne'}
+              loading="lazy"
+              src={beratungFotoImageUrl}
+            />
             <span className="service-explanation-video__overlay" aria-hidden="true" />
             <span className="service-explanation-video__play" aria-hidden="true">
               <PlayCircle size={52} />
             </span>
-            <span className="service-explanation-video__caption">Expertise automobile allemande</span>
+            <span className="service-explanation-video__caption">
+              {language === 'de' ? 'Deutsche Automobil-Expertise' : 'Expertise automobile allemande'}
+            </span>
           </button>
 
           <div className="service-explanation-copy">
-            <span className="eyebrow service-explanation-copy__eyebrow">ACCOMPAGNEMENT PREMIUM</span>
-            <h2>Nous trouvons votre véhicule idéal en Allemagne.</h2>
+            <span className="eyebrow service-explanation-copy__eyebrow">
+              {language === 'de' ? 'PREMIUM BEGLEITUNG' : 'ACCOMPAGNEMENT PREMIUM'}
+            </span>
+            <h2>
+              {language === 'de'
+                ? 'Wir finden Ihr Wunschfahrzeug in Deutschland.'
+                : 'Nous trouvons votre véhicule idéal en Allemagne.'}
+            </h2>
             <p>
-              De la recherche du véhicule jusqu’à l’accompagnement administratif, nous simplifions chaque étape pour vous
-              offrir une expérience d’achat sereine, transparente et personnalisée.
+              {language === 'de'
+                ? 'Von der Fahrzeugsuche bis zur administrativen Begleitung vereinfachen wir jeden Schritt für ein stressfreies, transparentes und persönliches Kauferlebnis.'
+                : "De la recherche du véhicule jusqu'à l'accompagnement administratif, nous simplifions chaque étape pour vous offrir une expérience d'achat sereine, transparente et personnalisée."}
             </p>
 
             <ul className="service-explanation-benefits">
-              <li>✓ Recherche personnalisée du véhicule</li>
-              <li>✓ Vérification des meilleures offres</li>
-              <li>✓ Assistance et négociation</li>
-              <li>✓ Accompagnement administratif complet</li>
+              <li>✓ {language === 'de' ? 'Persönliche Fahrzeugsuche' : 'Recherche personnalisée du véhicule'}</li>
+              <li>✓ {language === 'de' ? 'Prüfung der besten Angebote' : 'Vérification des meilleures offres'}</li>
+              <li>✓ {language === 'de' ? 'Unterstützung & Verhandlung' : 'Assistance et négociation'}</li>
+              <li>✓ {language === 'de' ? 'Vollständige administrative Begleitung' : 'Accompagnement administratif complet'}</li>
             </ul>
 
             <div className="service-explanation-actions">
               <Button className="primary-cta" type="primary" size="large" href={funnelPath}>
-                Commencer ma recherche
+                {language === 'de' ? 'Suche starten' : 'Commencer ma recherche'}
                 <ArrowRight size={17} />
               </Button>
               <a className="service-explanation-link" href="#process">
-                Découvrir notre méthode
+                {language === 'de' ? 'Unsere Methode entdecken' : 'Découvrir notre méthode'}
                 <ArrowRight size={17} />
               </a>
             </div>
+          </div>
           </div>
         </div>
       </section>
@@ -640,7 +670,7 @@ export function LandingPage() {
         </div>
       </section> */}
 
-      <section id="faq" className="content-section faq-section section-tone-soft">
+      <section id="faq" className="content-section faq-section section-tone-light">
         <div className="section-inner faq-grid">
           <div className="faq-copy">
             <span className="eyebrow">{t('landing.faq.eyebrow')}</span>

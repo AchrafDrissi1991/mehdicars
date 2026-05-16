@@ -1483,6 +1483,38 @@
   transition: transform 0.9s ease;
 }
 
+.service-explanation-video--playing {
+  display: block;
+  padding: 0;
+}
+
+.service-explanation-video--playing iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  border: 0;
+}
+
+.service-explanation-video__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(5, 10, 20, 0.72);
+  color: #ffffff;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .service-explanation-video__overlay {
   position: absolute;
   inset: 0;
@@ -5260,14 +5292,15 @@
   .landing-page .gallery-section .section-heading h2,
   .landing-page #faq .faq-copy h2,
   .landing-page .final-cta h2 {
-    font-size: clamp(30px, 2.6vw, 40px) !important;
-    line-height: 1.08 !important;
-    letter-spacing: -0.02em !important;
+    font-size: clamp(26px, 2.25vw, 34px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.016em !important;
   }
 
   .landing-page .section-heading p,
   .landing-page .faq-copy p,
   .landing-page .service-explanation-heading p {
+    margin-top: 16px !important;
     font-size: 15px !important;
     line-height: 1.6 !important;
   }
@@ -5382,5 +5415,476 @@
   .landing-page .content-section > .section-inner > .section-heading,
   .landing-page .content-section > .section-inner > .service-explanation-heading {
     margin-bottom: 20px !important;
+  }
+}
+
+/* ========================================
+   FINAL PREMIUM RESTRAINT PASS
+   Softer weight, calmer rhythm, same atmosphere
+   ======================================== */
+
+.landing-page section + section::before,
+.landing-page section + .final-cta::before {
+  top: -28px;
+  height: 28px;
+  background: linear-gradient(180deg, rgba(94, 139, 198, 0.12) 0%, rgba(57, 93, 144, 0.1) 28%, rgba(19, 36, 62, 0.34) 58%, rgba(10, 20, 38, 0.62) 100%);
+}
+
+.landing-page .hero-section + .content-section::before {
+  background: linear-gradient(180deg, rgba(72, 113, 170, 0.1) 0%, rgba(55, 92, 146, 0.09) 30%, rgba(16, 31, 54, 0.34) 58%, rgba(10, 20, 38, 0.64) 100%);
+}
+
+.landing-page .hero-copy,
+.landing-page .service-explanation-copy,
+.landing-page .service-details-simple,
+.landing-page #process .process-item,
+.landing-page #process .process-item--right,
+.landing-page .media-card,
+.landing-page .faq-collapse .ant-collapse-item,
+.landing-page .final-cta-card,
+.landing-page .editorial-moment > .section-inner,
+.landing-page .gallery-catalog__frame,
+.landing-page .intro-card,
+.landing-page .hero-panel,
+.landing-page .video-modal {
+  box-shadow: 0 12px 28px rgba(7, 14, 28, 0.16) !important;
+}
+
+.landing-page .media-card:hover,
+.landing-page .gallery-thumb:hover,
+.landing-page .gallery-thumb--active,
+.landing-page .service-explanation-video:hover,
+.landing-page .service-explanation-video:focus-visible,
+.landing-page .trust-item:hover,
+.landing-page .card-hover:hover {
+  transform: translateY(-2px) !important;
+}
+
+.landing-page .media-card:hover,
+.landing-page .service-explanation-video,
+.landing-page .service-explanation-video:hover,
+.landing-page .service-explanation-video:focus-visible,
+.landing-page .card-hover:hover,
+.landing-page .trust-item:hover {
+  box-shadow: 0 14px 30px rgba(7, 14, 28, 0.2) !important;
+}
+
+.landing-page .service-explanation-video__overlay {
+  background: linear-gradient(180deg, rgba(3, 7, 14, 0.12) 0%, rgba(3, 7, 14, 0.46) 100%) !important;
+}
+
+.landing-page .service-explanation-copy {
+  border-color: rgba(148, 163, 184, 0.1) !important;
+  background: linear-gradient(145deg, rgba(9, 15, 27, 0.8) 0%, rgba(14, 23, 40, 0.64) 62%, rgba(17, 29, 50, 0.54) 100%) !important;
+}
+
+.landing-page .service-explanation-copy p,
+.landing-page .media-card__content p,
+.landing-page #process .process-item p,
+.landing-page #process .process-item--right p,
+.landing-page .service-details-item__text p,
+.landing-page .section-heading p,
+.landing-page .faq-copy p {
+  line-height: 1.62 !important;
+}
+
+.landing-page .primary-cta.ant-btn,
+.landing-page .lift-button.ant-btn,
+.landing-page .ghost-cta.ant-btn,
+.landing-page .service-explanation-video__play,
+.landing-page .social-link,
+.landing-page .gallery-nav,
+.landing-page .faq-collapse .ant-collapse-item,
+.landing-page .faq-collapse .ant-collapse-arrow,
+.landing-page .faq-collapse .ant-collapse-expand-icon,
+.landing-page .service-explanation-link,
+.landing-page .nav-link::after,
+.landing-page .nav-dropdown-trigger svg,
+.landing-page .mobile-services-toggle svg,
+.landing-page .video-modal,
+.landing-page .video-modal__close {
+  transition-duration: 0.16s !important;
+}
+
+/* FAQ compactness pass */
+.landing-page .faq-collapse {
+  gap: 12px;
+}
+
+.landing-page .faq-collapse .ant-collapse-header {
+  padding: 20px 24px !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-content-box {
+  padding: 20px 24px 22px !important;
+}
+
+.landing-page .faq-collapse p {
+  line-height: 1.6;
+}
+
+@media (min-width: 1024px) {
+  .landing-page .hero-section {
+    min-height: clamp(620px, 78vh, 820px) !important;
+    padding-top: 96px !important;
+    padding-bottom: 135px !important;
+  }
+
+  .landing-page .hero-headline {
+    font-size: clamp(32px, 3.9vw, 56px) !important;
+  }
+
+  .landing-page #faq .faq-copy h2 {
+    font-size: clamp(24px, 2.05vw, 30px) !important;
+    line-height: 1.12 !important;
+  }
+
+  .landing-page #faq .faq-copy p {
+    margin-top: 14px !important;
+  }
+
+  .landing-page .content-section {
+    padding-top: 58px !important;
+    padding-bottom: 74px !important;
+  }
+
+  .landing-page .content-section > .section-inner > .section-heading,
+  .landing-page .content-section > .section-inner > .service-explanation-heading {
+    margin-bottom: 20px !important;
+  }
+
+  .landing-page #process .process-grid {
+    gap: 10px !important;
+  }
+
+  .landing-page #process .process-item,
+  .landing-page #process .process-item--right {
+    gap: 8px !important;
+    padding: 14px 18px 14px 64px !important;
+    min-height: 0 !important;
+  }
+
+  .landing-page #process .process-item::before,
+  .landing-page #process .process-item--right::before {
+    top: 14px !important;
+    left: 24px !important;
+    bottom: 14px !important;
+  }
+
+  .landing-page #process .process-item h3,
+  .landing-page #process .process-item--right h3 {
+    gap: 10px !important;
+  }
+
+  .landing-page #process .process-title-icon {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 9px !important;
+  }
+
+  .landing-page #process .process-item p,
+  .landing-page #process .process-item--right p {
+    line-height: 1.46 !important;
+  }
+
+  .landing-page .service-explanation-shell {
+    grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.1fr) !important;
+    gap: 30px !important;
+    align-items: stretch;
+  }
+
+  .landing-page .service-explanation-video,
+  .landing-page .service-explanation-video img {
+    min-height: 390px !important;
+  }
+
+  .landing-page .service-explanation-copy {
+    margin-top: 0 !important;
+    padding: 32px 32px !important;
+  }
+
+  .landing-page .service-explanation-copy h2 {
+    font-size: clamp(24px, 2.05vw, 30px) !important;
+    line-height: 1.14 !important;
+  }
+
+  .landing-page .service-explanation-shell {
+    gap: 30px !important;
+  }
+}
+
+/* ========================================
+   TYPOGRAPHY CLIPPING FIX PASS
+   Prevents descender/glyph cropping across headings and media titles
+   ======================================== */
+
+.landing-page .section-heading,
+.landing-page .faq-copy,
+.landing-page .media-card__content {
+  overflow: visible;
+}
+
+.landing-page .section-heading h2,
+.landing-page .faq-copy h2,
+.landing-page .funnel-preview-copy h2,
+.landing-page .final-cta h2,
+.landing-page .service-explanation-copy h2 {
+  line-height: 1.16 !important;
+  padding-bottom: 0.08em;
+  overflow: visible;
+}
+
+.landing-page .media-card__content {
+  padding-bottom: 3px;
+}
+
+.landing-page .media-card__content h3 {
+  line-height: 1.38 !important;
+  padding-bottom: 0.08em;
+  margin-bottom: 2px;
+}
+
+.landing-page .faq-collapse .ant-collapse-header {
+  padding-bottom: 21px !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-header-text {
+  line-height: 1.42;
+  padding-bottom: 1px;
+}
+
+.landing-page .faq-collapse .ant-collapse-content-box {
+  padding-bottom: 24px !important;
+}
+
+@media (max-width: 720px) {
+  .landing-page .section-heading h2,
+  .landing-page .faq-copy h2,
+  .landing-page .funnel-preview-copy h2,
+  .landing-page .final-cta h2,
+  .landing-page .service-explanation-copy h2 {
+    line-height: 1.18 !important;
+    padding-bottom: 0.09em;
+  }
+
+  .landing-page .media-card__content h3 {
+    line-height: 1.4 !important;
+    padding-bottom: 0.09em;
+  }
+}
+
+/* ========================================
+   LAPTOP VIEWPORT OPTIMIZATION (13-15 inch)
+   Reduces perceived scale and scroll fatigue without redesign
+   ======================================== */
+
+@media (min-width: 1024px) and (max-width: 1536px) {
+  .landing-page .hero-section {
+    min-height: clamp(500px, 64vh, 660px) !important;
+    padding-top: 76px !important;
+    padding-bottom: 100px !important;
+  }
+
+  .landing-page .hero-headline {
+    font-size: clamp(27px, 3.05vw, 46px) !important;
+    line-height: 1.04 !important;
+  }
+
+  .landing-page .hero-subline {
+    max-width: 500px;
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.56;
+  }
+
+  .landing-page .hero-actions,
+  .landing-page .final-cta-actions {
+    margin-top: 24px;
+    gap: 8px;
+  }
+
+  .landing-page .content-section {
+    padding-top: 44px !important;
+    padding-bottom: 52px !important;
+  }
+
+  .landing-page .content-section > .section-inner > .section-heading,
+  .landing-page .content-section > .section-inner > .service-explanation-heading {
+    margin-bottom: 14px !important;
+  }
+
+  .landing-page .section-heading h2,
+  .landing-page .faq-copy h2 {
+    margin-top: 10px !important;
+  }
+
+  .landing-page .service-explanation-heading h2,
+  .landing-page .service-details-heading h2,
+  .landing-page #process .section-heading h2,
+  .landing-page .media-section .section-heading h2,
+  .landing-page .gallery-section .section-heading h2,
+  .landing-page #faq .faq-copy h2,
+  .landing-page .final-cta h2 {
+    font-size: clamp(21px, 1.7vw, 25px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .landing-page .section-heading p,
+  .landing-page .faq-copy p,
+  .landing-page .service-explanation-heading p {
+    margin-top: 10px !important;
+    font-size: 14px !important;
+    line-height: 1.52 !important;
+  }
+
+  .landing-page .service-explanation-shell {
+    grid-template-columns: minmax(310px, 0.86fr) minmax(0, 1.14fr) !important;
+    gap: 20px !important;
+  }
+
+  .landing-page .service-explanation-video,
+  .landing-page .service-explanation-video img {
+    min-height: 320px !important;
+    border-radius: 28px !important;
+  }
+
+  .landing-page .service-explanation-copy {
+    padding: 21px 21px !important;
+    gap: 14px;
+    border-radius: 26px !important;
+  }
+
+  .landing-page .service-explanation-copy h2 {
+    font-size: clamp(20px, 1.65vw, 23px) !important;
+  }
+
+  .landing-page .service-details-list {
+    padding: 22px 23px 23px !important;
+    gap: 14px !important;
+  }
+
+  .landing-page #process .process-grid {
+    max-width: 860px !important;
+    gap: 6px !important;
+  }
+
+  .landing-page #process .process-item,
+  .landing-page #process .process-item--right {
+    gap: 5px !important;
+    padding: 10px 14px 10px 54px !important;
+    border-radius: 16px !important;
+  }
+
+  .landing-page #process .process-item::before,
+  .landing-page #process .process-item--right::before {
+    top: 10px !important;
+    left: 20px !important;
+    bottom: 10px !important;
+  }
+
+  .landing-page #process .process-title-icon {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 8px !important;
+  }
+
+  .landing-page #process .process-item h3,
+  .landing-page #process .process-item--right h3 {
+    font-size: 15px !important;
+  }
+
+  .landing-page #process .process-item p,
+  .landing-page #process .process-item--right p {
+    font-size: 13px !important;
+    line-height: 1.42 !important;
+  }
+
+  .landing-page .media-section {
+    padding: 60px 0 !important;
+  }
+
+  .landing-page .media-grid {
+    gap: 16px !important;
+  }
+
+  .landing-page .media-card {
+    border-radius: 20px !important;
+  }
+
+  .landing-page .media-card__thumbnail {
+    aspect-ratio: 16 / 8 !important;
+  }
+
+  .landing-page .media-card:nth-child(1) .media-card__thumbnail {
+    aspect-ratio: 16 / 8.4 !important;
+  }
+
+  .landing-page .media-card__content {
+    gap: 8px;
+    padding: 15px 16px 15px !important;
+  }
+
+  .landing-page .media-card:nth-child(1) .media-card__content {
+    gap: 8px;
+    padding: 16px 18px 16px !important;
+  }
+
+  .landing-page .media-card__content h3 {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+
+  .landing-page .media-card:nth-child(1) .media-card__content h3 {
+    font-size: 16px !important;
+  }
+
+  .landing-page .faq-grid {
+    gap: 34px;
+  }
+
+  .landing-page .faq-collapse {
+    gap: 8px;
+  }
+
+  .landing-page .faq-collapse .ant-collapse-header {
+    padding: 13px 18px !important;
+    font-size: clamp(14px, 0.95vw, 16px);
+    line-height: 1.34;
+  }
+
+  .landing-page .faq-collapse .ant-collapse-content-box {
+    padding: 10px 18px 12px !important;
+  }
+
+  .landing-page .faq-collapse .ant-collapse-item {
+    border-radius: 16px !important;
+  }
+
+  .landing-page .final-cta {
+    padding-top: 72px !important;
+  }
+
+  .landing-page .final-cta-card {
+    padding: 24px !important;
+    border-radius: 24px !important;
+  }
+
+  .landing-page section + section::before,
+  .landing-page section + .final-cta::before {
+    top: -22px;
+    height: 22px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 920px) {
+  .landing-page .hero-section {
+    min-height: 470px !important;
+    padding-top: 66px !important;
+    padding-bottom: 84px !important;
+  }
+
+  .landing-page .content-section {
+    padding-top: 40px !important;
+    padding-bottom: 48px !important;
   }
 }

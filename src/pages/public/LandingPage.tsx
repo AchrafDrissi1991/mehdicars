@@ -40,6 +40,7 @@ export function LandingPage() {
 
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [isServiceVideoOpen, setIsServiceVideoOpen] = useState(false);
   const [serviceExplanationVisible, setServiceExplanationVisible] = useState(false);
   const serviceExplanationRef = useRef<HTMLElement | null>(null);
   const touchIntentRef = useRef({ startX: 0, startY: 0, moved: false });
@@ -299,27 +300,51 @@ export function LandingPage() {
           </div>
 
           <div className="service-explanation-shell">
-          <button
-            className="service-explanation-video"
-            type="button"
-            onClick={() => mediaItems[0] && openVideoWithIntent(mediaItems[0].youtubeId)}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            aria-label={language === 'de' ? 'Präsentationsvideo öffnen' : 'Ouvrir la video de presentation'}
-          >
-            <img
-              alt={language === 'de' ? 'Premium Fahrzeugbegleitung in Deutschland' : 'Accompagnement automobile premium en Allemagne'}
-              loading="lazy"
-              src={beratungFotoImageUrl}
-            />
-            <span className="service-explanation-video__overlay" aria-hidden="true" />
-            <span className="service-explanation-video__play" aria-hidden="true">
-              <PlayCircle size={52} />
-            </span>
-            <span className="service-explanation-video__caption">
-              {language === 'de' ? 'Deutsche Automobil-Expertise' : 'Expertise automobile allemande'}
-            </span>
-          </button>
+          {!isServiceVideoOpen ? (
+            <button
+              className="service-explanation-video"
+              type="button"
+              onClick={() => {
+                if (touchIntentRef.current.moved) {
+                  return;
+                }
+                setIsServiceVideoOpen(true);
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              aria-label={language === 'de' ? 'Präsentationsvideo öffnen' : 'Ouvrir la video de presentation'}
+            >
+              <img
+                alt={language === 'de' ? 'Premium Fahrzeugbegleitung in Deutschland' : 'Accompagnement automobile premium en Allemagne'}
+                loading="lazy"
+                src={beratungFotoImageUrl}
+              />
+              <span className="service-explanation-video__overlay" aria-hidden="true" />
+              <span className="service-explanation-video__play" aria-hidden="true">
+                <PlayCircle size={52} />
+              </span>
+              <span className="service-explanation-video__caption">
+                {language === 'de' ? 'Deutsche Automobil-Expertise' : 'Expertise automobile allemande'}
+              </span>
+            </button>
+          ) : (
+            <div className="service-explanation-video service-explanation-video--playing" role="region" aria-label="Service video player">
+              <iframe
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                src={`https://www.youtube.com/embed/${mediaItems[0]?.youtubeId}?autoplay=1&rel=0`}
+                title="Service video"
+              />
+              <button
+                className="service-explanation-video__close"
+                type="button"
+                onClick={() => setIsServiceVideoOpen(false)}
+                aria-label={language === 'de' ? 'Video schließen' : 'Fermer la video'}
+              >
+                ✕
+              </button>
+            </div>
+          )}
 
           <div className="service-explanation-copy">
             <span className="eyebrow service-explanation-copy__eyebrow">

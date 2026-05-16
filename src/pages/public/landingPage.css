@@ -5888,3 +5888,139 @@
     padding-bottom: 48px !important;
   }
 }
+
+/* ========================================
+   MOBILE HERO FIT FIX
+   Prevents clipped heading and oversized mobile feel
+   ======================================== */
+
+@media (max-width: 720px) {
+  .landing-page .hero-section {
+    min-height: 560px !important;
+    padding-top: 74px !important;
+    padding-bottom: 88px !important;
+  }
+
+  .landing-page .hero-section__inner {
+    width: calc(100% - 24px);
+  }
+
+  .landing-page .hero-copy {
+    width: 100%;
+    max-width: 100%;
+    padding: 22px 18px 24px !important;
+    border-radius: 16px;
+  }
+
+  .landing-page .hero-headline {
+    max-width: 100% !important;
+    margin-top: 14px;
+    font-size: clamp(30px, 9.2vw, 42px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.018em;
+    hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+
+  .landing-page .hero-subline {
+    max-width: 100%;
+    margin-top: 16px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .landing-page .hero-proof {
+    margin-top: 20px;
+    gap: 8px;
+  }
+
+  .landing-page .hero-proof__item {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+
+  .landing-page .hero-actions {
+    margin-top: 22px;
+    gap: 10px;
+  }
+
+  .landing-page .hero-actions .ant-btn {
+    min-height: 44px;
+  }
+}
+
+/* ========================================
+   NATURAL WRAPPING FIX PASS
+   Prevents broken words and aggressive hyphenation
+   ======================================== */
+
+.landing-page .hero-headline,
+.landing-page .section-heading h2,
+.landing-page .service-explanation-copy h2,
+.landing-page .faq-copy h2,
+.landing-page .media-card__content h3,
+.landing-page .faq-collapse .ant-collapse-header,
+.landing-page .faq-collapse .ant-collapse-header-text {
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  -ms-hyphens: none !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+}
+
+.landing-page .hero-headline,
+.landing-page .section-heading h2,
+.landing-page .faq-copy h2,
+.landing-page .service-explanation-copy h2 {
+  max-width: 24ch;
+  text-wrap: pretty;
+}
+
+.landing-page .section-heading--center h2,
+.landing-page .service-explanation-heading h2,
+.landing-page #faq .faq-copy h2 {
+  margin-inline: auto;
+}
+
+.landing-page .media-card__content {
+  min-width: 0;
+}
+
+.landing-page .media-card__content h3,
+.landing-page .faq-collapse .ant-collapse-header-text {
+  text-wrap: pretty;
+}
+
+@media (max-width: 720px) {
+  .landing-page .hero-headline,
+  .landing-page .section-heading h2,
+  .landing-page .faq-copy h2,
+  .landing-page .service-explanation-copy h2 {
+    max-width: 100%;
+  }
+}
+
+/* ========================================
+   HERO CONTAINER ELEGANCE REFINEMENT
+   Keeps container, softens boxed feeling
+   ======================================== */
+
+.landing-page .hero-copy {
+  max-width: 748px;
+  padding: 30px 34px 32px !important;
+  border-color: rgba(219, 234, 254, 0.045) !important;
+  border-radius: 20px;
+  background: linear-gradient(140deg, rgba(8, 13, 23, 0.62) 0%, rgba(11, 18, 31, 0.46) 58%, rgba(10, 17, 30, 0.3) 100%) !important;
+  box-shadow: 0 14px 34px rgba(2, 6, 14, 0.24) !important;
+}
+
+@media (min-width: 1024px) and (max-width: 1536px) {
+  .landing-page .hero-copy {
+    max-width: 720px;
+    padding: 26px 30px 28px !important;
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(2, 6, 14, 0.22) !important;
+  }
+}

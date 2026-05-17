@@ -529,36 +529,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="content-section editorial-moment editorial-moment--primary" aria-label="Editorial statement">
-        <div className="section-inner">
-          <span className="editorial-moment__mark" aria-hidden="true">
-            DE
-          </span>
-          <p className="editorial-moment__eyebrow">
-            {language === 'de' ? 'Premium Begleitung' : 'Accompagnement premium'}
-          </p>
-          <h2>
-            {language === 'de' ? 'Der deutsche Markt.' : 'Le marche allemand.'}
-            <span>{language === 'de' ? 'Ohne Komplikationen.' : 'Sans complications.'}</span>
-          </h2>
-          <div
-            className="editorial-moment__metrics"
-            role="list"
-            aria-label={language === 'de' ? 'Vertrauenskennzahlen' : 'Indicateurs de confiance'}
-          >
-            {editorialMetrics.map((metric, index) => (
-              <div
-                className={`editorial-moment__metric ${index === 1 ? 'editorial-moment__metric--featured' : ''}`}
-                key={metric.key}
-                role="listitem"
-              >
-                <strong>{metric.value}</strong>
-                <span>{pickText(metric.label, language)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
       {/* <section className="intro-section explanation-section">
         <div className="section-inner intro-card explanation-card">
           <div className="intro-copy">
@@ -809,7 +780,36 @@ export function LandingPage() {
           )}
         </div>
       </section>
-
+          <section className="content-section editorial-moment editorial-moment--primary" aria-label="Editorial statement">
+        <div className="section-inner">
+          <span className="editorial-moment__mark" aria-hidden="true">
+            DE
+          </span>
+          <p className="editorial-moment__eyebrow">
+            {language === 'de' ? 'Premium Begleitung' : 'Accompagnement premium'}
+          </p>
+          <h2>
+            {language === 'de' ? 'Der deutsche Markt.' : 'Le marche allemand.'}
+            <span>{language === 'de' ? 'Ohne Komplikationen.' : 'Sans complications.'}</span>
+          </h2>
+          <div
+            className="editorial-moment__metrics"
+            role="list"
+            aria-label={language === 'de' ? 'Vertrauenskennzahlen' : 'Indicateurs de confiance'}
+          >
+            {editorialMetrics.map((metric, index) => (
+              <div
+                className={`editorial-moment__metric ${index === 1 ? 'editorial-moment__metric--featured' : ''}`}
+                key={metric.key}
+                role="listitem"
+              >
+                <strong>{metric.value}</strong>
+                <span>{pickText(metric.label, language)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       {/* <section className="content-section gallery-section section-tone-light">
         <div className="section-inner">
           <div className="section-heading section-heading--center">
@@ -872,8 +872,8 @@ export function LandingPage() {
 
       <section id="faq" className="content-section faq-section section-tone-light">
         <div className="section-inner faq-grid">
+          <span className="faq-deco-number" aria-hidden="true">06</span>
           <div className="faq-copy">
-            <span className="faq-deco-number" aria-hidden="true">06</span>
             <span className="eyebrow">{t('landing.faq.eyebrow')}</span>
             <h2>{t('landing.faq.title')}</h2>
             <p>{t('landing.faq.subtitle')}</p>

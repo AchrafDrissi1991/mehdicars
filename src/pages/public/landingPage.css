@@ -11,13 +11,18 @@
 }
 
 .landing-page .faq-section .section-inner {
+  position: relative;
+  overflow: hidden;
   width: min(1120px, calc(100% - 44px));
   margin: 0 auto;
   padding: clamp(46px, 5vw, 70px) clamp(24px, 4.2vw, 48px);
   border-radius: 14px;
-  border: 1px solid rgba(156, 213, 245, 0.12);
-  background: linear-gradient(180deg, rgba(7, 13, 25, 0.95) 0%, rgba(8, 14, 28, 0.9) 100%);
-  box-shadow: 0 18px 44px rgba(3, 8, 18, 0.24);
+  border: 1px solid rgba(74, 138, 244, 0.18);
+  background:
+    radial-gradient(62% 58% at 8% 18%, rgba(47, 111, 237, 0.1) 0%, transparent 68%),
+    radial-gradient(44% 48% at 88% 82%, rgba(132, 181, 243, 0.07) 0%, transparent 74%),
+    linear-gradient(180deg, rgba(6, 11, 22, 0.97) 0%, rgba(8, 14, 28, 0.93) 100%);
+  box-shadow: 0 0 0 1px rgba(74, 144, 217, 0.06) inset, 0 28px 64px rgba(2, 6, 14, 0.32);
 }
 
 .landing-page .faq-grid {
@@ -31,19 +36,25 @@
   position: relative;
   max-width: 460px;
   padding-top: 8px;
+  z-index: 1;
 }
 
 .landing-page .faq-deco-number {
   position: absolute;
-  right: -14px;
-  top: -54px;
+  bottom: clamp(16px, 3vw, 36px);
+  left: clamp(24px, 4.2vw, 52px);
+  right: auto;
+  top: auto;
   z-index: 0;
-  color: rgba(126, 167, 225, 0.1);
-  font-size: clamp(110px, 12vw, 176px);
-  font-weight: 700;
+  color: rgba(74, 144, 217, 0.11);
+  font-size: clamp(120px, 14vw, 190px);
+  font-weight: 800;
   line-height: 0.86;
-  letter-spacing: -0.03em;
-  filter: blur(1.1px);
+  letter-spacing: -0.045em;
+  filter: blur(0px);
+  text-shadow:
+    0 0 60px rgba(74, 144, 217, 0.16),
+    0 0 120px rgba(74, 144, 217, 0.07);
   user-select: none;
   pointer-events: none;
 }
@@ -105,38 +116,61 @@
 .landing-page .faq-plus {
   position: relative;
   display: inline-flex;
-  width: 22px;
-  height: 22px;
+  width: 32px;
+  height: 32px;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  border: 1px solid rgba(156, 213, 245, 0.34);
-  background: rgba(24, 43, 76, 0.42);
-  transition: border-color 0.24s ease, background 0.24s ease;
+  border-radius: 50%;
+  border: 1px solid rgba(74, 144, 217, 0.52);
+  background: linear-gradient(145deg, rgba(22, 44, 88, 0.86) 0%, rgba(12, 26, 56, 0.78) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(180, 221, 255, 0.18),
+    0 6px 14px rgba(2, 6, 14, 0.24),
+    0 0 0 1px rgba(74, 144, 217, 0.18);
+  transition: border-color 0.26s ease, background 0.26s ease, box-shadow 0.26s ease, transform 0.26s ease;
 }
 
 .landing-page .faq-plus::before,
 .landing-page .faq-plus::after {
   content: "";
   position: absolute;
-  width: 10px;
-  height: 1.5px;
+  width: 12px;
+  height: 1.8px;
   border-radius: 2px;
-  background: rgba(197, 222, 252, 0.94);
-  transition: transform 0.24s ease, opacity 0.24s ease;
+  background: rgba(214, 235, 255, 0.96);
+  transition: transform 0.26s ease, opacity 0.26s ease;
 }
 
 .landing-page .faq-plus::after {
   transform: rotate(90deg);
 }
 
+.landing-page .faq-collapse .ant-collapse-item:hover .faq-plus {
+  border-color: rgba(116, 176, 240, 0.78);
+  background: linear-gradient(145deg, rgba(28, 56, 108, 0.88) 0%, rgba(16, 34, 72, 0.82) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(198, 232, 255, 0.22),
+    0 8px 18px rgba(2, 6, 14, 0.28),
+    0 0 0 4px rgba(74, 144, 217, 0.12);
+}
+
+.landing-page .faq-plus.is-active {
+  transform: rotate(45deg);
+  border-color: rgba(74, 144, 217, 0.72);
+  background: linear-gradient(145deg, rgba(47, 111, 237, 0.28) 0%, rgba(20, 44, 92, 0.72) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(156, 213, 245, 0.22),
+    0 0 0 4px rgba(74, 144, 217, 0.14),
+    0 8px 20px rgba(47, 111, 237, 0.18);
+}
+
 .landing-page .faq-plus.is-active::before {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 .landing-page .faq-plus.is-active::after {
-  transform: rotate(180deg);
-  opacity: 0;
+  transform: rotate(90deg);
+  opacity: 1;
 }
 
 .landing-page .faq-collapse .ant-collapse-content {
@@ -171,8 +205,10 @@
   }
 
   .landing-page .faq-deco-number {
-    right: 0;
-    top: -36px;
+    bottom: 12px;
+    left: 16px;
+    right: auto;
+    top: auto;
     font-size: clamp(84px, 23vw, 132px);
   }
 }
@@ -7101,5 +7137,267 @@
     right: -12px;
     top: -46px;
     font-size: clamp(78px, 21vw, 124px);
+  }
+}
+
+/* ============================================================
+   MEHDI CARS — TARGETED PATCH
+   Füge diesen Block ans ENDE deiner landingPage.css hinzu.
+   Überschreibt nur die 3 betroffenen Stellen.
+   ============================================================ */
+
+
+/* ============================================================
+   1. FAQ — CINEMATIC UPGRADE
+      · Deko-Zahl "06" sichtbarer + Glow
+      · +/- Button cinematic mit blauem Akzent
+      · Aktives Item bekommt linken blauen Rahmen
+   ============================================================ */
+
+/* Deko-Zahl "06" — jetzt sichtbar + subtiler Glow */
+.landing-page #faq .faq-deco-number {
+  right: -18px;
+  top: -64px;
+  color: rgba(74, 144, 217, 0.13);       /* war 0.045 — viel zu unsichtbar */
+  font-size: clamp(120px, 14vw, 200px);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  filter: blur(0px);                      /* kein Blur — scharf & cinematic */
+  text-shadow:
+    0 0 80px rgba(74, 144, 217, 0.18),
+    0 0 160px rgba(74, 144, 217, 0.08);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* FAQ Section inner — stärkerer Rahmen & Glow für mehr Tiefe */
+.landing-page #faq .section-inner {
+  border: 1px solid rgba(74, 144, 217, 0.18);
+  background:
+    radial-gradient(62% 58% at 8% 18%, rgba(47, 111, 237, 0.1) 0%, rgba(47, 111, 237, 0) 68%),
+    radial-gradient(44% 48% at 88% 82%, rgba(132, 181, 243, 0.07) 0%, rgba(132, 181, 243, 0) 74%),
+    linear-gradient(180deg, rgba(6, 11, 22, 0.97) 0%, rgba(8, 14, 28, 0.93) 100%);
+  box-shadow:
+    0 0 0 1px rgba(74, 144, 217, 0.06) inset,
+    0 28px 64px rgba(2, 6, 14, 0.32);
+}
+
+/* Aktives Collapse-Item — linker blauer Akzent-Streifen */
+.landing-page #faq .faq-collapse .ant-collapse-item-active {
+  border-color: rgba(74, 144, 217, 0.32) !important;
+  border-left-color: rgba(74, 144, 217, 0.72) !important;
+  border-left-width: 2px !important;
+  background:
+    linear-gradient(180deg, rgba(14, 26, 48, 0.72) 0%, rgba(10, 18, 36, 0.88) 100%),
+    radial-gradient(88% 62% at 50% 4%, rgba(74, 144, 217, 0.07) 0%, rgba(74, 144, 217, 0) 74%);
+}
+
+/* +/- Button — cinematic Upgrade */
+.landing-page #faq .faq-plus {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(74, 144, 217, 0.35);
+  border-radius: 50%;
+  background: linear-gradient(
+    145deg,
+    rgba(20, 40, 80, 0.72) 0%,
+    rgba(12, 24, 50, 0.64) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(156, 213, 245, 0.14),
+    0 4px 12px rgba(2, 6, 14, 0.22),
+    0 0 0 0px rgba(74, 144, 217, 0.0);
+  transition:
+    border-color 0.28s ease,
+    background 0.28s ease,
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.landing-page #faq .faq-plus::before,
+.landing-page #faq .faq-plus::after {
+  width: 11px;
+  height: 1.5px;
+  background: rgba(156, 213, 245, 0.92);
+}
+
+/* Hover — blauer Glow-Ring */
+.landing-page #faq .faq-collapse .ant-collapse-item:hover .faq-plus {
+  border-color: rgba(74, 144, 217, 0.6);
+  background: linear-gradient(
+    145deg,
+    rgba(28, 56, 108, 0.72) 0%,
+    rgba(16, 32, 68, 0.68) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(156, 213, 245, 0.18),
+    0 6px 16px rgba(2, 6, 14, 0.26),
+    0 0 0 3px rgba(74, 144, 217, 0.12);
+}
+
+/* Aktiv-Zustand — rotiert + blau leuchtend */
+.landing-page #faq .faq-plus.is-active {
+  transform: rotate(45deg);              /* X statt — Linie bleibt sichtbar */
+  border-color: rgba(74, 144, 217, 0.72);
+  background: linear-gradient(
+    145deg,
+    rgba(47, 111, 237, 0.28) 0%,
+    rgba(20, 44, 92, 0.72) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(156, 213, 245, 0.22),
+    0 0 0 4px rgba(74, 144, 217, 0.14),
+    0 8px 20px rgba(47, 111, 237, 0.18);
+}
+
+/* Im aktiven State: beide Linien bleiben, ergeben ein X */
+.landing-page #faq .faq-plus.is-active::before {
+  transform: rotate(0deg);
+}
+
+.landing-page #faq .faq-plus.is-active::after {
+  transform: rotate(90deg);
+  opacity: 1;                            /* war opacity:0 — jetzt bleibt X sichtbar */
+}
+
+/* Mobile responsive */
+@media (max-width: 900px) {
+  .landing-page #faq .faq-deco-number {
+    right: -8px;
+    top: -44px;
+    font-size: clamp(88px, 22vw, 140px);
+    color: rgba(74, 144, 217, 0.1);
+  }
+}
+
+
+/* ============================================================
+   2. SERVICE JOURNEY — AKTIVE LINIE LEUCHTET BLAU
+      · Linie füllt sich mit Blau-Gradient wenn aktiv
+      · Glow-Effekt auf dem aktiven Icon
+      · Abgeschlossene Schritte behalten leichtes Blau
+   ============================================================ */
+
+/* Linie — Hintergrund etwas heller damit Kontrast besser wird */
+.landing-page .service-journey-step__line {
+  width: 2px;
+  flex: 1;
+  min-height: 28px;
+  margin: 4px 0;
+  border-radius: 2px;
+  background: rgba(41, 81, 129, 0.35);    /* war 0.8 — zu dunkel, kaum sichtbar */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fill — leuchtender Blau-Gradient */
+.landing-page .service-journey-step__line-fill {
+  width: 100%;
+  height: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(74, 144, 217, 1) 0%,
+    rgba(120, 185, 245, 0.9) 100%
+  );
+  border-radius: 2px;
+  transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(74, 144, 217, 0.6);  /* Glow auf der Linie */
+}
+
+/* Wenn aktiv oder abgeschlossen — Linie füllt sich */
+.landing-page .service-journey-step__line-fill.is-filled {
+  height: 100%;
+}
+
+/* Aktives Icon — stärkerer Glow */
+.landing-page .service-journey-step.is-active .service-journey-step__icon {
+  border-color: rgba(74, 144, 217, 0.95);
+  background: rgba(17, 32, 64, 0.92);
+  color: rgba(113, 177, 238, 0.98);
+  box-shadow:
+    0 0 0 4px rgba(74, 144, 217, 0.12),
+    0 0 16px rgba(74, 144, 217, 0.22);
+}
+
+/* Abgeschlossene Schritte — leichter blauer Rand */
+.landing-page .service-journey-step.is-completed .service-journey-step__icon {
+  border-color: rgba(62, 118, 182, 0.72);
+  background: rgba(13, 30, 53, 0.72);
+  color: rgba(84, 146, 209, 0.9);
+  box-shadow: 0 0 0 3px rgba(62, 118, 182, 0.08);
+}
+
+/* Aktiver Label — etwas heller */
+.landing-page .service-journey-step.is-active .service-journey-step__label {
+  color: rgba(120, 185, 245, 1);
+  text-shadow: 0 0 20px rgba(74, 144, 217, 0.3);
+}
+
+/* FAQ hotfix: unclipped deco number + richer cards + stronger plus button */
+.landing-page #faq .section-inner,
+.landing-page .faq-section .section-inner {
+  overflow: visible;
+}
+
+.landing-page #faq .faq-deco-number {
+  z-index: 0;
+  top: -74px;
+  right: -14px;
+}
+
+.landing-page #faq .faq-copy {
+  z-index: 2;
+}
+
+.landing-page #faq .faq-collapse {
+  gap: 8px;
+}
+
+.landing-page #faq .faq-collapse .ant-collapse-item {
+  border-color: rgba(118, 156, 207, 0.24) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(214, 231, 254, 0.08),
+    0 14px 30px rgba(2, 6, 14, 0.2);
+}
+
+.landing-page #faq .faq-collapse .ant-collapse-item + .ant-collapse-item {
+  margin-top: 2px;
+}
+
+.landing-page #faq .faq-plus {
+  width: 32px;
+  height: 32px;
+  border-color: rgba(74, 144, 217, 0.58);
+  background: linear-gradient(145deg, rgba(26, 52, 99, 0.84) 0%, rgba(14, 30, 64, 0.76) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(180, 221, 255, 0.2),
+    0 6px 14px rgba(2, 6, 14, 0.24),
+    0 0 0 1px rgba(74, 144, 217, 0.2);
+}
+
+.landing-page #faq .faq-plus::before,
+.landing-page #faq .faq-plus::after {
+  width: 12px;
+  height: 1.8px;
+  background: rgba(214, 235, 255, 0.96);
+}
+
+.landing-page #faq .faq-collapse .ant-collapse-item:hover .faq-plus {
+  border-color: rgba(116, 176, 240, 0.86);
+  box-shadow:
+    inset 0 1px 0 rgba(198, 232, 255, 0.22),
+    0 8px 18px rgba(2, 6, 14, 0.28),
+    0 0 0 4px rgba(74, 144, 217, 0.14);
+}
+
+@media (max-width: 900px) {
+  .landing-page #faq .faq-deco-number {
+    top: -48px;
+    right: -6px;
+  }
+
+  .landing-page #faq .faq-collapse {
+    gap: 7px;
   }
 }

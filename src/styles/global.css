@@ -139,6 +139,13 @@ select {
   letter-spacing: 0;
 }
 
+.brand-logo {
+  display: block;
+  width: 166px;
+  max-width: 100%;
+  height: auto;
+}
+
 .language-select {
   min-width: 82px;
 }

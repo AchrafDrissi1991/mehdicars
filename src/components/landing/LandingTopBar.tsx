@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { LanguageSwitch } from '../common/LanguageSwitch';
 import { SocialLinks } from '../common/SocialLinks';
+import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
 
 export function LandingTopBar() {
   const { t } = useTranslation();
@@ -58,8 +59,7 @@ export function LandingTopBar() {
     <header className={`landing-topbar ${isScrolled ? 'is-scrolled' : ''}`}>
       <div className="landing-topbar__inner">
         <Link className="brand" to={`/${lang}`}>
-          <span className="brand-mark">{t('landing.brandMark')}</span>
-          <span>{t('landing.brand')}</span>
+          <img alt={t('landing.brand')} className="brand-logo" src={mehdiCarsLogoUrl} />
         </Link>
 
         <nav aria-label={t('landing.nav.label')} className="landing-nav">

@@ -1,0 +1,17 @@
+<svg width="500" height="160" viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="500" height="160" rx="12" fill="#0f1c2e"/>
+  
+  <!-- Shield shape -->
+  <path d="M100 20 L160 20 L185 38 L185 108 L130 138 L75 108 L75 38 Z" fill="#1a3a5c" stroke="#3a7bd5" stroke-width="2"/>
+  <!-- M inside shield -->
+  <text x="130" y="95" font-family="Arial,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">M</text>
+  
+  <!-- Divider line -->
+  <line x1="205" y1="86" x2="480" y2="86" stroke="#3a7bd5" stroke-width="1" opacity="0.5"/>
+  
+  <!-- MEHDI text -->
+  <text x="205" y="78" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="white" letter-spacing="3">MEHDI</text>
+  <!-- CARS text -->
+  <text x="207" y="118" font-family="Arial,sans-serif" font-size="22" font-weight="400" fill="#3a7bd5" letter-spacing="10">CARS</text>
+</svg>

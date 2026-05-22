@@ -1813,3 +1813,533 @@
     font-size: clamp(30px, 8vw, 38px);
   }
 }
+
+.advisory-page-redesign.funnel-page {
+  background: var(--color-background-primary);
+}
+
+.advisory-page-redesign .consultation-redesign-section {
+  padding: 28px 16px 56px;
+}
+
+.advisory-page-redesign .lead-funnel-shell {
+  width: min(1320px, 100%);
+}
+
+.advisory-page-redesign .consultation-redesign {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 620px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--color-background-primary);
+}
+
+.advisory-page-redesign .consultation-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+  background: #0A0E1A;
+  color: #ffffff;
+}
+
+.advisory-page-redesign .consultation-left::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.advisory-page-redesign .consultation-left::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.advisory-page-redesign .consultation-brand {
+  margin: 0 0 34px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: #4A90C4;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-title {
+  margin: 0;
+  font-size: clamp(38px, 4.2vw, 52px);
+  line-height: 1.02;
+  color: #ffffff;
+  font-family: 'Cormorant Garamond', var(--font-heading);
+}
+
+.advisory-page-redesign .consultation-text {
+  margin: 20px 0 0;
+  max-width: 560px;
+  color: #8A95A8;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.advisory-page-redesign .consultation-features {
+  display: grid;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.advisory-page-redesign .consultation-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #C5CCD8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.advisory-page-redesign .consultation-feature-dot {
+  width: 6px;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: #4A90C4;
+  flex: 0 0 auto;
+}
+
+.advisory-page-redesign .consultation-price-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.advisory-page-redesign .consultation-price-label {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #4A90C4;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-price-values {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.advisory-page-redesign .consultation-price-new {
+  font-size: 38px;
+  line-height: 1;
+  color: #ffffff;
+  font-family: 'Cormorant Garamond', var(--font-heading);
+}
+
+.advisory-page-redesign .consultation-price-old {
+  color: #555E6E;
+  font-size: 16px;
+  text-decoration: line-through;
+}
+
+.advisory-page-redesign .consultation-price-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid #2A6096;
+  border-radius: 5px;
+  background: #1A3A5C;
+  color: #7AB8E8;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-right {
+  padding: 36px 32px;
+  background: var(--color-background-primary);
+}
+
+.advisory-page-redesign .consultation-right h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 32px;
+  font-family: 'Cormorant Garamond', var(--font-heading);
+  font-weight: 600;
+}
+
+.advisory-page-redesign .consultation-subtitle {
+  margin: 8px 0 24px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.advisory-page-redesign .consultation-section-label {
+  margin: 0 0 12px;
+  color: #4A90C4;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-calendar-wrap {
+  margin-bottom: 24px;
+}
+
+.advisory-page-redesign .consultation-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.advisory-page-redesign .consultation-cal-month {
+  color: var(--color-text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-cal-nav {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.advisory-page-redesign .consultation-cal-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.advisory-page-redesign .consultation-cal-btn:hover {
+  background: var(--color-background-secondary);
+}
+
+.advisory-page-redesign .consultation-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.advisory-page-redesign .consultation-cal-day-name {
+  min-height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-cal-day {
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  position: relative;
+}
+
+.advisory-page-redesign .consultation-cal-day.is-current:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+
+.advisory-page-redesign .consultation-cal-day.is-available::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #4A90C4;
+}
+
+.advisory-page-redesign .consultation-cal-day.is-selected {
+  background: #0A0E1A;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.advisory-page-redesign .consultation-cal-day.is-today {
+  font-weight: 700;
+}
+
+.advisory-page-redesign .consultation-cal-day.is-other,
+.advisory-page-redesign .consultation-cal-day:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: var(--color-text-tertiary);
+}
+
+.advisory-page-redesign .consultation-slots-heading {
+  margin: 0 0 12px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.advisory-page-redesign .consultation-slots-heading strong {
+  color: #4A90C4;
+}
+
+.advisory-page-redesign .consultation-slots-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.advisory-page-redesign .consultation-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.advisory-page-redesign .consultation-slot:hover {
+  border-color: #4A90C4;
+  background: rgba(74, 144, 196, 0.04);
+}
+
+.advisory-page-redesign .consultation-slot.is-picked {
+  border-color: #4A90C4;
+  background: rgba(74, 144, 196, 0.08);
+}
+
+.advisory-page-redesign .consultation-slot:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.advisory-page-redesign .consultation-slot-time {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.advisory-page-redesign .consultation-slot-availability {
+  margin: 2px 0 0;
+  color: var(--color-text-tertiary);
+  font-size: 10px;
+}
+
+.advisory-page-redesign .consultation-slot-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20px;
+  padding: 0 8px;
+  border: 1px solid #4A90C4;
+  border-radius: 4px;
+  color: #4A90C4;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-slot.is-picked .consultation-slot-pill {
+  background: #4A90C4;
+  color: #ffffff;
+}
+
+.advisory-page-redesign .consultation-empty-hint {
+  margin: 0 0 16px;
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+}
+
+.advisory-page-redesign .consultation-form {
+  display: grid;
+  gap: 14px;
+}
+
+.advisory-page-redesign .consultation-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.advisory-page-redesign .consultation-field {
+  display: grid;
+  gap: 6px;
+}
+
+.advisory-page-redesign .consultation-field-full {
+  grid-column: 1 / -1;
+}
+
+.advisory-page-redesign .consultation-field span {
+  color: var(--color-text-tertiary);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.advisory-page-redesign .consultation-field input,
+.advisory-page-redesign .consultation-field textarea {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 8px;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  font-family: inherit;
+}
+
+.advisory-page-redesign .consultation-field textarea {
+  min-height: 86px;
+  padding: 10px 14px;
+  resize: vertical;
+}
+
+.advisory-page-redesign .consultation-field input:focus,
+.advisory-page-redesign .consultation-field textarea:focus {
+  outline: none;
+  border-color: #4A90C4;
+}
+
+.advisory-page-redesign .consultation-field-error {
+  margin: 0;
+  color: #DC2626;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.advisory-page-redesign .consultation-divider {
+  height: 1px;
+  background: var(--color-border-tertiary);
+}
+
+.advisory-page-redesign .consultation-payment-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.advisory-page-redesign .consultation-payment-title svg {
+  color: #4A90C4;
+}
+
+.advisory-page-redesign .consultation-payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.advisory-page-redesign .consultation-pay-badge {
+  position: relative;
+  cursor: pointer;
+}
+
+.advisory-page-redesign .consultation-pay-badge input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.advisory-page-redesign .consultation-pay-badge span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: 5px;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+.advisory-page-redesign .consultation-pay-badge input:checked + span {
+  border-color: #4A90C4;
+  color: #4A90C4;
+  background: rgba(74, 144, 196, 0.08);
+}
+
+.advisory-page-redesign .consultation-cta {
+  min-height: 46px;
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  background: #0A0E1A;
+  color: #ffffff;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.advisory-page-redesign .consultation-cta:hover {
+  background: #162238;
+}
+
+.advisory-page-redesign .consultation-legal-note {
+  margin: 0;
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+}
+
+@media (max-width: 1080px) {
+  .advisory-page-redesign .consultation-redesign {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .advisory-page-redesign .consultation-redesign-section {
+    padding: 16px 10px 40px;
+  }
+
+  .advisory-page-redesign .consultation-left,
+  .advisory-page-redesign .consultation-right {
+    padding: 22px 16px;
+  }
+
+  .advisory-page-redesign .consultation-slots-grid,
+  .advisory-page-redesign .consultation-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

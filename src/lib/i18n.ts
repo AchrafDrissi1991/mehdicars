@@ -45,7 +45,7 @@ export const resources = {
         },
         hero: {
           eyebrow: 'Conciergerie Automobile',
-          title: 'Nous trouvons votre voiture idéale en Allemagne.',
+          title: 'Votre voiture de rêve vous attend.',
           subtitle:
             'Recherche, vérification, négociation et accompagnement personnalisé — du premier contact à la remise des clés.',
           buyCta: 'Commencer ma recherche',
@@ -290,7 +290,7 @@ export const resources = {
         },
         hero: {
           eyebrow: 'Automobil-Concierge',
-          title: 'Wir finden Ihr Wunschfahrzeug in Deutschland.',
+          title: 'Ihr Traumfahrzeug wartet in Deutschland.',
           subtitle:
             'Suche, Prüfung, Verhandlung und persönliche Begleitung — vom ersten Kontakt bis zur Schlüsselübergabe.',
           buyCta: 'Meine Suche starten',

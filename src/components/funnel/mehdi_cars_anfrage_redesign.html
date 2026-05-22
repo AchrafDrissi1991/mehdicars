@@ -1,0 +1,209 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@300;400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif}
+  .wrap{background:var(--color-background-tertiary);min-height:600px}
+  .hero{background:#0a0e1a;padding:48px 0 40px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 120%,rgba(74,144,196,0.12),transparent)}
+  .hero-badge{display:inline-block;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#4a90c4;border:0.5px solid rgba(74,144,196,0.4);border-radius:20px;padding:5px 16px;margin-bottom:20px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:500;color:#fff;margin-bottom:12px}
+  .hero-sub{font-size:13px;color:#8a95a8;letter-spacing:0.5px}
+  .progress-bar-wrap{height:3px;background:#1a2235;position:relative}
+  .progress-bar-fill{height:100%;background:linear-gradient(90deg,#2a6096,#4a90c4);transition:width 0.4s ease}
+  .step-counter{position:absolute;top:50%;right:20px;transform:translateY(-50%);font-size:11px;color:#4a90c4;letter-spacing:1px}
+  .body{display:flex;justify-content:center;padding:40px 20px 60px;background:var(--color-background-tertiary)}
+  .card{width:100%;max-width:640px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:16px;padding:36px;position:relative}
+  .step-info{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .step-num{width:32px;height:32px;border-radius:50%;background:#0a0e1a;color:#4a90c4;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;letter-spacing:1px;flex-shrink:0}
+  .step-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--color-text-tertiary)}
+  .inner-progress{height:2px;background:var(--color-background-secondary);border-radius:1px;margin-bottom:28px;overflow:hidden}
+  .inner-progress-fill{height:100%;background:#4a90c4;border-radius:1px;transition:width 0.4s}
+  .card h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:500;color:var(--color-text-primary);line-height:1.1;margin-bottom:28px}
+  .field{margin-bottom:18px}
+  .field-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:7px;display:block}
+  .field select,.field input[type=text]{width:100%;padding:11px 16px;border:0.5px solid var(--color-border-tertiary);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--color-background-secondary);color:var(--color-text-primary);transition:border-color 0.15s;appearance:none}
+  .field select:focus,.field input[type=text]:focus{outline:none;border-color:#4a90c4}
+  .select-wrap{position:relative}
+  .select-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--color-text-tertiary);pointer-events:none}
+  .slider-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:16px 20px;margin-bottom:14px}
+  .slider-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .slider-name{font-size:12px;color:var(--color-text-secondary);font-weight:500}
+  .slider-val{font-size:13px;font-weight:500;color:#4a90c4}
+  input[type=range]{width:100%;accent-color:#4a90c4;cursor:pointer;height:4px}
+  .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+  .type-btn{padding:10px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:8px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;text-align:center;transition:all 0.15s}
+  .type-btn:hover{border-color:#4a90c4;color:var(--color-text-primary)}
+  .type-btn.active{border-color:#4a90c4;background:rgba(74,144,196,0.08);color:#4a90c4;font-weight:500}
+  .nav{display:flex;align-items:center;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:0.5px solid var(--color-border-tertiary)}
+  .nav-step{font-size:11px;letter-spacing:1px;color:var(--color-text-tertiary);text-transform:uppercase}
+  .btn-back{padding:10px 22px;border:0.5px solid var(--color-border-tertiary);border-radius:8px;background:none;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;letter-spacing:0.5px}
+  .btn-back:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+  .btn-next{padding:11px 28px;border:none;border-radius:8px;background:#0a0e1a;font-size:12px;font-family:'DM Sans',sans-serif;color:#fff;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;transition:background 0.2s;display:flex;align-items:center;gap:8px}
+  .btn-next:hover{background:#162238}
+  .step-panel{display:none}
+  .step-panel.active{display:block}
+</style>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Mehdi Cars – Fahrzeuganfrage</h2>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-badge">Mehdi Cars</div>
+    <h1>Ihre Fahrzeuganfrage</h1>
+    <p class="hero-sub">Beantworten Sie die wichtigsten Fragen. Das dauert ca. 2 Minuten.</p>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="topbar" style="width:25%"></div>
+    <span class="step-counter" id="top-counter">1/4</span>
+  </div>
+
+  <div class="body">
+    <div class="card">
+      <div class="inner-progress"><div class="inner-progress-fill" id="innerbar" style="width:25%"></div></div>
+
+      <!-- Step 1 -->
+      <div class="step-panel active" id="step1">
+        <div class="step-info">
+          <div class="step-num">01</div>
+          <span class="step-label">Schritt 1 / 4</span>
+        </div>
+        <h2>Welche Automarke suchen Sie?</h2>
+        <div class="field">
+          <span class="field-label">Automarke *</span>
+          <div class="select-wrap">
+            <select>
+              <option value="" disabled selected>Marke auswählen</option>
+              <option>Audi</option><option>BMW</option><option>Mercedes-Benz</option>
+              <option>Volkswagen</option><option>Porsche</option><option>Toyota</option>
+              <option>Ford</option><option>Skoda</option><option>Seat</option>
+              <option>Andere</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">Modell (optional)</span>
+          <input type="text" placeholder="z. B. Q5, 3er, Golf…">
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step-panel" id="step2">
+        <div class="step-info">
+          <div class="step-num">02</div>
+          <span class="step-label">Schritt 2 / 4</span>
+        </div>
+        <h2>Welches Fahrzeug suchen Sie genau?</h2>
+        <div class="field">
+          <span class="field-label">Fahrzeugtyp</span>
+          <div class="type-grid">
+            <button class="type-btn" onclick="toggleType(this)"><i class="ti ti-car" aria-hidden="true"></i><br>Limousine</button>
+            <button class="type-btn" onclick="toggleType(this)"><i class="ti ti-car-suv" aria-hidden="true"></i><br>SUV</button>
+            <button class="type-btn" onclick="toggleType(this)">Kombi</button>
+            <button class="type-btn" onclick="toggleType(this)">Cabrio</button>
+            <button class="type-btn" onclick="toggleType(this)">Van</button>
+            <button class="type-btn" onclick="toggleType(this)">Andere</button>
+          </div>
+        </div>
+        <div class="slider-card">
+          <div class="slider-row"><span class="slider-name">Baujahr ab</span><span class="slider-val" id="year-val">2018</span></div>
+          <input type="range" min="2000" max="2026" value="2018" step="1" oninput="document.getElementById('year-val').textContent=this.value">
+        </div>
+        <div class="slider-card">
+          <div class="slider-row"><span class="slider-name">Maximale Kilometer</span><span class="slider-val" id="km-val">80 000 km</span></div>
+          <input type="range" min="0" max="300000" value="80000" step="5000" oninput="document.getElementById('km-val').textContent=Math.round(this.value/1000)*1000+' km'">
+        </div>
+        <div class="slider-card">
+          <div class="slider-row"><span class="slider-name">Budget</span><span class="slider-val" id="bud-val">30 000 €</span></div>
+          <input type="range" min="5000" max="150000" value="30000" step="1000" oninput="document.getElementById('bud-val').textContent=parseInt(this.value).toLocaleString('de-DE')+' €'">
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step-panel" id="step3">
+        <div class="step-info">
+          <div class="step-num">03</div>
+          <span class="step-label">Schritt 3 / 4</span>
+        </div>
+        <h2>Wie möchten Sie das Fahrzeug nutzen?</h2>
+        <div class="field">
+          <span class="field-label">Nutzungsart</span>
+          <div class="type-grid">
+            <button class="type-btn" onclick="toggleType(this)">Privat</button>
+            <button class="type-btn" onclick="toggleType(this)">Geschäftlich</button>
+            <button class="type-btn" onclick="toggleType(this)">Beides</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">Kraftstoff</span>
+          <div class="type-grid">
+            <button class="type-btn" onclick="toggleType(this)">Benzin</button>
+            <button class="type-btn" onclick="toggleType(this)">Diesel</button>
+            <button class="type-btn" onclick="toggleType(this)">Elektro</button>
+            <button class="type-btn" onclick="toggleType(this)">Hybrid</button>
+            <button class="type-btn" onclick="toggleType(this)">LPG</button>
+            <button class="type-btn" onclick="toggleType(this)">Egal</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">Anmerkungen (optional)</span>
+          <input type="text" placeholder="z. B. Automatik, Anhängerkupplung, Panoramadach…">
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step-panel" id="step4">
+        <div class="step-info">
+          <div class="step-num">04</div>
+          <span class="step-label">Schritt 4 / 4</span>
+        </div>
+        <h2>Ihre Kontaktdaten</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="field"><span class="field-label">Vorname *</span><input type="text" placeholder="Max"></div>
+          <div class="field"><span class="field-label">Nachname *</span><input type="text" placeholder="Mustermann"></div>
+        </div>
+        <div class="field"><span class="field-label">E-Mail *</span><input type="text" placeholder="name@beispiel.com"></div>
+        <div class="field"><span class="field-label">Telefon</span><input type="text" placeholder="+49 170 123 45 67"></div>
+        <div style="background:rgba(74,144,196,0.06);border:0.5px solid rgba(74,144,196,0.2);border-radius:8px;padding:12px 16px;margin-top:8px">
+          <p style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">Ihre Angaben werden vertraulich behandelt und ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.</p>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="btn-back" id="btn-back" onclick="goStep(-1)">← Zurück</button>
+        <span class="nav-step" id="nav-label">Schritt 1 / 4</span>
+        <button class="btn-next" id="btn-next" onclick="goStep(1)">Weiter <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let cur = 1;
+const total = 4;
+function goStep(dir) {
+  if (cur + dir < 1 || cur + dir > total) return;
+  document.getElementById('step' + cur).classList.remove('active');
+  cur += dir;
+  document.getElementById('step' + cur).classList.add('active');
+  const pct = Math.round((cur / total) * 100) + '%';
+  document.getElementById('topbar').style.width = pct;
+  document.getElementById('innerbar').style.width = pct;
+  document.getElementById('top-counter').textContent = cur + '/' + total;
+  document.getElementById('nav-label').textContent = 'Schritt ' + cur + ' / ' + total;
+  document.getElementById('btn-back').style.opacity = cur === 1 ? '0.3' : '1';
+  document.getElementById('btn-back').style.pointerEvents = cur === 1 ? 'none' : 'auto';
+  if (cur === total) {
+    document.getElementById('btn-next').innerHTML = '<i class="ti ti-send" aria-hidden="true"></i> Anfrage absenden';
+  } else {
+    document.getElementById('btn-next').innerHTML = 'Weiter <i class="ti ti-arrow-right" aria-hidden="true"></i>';
+  }
+}
+function toggleType(el) {
+  const grid = el.closest('.type-grid');
+  grid.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+document.getElementById('btn-back').style.opacity = '0.3';
+document.getElementById('btn-back').style.pointerEvents = 'none';
+</script>

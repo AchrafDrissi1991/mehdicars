@@ -19,7 +19,6 @@ import {
   ShieldCheck,
   Sparkles,
   Star,
-  User,
 } from 'lucide-react';
 import type { CSSProperties, TouchEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -31,7 +30,8 @@ import { faqItems, galleryItems, mediaItems, testimonials } from '../../features
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import heroImageUrl from '../../../images/banner.png';
-import beratungFotoImageUrl from '../../../images/beratungfoto.png';
+import mehdiClaGrayImageUrl from '../../../images/mehdi_cla_gray.png';
+import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
 import './landingPage.css';
 
 export function LandingPage() {
@@ -41,7 +41,10 @@ export function LandingPage() {
   const funnelPath = `/${language}/${language === 'de' ? 'anfrage' : 'demande'}`;
   const advisoryPath = `/${language}/${language === 'de' ? 'beratung' : 'conseil'}`;
   const privacyPath = `/${language}/${language === 'de' ? 'datenschutz' : 'confidentialite'}`;
-  const heroStyle = { '--hero-image': `url(${heroImageUrl})` } as CSSProperties;
+  const heroStyle = {
+    '--hero-image': `url(${heroImageUrl})`,
+    '--hero-image-mobile': `url(${mehdiClaGrayImageUrl})`,
+  } as CSSProperties;
 
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
@@ -398,15 +401,8 @@ export function LandingPage() {
               <img
                 alt={language === 'de' ? 'Mehdi Cars Beratung in Deutschland' : 'Conseil Mehdi Cars en Allemagne'}
                 loading="lazy"
-                src={beratungFotoImageUrl}
+                src={mehdiClaGrayImageUrl}
               />
-              <span className="service-explanation-visual__overlay" />
-              <span className="service-explanation-visual__placeholder">
-                <User size={36} />
-                <span>
-                  {language === 'de' ? 'Foto von Mehdi mit einem Fahrzeug in Deutschland' : 'Photo de Mehdi avec une voiture en Allemagne'}
-                </span>
-              </span>
             </div>
 
           <div className="service-explanation-copy">
@@ -944,8 +940,7 @@ export function LandingPage() {
         <div className="section-inner footer-grid">
           <div className="footer-brand">
             <Link className="brand brand--footer" to={`/${language}`}>
-              <span className="brand-mark">{t('landing.brandMark')}</span>
-              <span>{t('landing.brand')}</span>
+              <img alt={t('landing.brand')} className="brand-logo" src={mehdiCarsLogoUrl} />
             </Link>
             <p>{t('landing.footer.description')}</p>
             <SocialLinks variant="dark" />

@@ -7708,9 +7708,9 @@
 }
 
 .landing-page .hero-copy {
-  border: 1px solid rgba(124, 116, 101, 0.2) !important;
-  background: linear-gradient(140deg, rgba(252, 251, 248, 0.95) 0%, rgba(245, 244, 241, 0.9) 100%) !important;
-  box-shadow: var(--lux-shadow-card) !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .landing-page .hero-headline {
@@ -7984,5 +7984,33 @@
   .landing-page .service-journey-section,
   .landing-page .editorial-moment {
     background: linear-gradient(150deg, #1a1815 0%, #2a2621 100%) !important;
+  }
+}
+
+@media (max-width: 1120px) {
+  .landing-page .mobile-menu-button.ant-btn {
+    display: inline-flex !important;
+    color: #1f2937 !important;
+    border-color: rgba(15, 23, 42, 0.18) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    z-index: 4;
+  }
+
+  .landing-page .mobile-cart-button {
+    display: inline-flex !important;
+    color: #1f2937 !important;
+    border-color: rgba(15, 23, 42, 0.18) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    z-index: 4;
+  }
+
+  .landing-page .landing-topbar .brand {
+    z-index: 3;
+  }
+}
+
+@media (max-width: 720px) {
+  .landing-page .hero-section__inner {
+    padding-bottom: 156px !important;
   }
 }

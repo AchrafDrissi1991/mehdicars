@@ -45,6 +45,7 @@ export function LandingPage() {
   } as CSSProperties;
 
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [mediaIndex, setMediaIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [serviceExplanationVisible, setServiceExplanationVisible] = useState(false);
   const [serviceJourneyVisible, setServiceJourneyVisible] = useState(false);
@@ -226,6 +227,14 @@ export function LandingPage() {
     setGalleryIndex((prev) => (prev === galleryItems.length - 1 ? 0 : prev + 1));
   };
 
+  const handleMediaPrev = () => {
+    setMediaIndex((prev) => (prev === 0 ? mediaItems.length - 1 : prev - 1));
+  };
+
+  const handleMediaNext = () => {
+    setMediaIndex((prev) => (prev === mediaItems.length - 1 ? 0 : prev + 1));
+  };
+
   const trustItems = [
     { icon: <MapPin size={19} />, key: 'germany', label: t('landing.trust.germany') },
     { icon: <Handshake size={19} />, key: 'guidance', label: t('landing.trust.guidance') },
@@ -239,6 +248,12 @@ export function LandingPage() {
     t('landing.explanation.bullets.communication'),
     t('landing.explanation.bullets.personal'),
   ];
+
+  const selectedMedia = mediaItems[mediaIndex] ?? mediaItems[0];
+  const mediaAlbumItems = mediaItems.map((media, index) => ({
+    ...media,
+    index,
+  }));
 
   const advantageCards = [
     {
@@ -548,6 +563,7 @@ export function LandingPage() {
       <section className="content-section advisory-cta-section" aria-label={language === 'de' ? 'Beratungsaufruf' : 'Appel au conseil'}>
         <div className="section-inner advisory-cta-shell">
           <div className="advisory-cta-copy">
+            <span className="advisory-cta-label">{language === 'de' ? 'Beratung' : 'Conseil'}</span>
             <h2>
               <span>{language === 'de' ? 'Unsicher beim' : 'Un doute avant'}</span>
               <strong>{language === 'de' ? 'Fahrzeugkauf?' : "l'achat du véhicule ?"}</strong>
@@ -700,62 +716,87 @@ export function LandingPage() {
                 : 'Guides, conseils et aperçus de notre processus d\'inspection'}
             </p>
           </div>
-            <div className="media-showcase media-showcase--desktop">
-                <div className="media-grid media-grid--desktop-cards">
-                  {mediaItems.slice(1, 3).map((media) => (
-                  <article className="media-card media-card--secondary card-hover" key={media.id}>
+            <div className="media-showcase media-showcase--desktop" aria-label={language === 'de' ? 'Video-Album' : 'Album vidéo'}>
+              <div className="media-album">
+                <div className="media-album__hero">
+                  <button
+                    className="media-album__nav media-album__nav--prev"
+                    type="button"
+                    onClick={handleMediaPrev}
+                    aria-label={language === 'de' ? 'Vorheriges Video' : 'Vidéo précédente'}
+                  >
+                    <ChevronLeft size={22} />
+                  </button>
+
+                  <article className="media-album__feature" key={selectedMedia?.id}>
                     <button
-                      className="media-card__thumbnail"
+                      className="media-album__frame"
                       type="button"
-                      onClick={() => openVideoWithIntent(media.youtubeId)}
+                      onClick={() => selectedMedia && openVideoWithIntent(selectedMedia.youtubeId)}
                       onTouchStart={handleTouchStart}
                       onTouchMove={handleTouchMove}
-                      aria-label={pickText(media.title, language)}
+                      aria-label={selectedMedia ? pickText(selectedMedia.title, language) : undefined}
                     >
                       <img
-                        alt={pickText(media.title, language)}
+                        alt={selectedMedia ? pickText(selectedMedia.title, language) : ''}
                         loading="lazy"
-                        src={`https://img.youtube.com/vi/${media.youtubeId}/maxresdefault.jpg`}
+                        src={selectedMedia ? `https://img.youtube.com/vi/${selectedMedia.youtubeId}/maxresdefault.jpg` : ''}
                       />
-                      <span className="media-card__play">
-                        <PlayCircle size={48} />
+                      <span className="media-album__overlay" />
+                      <span className="media-card__play media-card__play--album">
+                        <PlayCircle size={54} />
                       </span>
-                      {media.duration && <span className="media-card__duration">{media.duration}</span>}
+                      {selectedMedia?.duration && <span className="media-card__duration">{selectedMedia.duration}</span>}
                     </button>
-                    <div className="media-card__content">
-                      <span className="media-card__category">{pickText(media.category, language)}</span>
-                      <h3>{pickText(media.title, language)}</h3>
-                      <p>{pickText(media.description, language)}</p>
+
+                    <div className="media-album__details">
+                      <div className="media-album__meta">
+                        <span className="media-card__category">{selectedMedia ? pickText(selectedMedia.category, language) : ''}</span>
+                        <span className="media-album__count">
+                          {String(mediaIndex + 1).padStart(2, '0')} / {String(mediaItems.length).padStart(2, '0')}
+                        </span>
+                      </div>
+                      <h3>{selectedMedia ? pickText(selectedMedia.title, language) : ''}</h3>
+                      <p>{selectedMedia ? pickText(selectedMedia.description, language) : ''}</p>
                     </div>
                   </article>
-                ))}
-              </div>
 
-              <article className="media-card media-card--featured card-hover" key={mediaItems[0]?.id}>
-                <button
-                  className="media-card__thumbnail media-card__thumbnail--featured"
-                  type="button"
-                  onClick={() => mediaItems[0] && openVideoWithIntent(mediaItems[0].youtubeId)}
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  aria-label={mediaItems[0] ? pickText(mediaItems[0].title, language) : undefined}
-                >
-                  <img
-                    alt={mediaItems[0] ? pickText(mediaItems[0].title, language) : ''}
-                    loading="lazy"
-                    src={mediaItems[0] ? `https://img.youtube.com/vi/${mediaItems[0].youtubeId}/maxresdefault.jpg` : ''}
-                  />
-                  <span className="media-card__play">
-                    <PlayCircle size={48} />
-                  </span>
-                  {mediaItems[0]?.duration && <span className="media-card__duration">{mediaItems[0].duration}</span>}
-                </button>
-                <div className="media-card__content media-card__content--featured">
-                  <span className="media-card__category">{mediaItems[0] ? pickText(mediaItems[0].category, language) : ''}</span>
-                  <h3>{mediaItems[0] ? pickText(mediaItems[0].title, language) : ''}</h3>
-                  <p>{mediaItems[0] ? pickText(mediaItems[0].description, language) : ''}</p>
+                  <button
+                    className="media-album__nav media-album__nav--next"
+                    type="button"
+                    onClick={handleMediaNext}
+                    aria-label={language === 'de' ? 'Nächstes Video' : 'Vidéo suivante'}
+                  >
+                    <ChevronRight size={22} />
+                  </button>
                 </div>
-              </article>
+
+                <div className="media-album__rail" role="tablist" aria-label={language === 'de' ? 'Videoliste' : 'Liste des vidéos'}>
+                  {mediaAlbumItems.map((media) => (
+                    <button
+                      className={`media-album__thumb ${media.index === mediaIndex ? 'media-album__thumb--active' : ''}`}
+                      key={media.id}
+                      type="button"
+                      onClick={() => setMediaIndex(media.index)}
+                      aria-label={pickText(media.title, language)}
+                      aria-pressed={media.index === mediaIndex}
+                    >
+                      <span className="media-album__thumb-image">
+                        <img
+                          alt={pickText(media.title, language)}
+                          loading="lazy"
+                          src={`https://img.youtube.com/vi/${media.youtubeId}/mqdefault.jpg`}
+                        />
+                      </span>
+                      <span className="media-album__thumb-copy">
+                        <span className="media-album__thumb-kicker">{pickText(media.category, language)}</span>
+                        <strong>{pickText(media.title, language)}</strong>
+                        {media.duration && <em>{media.duration}</em>}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="media-showcase media-showcase--mobile" aria-label={language === 'de' ? 'Video-Karussell' : 'Carrousel vidéo'}>

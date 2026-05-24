@@ -545,6 +545,26 @@ export function LandingPage() {
         </div>
       </section>
 
+      <section className="content-section advisory-cta-section" aria-label={language === 'de' ? 'Beratungsaufruf' : 'Appel au conseil'}>
+        <div className="section-inner advisory-cta-shell">
+          <div className="advisory-cta-copy">
+            <h2>
+              <span>{language === 'de' ? 'Unsicher beim' : 'Un doute avant'}</span>
+              <strong>{language === 'de' ? 'Fahrzeugkauf?' : "l'achat du véhicule ?"}</strong>
+            </h2>
+            <p>
+              {language === 'de'
+                ? 'Kein Problem - wir begleiten Sie Schritt fuer Schritt.'
+                : 'Aucun souci - nous vous accompagnons pas à pas.'}
+            </p>
+            <Button className="primary-cta advisory-cta-button" type="primary" size="large" href={advisoryPath}>
+              {language === 'de' ? 'Beratung buchen' : 'Réserver un conseil'}
+              <ArrowRight size={18} />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       
       {/* <section className="intro-section explanation-section">
         <div className="section-inner intro-card explanation-card">
@@ -796,7 +816,7 @@ export function LandingPage() {
           )}
         </div>
       </section>
-          <section className="content-section editorial-moment editorial-moment--primary" aria-label="Editorial statement">
+          {/* <section className="content-section editorial-moment editorial-moment--primary" aria-label="Editorial statement">
         <div className="section-inner">
           <span className="editorial-moment__mark" aria-hidden="true">
             DE
@@ -825,7 +845,7 @@ export function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
       {/* <section className="content-section gallery-section section-tone-light">
         <div className="section-inner">
           <div className="section-heading section-heading--center">

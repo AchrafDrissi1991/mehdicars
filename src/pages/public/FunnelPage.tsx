@@ -3,10 +3,12 @@ import type { CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
-import { FunnelTopBar } from '../../components/funnel/FunnelTopBar';
+import { LandingTopBar } from '../../components/landing/LandingTopBar';
 import { LeadFunnel } from '../../components/funnel/LeadFunnel';
 import type { SupportedLanguage } from '../../types/i18n';
 import designerHeroImageUrl from '../../../images/Designerimg.png';
+import '../../components/funnel/funnel.css';
+import './landingPage.css';
 
 export function FunnelPage() {
   const { t } = useTranslation();
@@ -35,8 +37,8 @@ export function FunnelPage() {
   ];
 
   return (
-    <main className="funnel-page">
-      <FunnelTopBar current={currentStep} total={4} />
+    <main className="landing-page funnel-page">
+      <LandingTopBar />
 
       <section className="funnel-hero" style={{ '--funnel-hero-image': `url(${designerHeroImageUrl})` } as CSSProperties}>
         <div className="section-inner funnel-hero__inner">

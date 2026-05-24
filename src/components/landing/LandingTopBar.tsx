@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { LanguageSwitch } from '../common/LanguageSwitch';
 import { SocialLinks } from '../common/SocialLinks';
 import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
@@ -10,11 +10,16 @@ import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
 export function LandingTopBar() {
   const { t } = useTranslation();
   const { lang = 'fr' } = useParams();
+  const location = useLocation();
   const funnelPath = `/${lang}/${lang === 'de' ? 'anfrage' : 'demande'}`;
   const advisoryPath = `/${lang}/${lang === 'de' ? 'beratung' : 'conseil'}`;
+  const landingPath = `/${lang}`;
+  const isLandingPage = location.pathname === landingPath;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const sectionHref = (sectionId: string) => (isLandingPage ? `#${sectionId}` : `${landingPath}#${sectionId}`);
 
   useEffect(() => {
     function handleScroll() {
@@ -45,7 +50,7 @@ export function LandingTopBar() {
         </Link>
 
         <nav aria-label={t('landing.nav.label')} className="landing-nav">
-          <a className="nav-link" href="#home">
+          <a className="nav-link" href={sectionHref('home')}>
             {t('landing.nav.home')}
           </a>
           <div className="nav-services">
@@ -62,13 +67,13 @@ export function LandingTopBar() {
               </Link>
             </div>
           </div>
-          <a className="nav-link" href="#service-details">
+          <a className="nav-link" href={sectionHref('service-details')}>
             {lang === 'de' ? 'Service-Details' : 'Details du service'}
           </a>
-          <a className="nav-link" href="#faq">
+          <a className="nav-link" href={sectionHref('faq')}>
             {t('landing.nav.faq')}
           </a>
-          <a className="nav-link" href="#contact">
+          <a className="nav-link" href={sectionHref('contact')}>
             {t('landing.nav.contact')}
           </a>
         </nav>
@@ -90,7 +95,7 @@ export function LandingTopBar() {
       {mobileMenuOpen && (
         <div className="mobile-nav-panel">
           <nav aria-label={t('landing.nav.mobileLabel')} className="mobile-nav">
-            <a href="#home" onClick={closeMobileMenu}>
+            <a href={sectionHref('home')} onClick={closeMobileMenu}>
               {t('landing.nav.home')}
             </a>
             <button className="mobile-services-toggle" onClick={() => setServicesOpen((current) => !current)} type="button">
@@ -107,13 +112,13 @@ export function LandingTopBar() {
                 </Link>
               </div>
             )}
-            <a href="#service-details" onClick={closeMobileMenu}>
+            <a href={sectionHref('service-details')} onClick={closeMobileMenu}>
               {lang === 'de' ? 'Service-Details' : 'Details du service'}
             </a>
-            <a href="#faq" onClick={closeMobileMenu}>
+            <a href={sectionHref('faq')} onClick={closeMobileMenu}>
               {t('landing.nav.faq')}
             </a>
-            <a href="#contact" onClick={closeMobileMenu}>
+            <a href={sectionHref('contact')} onClick={closeMobileMenu}>
               {t('landing.nav.contact')}
             </a>
           </nav>

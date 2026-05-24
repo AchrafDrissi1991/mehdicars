@@ -2322,6 +2322,125 @@
   font-size: 11px;
 }
 
+@media (min-width: 721px) {
+  .landing-page.funnel-page .funnel-hero {
+    min-height: calc(100svh - var(--landing-topbar-safe-offset, 122px));
+    padding-top: calc(88px + var(--landing-topbar-safe-offset, 122px));
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero {
+    min-height: 340px;
+    padding-top: calc(24px + var(--landing-topbar-safe-offset, 122px));
+    padding-bottom: 36px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero__copy {
+    gap: 10px;
+    max-width: 620px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero__copy h1 {
+    font-size: clamp(28px, 3.3vw, 42px);
+    line-height: 1.02;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero__copy p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .lead-funnel-shell {
+    width: min(540px, calc(100% - 40px));
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-card {
+    padding: 28px;
+    border-radius: 22px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-card h1 {
+    max-width: 420px;
+    margin-bottom: 8px;
+    font-size: clamp(26px, 2.2vw, 34px);
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-card > p {
+    max-width: 420px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-list {
+    gap: 18px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-field {
+    gap: 10px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-field label {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .option-grid {
+    gap: 10px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .option-grid .ant-radio-button-wrapper {
+    min-height: 50px;
+    padding: 0 14px;
+    border-radius: 14px;
+    font-size: 13px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .option-check-grid .ant-checkbox-wrapper {
+    padding: 11px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .full-control .ant-input,
+  .landing-page.funnel-page:not(.advisory-page) .full-control.ant-input,
+  .landing-page.funnel-page:not(.advisory-page) .full-control.ant-input-number,
+  .landing-page.funnel-page:not(.advisory-page) .question-field .ant-input-number,
+  .landing-page.funnel-page:not(.advisory-page) .question-field textarea.ant-input {
+    border-radius: 12px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-field .ant-input-lg,
+  .landing-page.funnel-page:not(.advisory-page) .question-field .ant-input-number-lg {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .privacy-row {
+    gap: 10px;
+    margin-top: 20px;
+    padding: 14px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-actions {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-actions .ant-btn {
+    min-height: 42px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  .landing-page.funnel-page .funnel-content {
+    padding-top: calc(56px + var(--landing-topbar-safe-offset, 122px));
+  }
+
+  .landing-page.funnel-page.advisory-page .consultation-redesign-section {
+    padding-top: calc(24px + var(--landing-topbar-safe-offset, 122px));
+  }
+}
+
 @media (max-width: 1080px) {
   .advisory-page-redesign .consultation-redesign {
     grid-template-columns: 1fr;
@@ -2329,6 +2448,61 @@
 }
 
 @media (max-width: 720px) {
+  .landing-page.funnel-page .funnel-hero {
+    padding-top: 132px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero {
+    min-height: 280px;
+    padding-top: 116px;
+    padding-bottom: 28px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero__copy h1 {
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-hero__copy p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .lead-funnel-shell {
+    width: min(100%, calc(100% - 20px));
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-card h1 {
+    font-size: clamp(22px, 6vw, 28px);
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-card > p {
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .question-field label {
+    font-size: 15px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .option-grid .ant-radio-button-wrapper {
+    min-height: 46px;
+    font-size: 13px;
+  }
+
+  .landing-page.funnel-page .funnel-content {
+    padding-top: 110px;
+  }
+
+  .landing-page.funnel-page.advisory-page .consultation-redesign-section {
+    padding-top: 92px;
+  }
+
   .advisory-page-redesign .consultation-redesign-section {
     padding: 16px 10px 40px;
   }

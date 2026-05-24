@@ -2,9 +2,11 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { CheckCircle2, ChevronLeft, ChevronRight, Lock, ShieldCheck } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
-import { FunnelTopBar } from '../../components/funnel/FunnelTopBar';
+import { LandingTopBar } from '../../components/landing/LandingTopBar';
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
+import '../../components/funnel/funnel.css';
+import './landingPage.css';
 
 export function AdvisoryPage() {
   const { lang = 'fr' } = useParams();
@@ -276,8 +278,8 @@ export function AdvisoryPage() {
   };
 
   return (
-    <main className="funnel-page advisory-page advisory-page-redesign">
-      <FunnelTopBar current={1} total={1} showProgress={false} />
+    <main className="landing-page funnel-page advisory-page advisory-page-redesign">
+      <LandingTopBar />
 
       {isSubmitted && (
         <div className="advisory-success-banner" role="alert">

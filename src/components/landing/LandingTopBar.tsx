@@ -1,5 +1,5 @@
-import { Button, Drawer } from 'antd';
-import { ChevronDown, Menu, ShoppingCart, X } from 'lucide-react';
+import { Button } from 'antd';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ export function LandingTopBar() {
   const { lang = 'fr' } = useParams();
   const funnelPath = `/${lang}/${lang === 'de' ? 'anfrage' : 'demande'}`;
   const advisoryPath = `/${lang}/${lang === 'de' ? 'beratung' : 'conseil'}`;
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -26,37 +26,19 @@ export function LandingTopBar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  function releaseBodyScrollLock() {
-    if (typeof document === 'undefined') {
-      return;
-    }
-
-    const hasOpenDrawer = document.querySelector('.ant-drawer-open');
-    if (hasOpenDrawer) {
-      return;
-    }
-
-    document.body.classList.remove('ant-scrolling-effect');
-    document.body.style.overflow = '';
-    document.body.style.width = '';
-  }
-
   useEffect(() => {
-    if (!drawerOpen) {
-      releaseBodyScrollLock();
+    if (!mobileMenuOpen) {
+      setServicesOpen(false);
     }
+  }, [mobileMenuOpen]);
 
-    return () => {
-      releaseBodyScrollLock();
-    };
-  }, [drawerOpen]);
-
-  function closeDrawer() {
-    setDrawerOpen(false);
+  function closeMobileMenu() {
+    setMobileMenuOpen(false);
+    setServicesOpen(false);
   }
 
   return (
-    <header className={`landing-topbar ${isScrolled ? 'is-scrolled' : ''}`}>
+    <header className={`landing-topbar ${isScrolled ? 'is-scrolled' : ''} ${mobileMenuOpen ? 'is-mobile-menu-open' : ''}`}>
       <div className="landing-topbar__inner">
         <Link className="brand" to={`/${lang}`}>
           <img alt={t('landing.brand')} className="brand-logo" src={mehdiCarsLogoUrl} />
@@ -99,63 +81,49 @@ export function LandingTopBar() {
         <Button
           aria-label={t('landing.nav.openMenu')}
           className="mobile-menu-button"
-          icon={<Menu size={22} />}
-          onClick={() => setDrawerOpen(true)}
+          icon={mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          onClick={() => setMobileMenuOpen((current) => !current)}
           type="text"
         />
-        <Link aria-label="Warenkorb" className="mobile-cart-button" to={funnelPath}>
-          <ShoppingCart size={20} />
-        </Link>
       </div>
 
-      <Drawer
-        afterOpenChange={(open) => {
-          if (!open) {
-            releaseBodyScrollLock();
-          }
-        }}
-        className="mobile-nav-drawer"
-        closeIcon={<X size={22} />}
-        onClose={closeDrawer}
-        open={drawerOpen}
-        placement="right"
-        title={t('landing.brand')}
-        width={340}
-      >
-        <nav aria-label={t('landing.nav.mobileLabel')} className="mobile-nav">
-          <a href="#home" onClick={closeDrawer}>
-            {t('landing.nav.home')}
-          </a>
-          <button className="mobile-services-toggle" onClick={() => setServicesOpen((current) => !current)} type="button">
-            {t('landing.nav.services')}
-            <ChevronDown className={servicesOpen ? 'is-open' : ''} size={17} />
-          </button>
-          {servicesOpen && (
-            <div className="mobile-services-panel">
-              <Link onClick={closeDrawer} to={funnelPath}>
-                {t('landing.servicesMenu.advisory.title')}
-              </Link>
-              <Link onClick={closeDrawer} to={advisoryPath}>
-                {t('landing.servicesMenu.sell.title')}
-              </Link>
-            </div>
-          )}
-          <a href="#service-details" onClick={closeDrawer}>
-            {lang === 'de' ? 'Service-Details' : 'Details du service'}
-          </a>
-          <a href="#faq" onClick={closeDrawer}>
-            {t('landing.nav.faq')}
-          </a>
-          <a href="#contact" onClick={closeDrawer}>
-            {t('landing.nav.contact')}
-          </a>
-        </nav>
+      {mobileMenuOpen && (
+        <div className="mobile-nav-panel">
+          <nav aria-label={t('landing.nav.mobileLabel')} className="mobile-nav">
+            <a href="#home" onClick={closeMobileMenu}>
+              {t('landing.nav.home')}
+            </a>
+            <button className="mobile-services-toggle" onClick={() => setServicesOpen((current) => !current)} type="button">
+              {t('landing.nav.services')}
+              <ChevronDown className={servicesOpen ? 'is-open' : ''} size={17} />
+            </button>
+            {servicesOpen && (
+              <div className="mobile-services-panel">
+                <Link onClick={closeMobileMenu} to={funnelPath}>
+                  {t('landing.servicesMenu.advisory.title')}
+                </Link>
+                <Link onClick={closeMobileMenu} to={advisoryPath}>
+                  {t('landing.servicesMenu.sell.title')}
+                </Link>
+              </div>
+            )}
+            <a href="#service-details" onClick={closeMobileMenu}>
+              {lang === 'de' ? 'Service-Details' : 'Details du service'}
+            </a>
+            <a href="#faq" onClick={closeMobileMenu}>
+              {t('landing.nav.faq')}
+            </a>
+            <a href="#contact" onClick={closeMobileMenu}>
+              {t('landing.nav.contact')}
+            </a>
+          </nav>
 
-        <div className="mobile-nav-actions">
-          <SocialLinks />
-          <LanguageSwitch />
+          <div className="mobile-nav-actions">
+            <SocialLinks />
+            <LanguageSwitch />
+          </div>
         </div>
-      </Drawer>
+      )}
     </header>
   );
 }

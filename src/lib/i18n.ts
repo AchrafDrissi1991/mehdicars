@@ -229,7 +229,7 @@ export const resources = {
           description:
             'Accompagnement personnel pour les clients en France qui recherchent un véhicule en Allemagne.',
           imprint: 'Impressum',
-          legal: 'Liens',
+          legal: 'Legal',
           navigation: 'Navigation',
           privacy: 'Confidentialité',
           rights: 'Release candidate. Textes juridiques à finaliser avant production.',

@@ -38,17 +38,44 @@ export function LanguageSwitch() {
     navigate(`${segments.join('/')}${location.search}`);
   }
 
+  const languageOptions = [
+    {
+      label: (
+        <span className="language-option">
+          <span aria-hidden="true" className="language-option__flag">
+            🇩🇪
+          </span>
+          <span className="language-option__label">Deutsch</span>
+        </span>
+      ),
+      value: 'de',
+    },
+    {
+      label: (
+        <span className="language-option">
+          <span aria-hidden="true" className="language-option__flag">
+            🇫🇷
+          </span>
+          <span className="language-option__label">French</span>
+        </span>
+      ),
+      value: 'fr',
+    },
+  ];
+
+  const selectedLanguage = languageOptions.find((option) => option.value === currentLanguage);
+
   return (
     <Select
       aria-label="Language"
       className="language-select"
-      onChange={switchLanguage}
-      options={[
-        { label: 'DE', value: 'de' },
-        { label: 'FR', value: 'fr' },
-      ]}
+      labelInValue
+      onChange={({ value }) => switchLanguage(value as SupportedLanguage)}
+      options={languageOptions}
+      optionLabelProp="label"
       popupMatchSelectWidth={false}
-      value={currentLanguage}
+      popupClassName="language-select-dropdown"
+      value={selectedLanguage}
     />
   );
 }

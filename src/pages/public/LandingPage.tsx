@@ -8,12 +8,9 @@ import {
   ChevronRight,
   CheckCircle2,
   ClipboardCheck,
-  Eye,
-  FileCheck,
   FileText,
   Handshake,
   MapPin,
-  PhoneCall,
   PlayCircle,
   Search,
   ShieldCheck,
@@ -29,7 +26,8 @@ import { LandingTopBar } from '../../components/landing/LandingTopBar';
 import { faqItems, galleryItems, mediaItems, testimonials } from '../../features/content/contentData';
 import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
-import heroImageUrl from '../../../images/banner.png';
+import heroImageUrl from '../../../images/bannerfix2.png';
+import bannerFixTwoImageUrl from '../../../images/bannerfix2.png';
 import mehdiClaGrayImageUrl from '../../../images/mehdi_cla_gray.png';
 import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
 import './landingPage.css';
@@ -50,8 +48,6 @@ export function LandingPage() {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [serviceExplanationVisible, setServiceExplanationVisible] = useState(false);
   const [serviceJourneyVisible, setServiceJourneyVisible] = useState(false);
-  const [activeServiceStep, setActiveServiceStep] = useState(0);
-  const [serviceJourneyAutoPlay, setServiceJourneyAutoPlay] = useState(true);
   const serviceExplanationRef = useRef<HTMLElement | null>(null);
   const serviceJourneyRef = useRef<HTMLElement | null>(null);
   const touchIntentRef = useRef({ startX: 0, startY: 0, moved: false });
@@ -60,38 +56,88 @@ export function LandingPage() {
     {
       id: 1,
       label: { de: 'SCHRITT 01', fr: 'ÉTAPE 01' },
-      text: {
-        de: 'Finden Sie das Fahrzeug auf mobile.de oder AutoScout24 und senden Sie uns den Link. Wir uebernehmen den Rest.',
-        fr: 'Trouvez le véhicule sur mobile.de ou AutoScout24 et envoyez-nous le lien. Nous prenons en charge la suite.',
+      description: {
+        de: 'Sie finden Ihr Wunschfahrzeug über bekannte Fahrzeugbörsen und senden uns einfach den Link zur Prüfung.',
+        fr: 'Vous trouvez votre véhicule idéal sur une plateforme reconnue et nous envoyez simplement le lien pour vérification.',
       },
-      title: { de: 'Recherche des Fahrzeugs', fr: 'Recherche du véhicule' },
+      title: { de: 'Fahrzeugsuche', fr: 'Recherche du véhicule' },
+      bullets: {
+        de: ['mobile.de', 'AutoScout24', 'Vergleichbare Fahrzeugbörsen', 'Link direkt an uns senden'],
+        fr: ['mobile.de', 'AutoScout24', 'Plateformes similaires', 'Envoi direct du lien'],
+      },
+      links: [
+        { href: 'https://www.mobile.de', label: 'mobile.de' },
+        { href: 'https://www.autoscout24.de', label: 'AutoScout24' },
+      ],
     },
     {
       id: 2,
       label: { de: 'SCHRITT 02', fr: 'ÉTAPE 02' },
-      text: {
-        de: 'Der Verkaeufer wird kontaktiert und die wichtigsten Punkte geprueft: Unfallhistorie, Wartung, Kilometerstand und technischer Zustand.',
-        fr: 'Le vendeur est contacté et les points clés vérifiés : historique des accidents, entretien, kilométrage et état technique.',
+      description: {
+        de: 'Wir kontaktieren den Händler direkt und prüfen alle wesentlichen Fahrzeuginformationen vorab.',
+        fr: 'Nous contactons directement le vendeur et vérifions en amont toutes les informations essentielles du véhicule.',
       },
-      title: { de: 'Kontakt mit Verkaeufer & Pruefung', fr: 'Contact vendeur & vérification' },
+      title: { de: 'Händlerkontakt & Fahrzeugprüfung', fr: 'Contact vendeur & vérification' },
+      bullets: {
+        de: ['Unfallhistorie', 'Wartungs- und Servicehistorie', 'Vorbesitzer', 'Technischer Zustand', 'Laufleistung und Dokumentation'],
+        fr: ['Historique d’accident', 'Historique d’entretien', 'Nombre de propriétaires', 'État technique', 'Kilométrage et documents'],
+      },
     },
     {
       id: 3,
       label: { de: 'SCHRITT 03', fr: 'ÉTAPE 03' },
-      text: {
-        de: 'Vor-Ort-Inspektion: Karosserie, Motor, Innenraum, Reifen und Bremsen. Sie erhalten Fotos, Videos und einen ehrlichen Bericht.',
-        fr: 'Inspection complète sur place : carrosserie, moteur, intérieur, pneus et freins. Vous recevez photos, vidéos et rapport honnête.',
+      description: {
+        de: 'Nach positiver Vorprüfung besichtigen wir das Fahrzeug persönlich vor Ort und dokumentieren alles transparent.',
+        fr: 'Après une pré-vérification positive, nous inspectons personnellement le véhicule sur place et documentons tout avec transparence.',
       },
-      title: { de: 'Inspektion vor Ort', fr: 'Inspection sur place' },
+      title: { de: 'Vor-Ort-Besichtigung', fr: 'Inspection sur place' },
+      bullets: {
+        de: ['Karosserie und Lackzustand', 'Motor und Getriebe', 'Innenraumzustand', 'Reifen und Bremsen', 'Elektronik und Ausstattung', 'Schäden oder Mängel'],
+        fr: ['Carrosserie et peinture', 'Moteur et boîte', 'État intérieur', 'Pneus et freins', 'Électronique et équipements', 'Défauts éventuels'],
+      },
+      note: {
+        de: 'Zusätzlich erhalten Sie Fotos, Videos und eine ehrliche Einschätzung zum Fahrzeugzustand.',
+        fr: 'Vous recevez en plus des photos, des vidéos et une évaluation honnête de l’état du véhicule.',
+      },
     },
     {
       id: 4,
       label: { de: 'SCHRITT 04', fr: 'ÉTAPE 04' },
-      text: {
-        de: 'Alle Dokumente werden vorbereitet: Vertrag, Reservierung und komplette Koordination bis zur Fahrzeuguebergabe.',
-        fr: "Tous les documents sont préparés : contrat, réservation et coordination complète jusqu'au retrait du véhicule.",
+      description: {
+        de: 'Auf Grundlage unserer Prüfung entscheiden Sie in Ruhe, ob das Fahrzeug gekauft werden soll.',
+        fr: 'Sur la base de notre contrôle, vous décidez sereinement si le véhicule doit être acheté ou non.',
       },
-      title: { de: 'Abschluss des Kaufs', fr: "Finalisation de l'achat" },
+      title: { de: 'Kaufentscheidung', fr: 'Décision d’achat' },
+      bullets: {
+        de: ['Transparente Entscheidungsgrundlage', 'Alle Ergebnisse übersichtlich', 'Ohne Kaufdruck', 'Sie geben die finale Freigabe'],
+        fr: ['Base de décision claire', 'Résultats présentés de façon structurée', 'Sans pression', 'Validation finale par vous'],
+      },
+    },
+    {
+      id: 5,
+      label: { de: 'SCHRITT 05', fr: 'ÉTAPE 05' },
+      description: {
+        de: 'Bei positiver Entscheidung kümmern wir uns um die komplette Kaufabwicklung mit dem Händler.',
+        fr: 'En cas de validation, nous gérons l’ensemble de la procédure d’achat avec le vendeur.',
+      },
+      title: { de: 'Kaufabwicklung', fr: 'Gestion de l’achat' },
+      bullets: {
+        de: ['Kaufvertrag', 'Fahrzeugdokumente', 'Reservierung des Fahrzeugs', 'Abstimmung mit dem Händler'],
+        fr: ['Contrat de vente', 'Documents du véhicule', 'Réservation du véhicule', 'Coordination avec le vendeur'],
+      },
+    },
+    {
+      id: 6,
+      label: { de: 'SCHRITT 06', fr: 'ÉTAPE 06' },
+      description: {
+        de: 'Nach Abschluss aller Formalitäten organisieren wir die Abholung oder auf Wunsch den weiteren Transport.',
+        fr: 'Après la finalisation des démarches, nous organisons l’enlèvement du véhicule ou, sur demande, son transport.',
+      },
+      title: { de: 'Fahrzeugabholung & Transport', fr: 'Enlèvement & transport' },
+      bullets: {
+        de: ['Abholung nach Termin', 'Organisation des Transports', 'Saubere Übergabe', 'Begleitung bis zum nächsten Schritt'],
+        fr: ['Retrait sur rendez-vous', 'Organisation du transport', 'Remise structurée', 'Accompagnement jusqu’à la suite'],
+      },
     },
   ];
 
@@ -171,18 +217,6 @@ export function LandingPage() {
 
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (!serviceJourneyVisible || !serviceJourneyAutoPlay) {
-      return;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setActiveServiceStep((prev) => (prev + 1) % serviceDetailsSteps.length);
-    }, 3200);
-
-    return () => window.clearInterval(intervalId);
-  }, [serviceJourneyVisible, serviceJourneyAutoPlay, serviceDetailsSteps.length]);
 
   const handleGalleryPrev = () => {
     setGalleryIndex((prev) => (prev === 0 ? galleryItems.length - 1 : prev - 1));
@@ -268,13 +302,11 @@ export function LandingPage() {
   const serviceDetailsSectionCopy = {
     eyebrow: { de: 'Service-Details', fr: 'Détails du service' },
     subtitle: {
-      de: '4 einfache Schritte, von der Suche bis zur Fahrzeuguebergabe.',
-      fr: '4 étapes simples, de la recherche à la remise des clés.',
+      de: '6 klar strukturierte Schritte von der Fahrzeugsuche bis zur Abholung oder zum Transport.',
+      fr: '6 étapes claires, de la recherche du véhicule jusqu’au retrait ou au transport.',
     },
-    title: { de: 'So funktioniert der Fahrzeugservice', fr: 'Comment fonctionne le service' },
+    title: { de: 'So funktioniert unser Fahrzeugservice', fr: 'Comment fonctionne notre service véhicule' },
   };
-
-  const serviceJourneyIcons = [Search, PhoneCall, Eye, FileCheck];
 
   const serviceExplanationSectionCopy = {
     eyebrow: { de: 'WILLKOMMEN', fr: 'BIENVENUE' },
@@ -473,54 +505,42 @@ export function LandingPage() {
             <h2>{pickText(serviceDetailsSectionCopy.title, language)}</h2>
             <p>{pickText(serviceDetailsSectionCopy.subtitle, language)}</p>
           </div>
-          <div className="service-journey">
-            <div className="service-journey__line" aria-hidden="true" />
-            <div className="service-journey__steps" role="list">
-              {serviceDetailsSteps.map((step, index) => {
-                const StepIcon = serviceJourneyIcons[index] ?? ClipboardCheck;
-                const isActive = index === activeServiceStep;
-                const isCompleted = index < activeServiceStep;
-
-                return (
-                  <article
-                    className={`service-journey-step ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''}`}
-                    key={step.id}
-                    role="listitem"
-                    style={{ '--step-index': String(index) } as CSSProperties}
-                  >
-                    <button
-                      type="button"
-                      className="service-journey-step__trigger"
-                      onClick={() => {
-                        setActiveServiceStep(index);
-                        setServiceJourneyAutoPlay(false);
-                      }}
-                      aria-expanded={isActive}
-                    >
-                      <span className="service-journey-step__left" aria-hidden="true">
-                        <span className="service-journey-step__icon">
-                          <StepIcon size={18} />
-                        </span>
-                        {index < serviceDetailsSteps.length - 1 && (
-                          <span className="service-journey-step__line">
-                            <span
-                              className={`service-journey-step__line-fill ${isCompleted || isActive ? 'is-filled' : ''}`}
-                            />
-                          </span>
-                        )}
-                      </span>
-                      <span className="service-journey-step__copy">
-                        <span className="service-journey-step__label">{pickText(step.label, language)}</span>
-                        <h3>{pickText(step.title, language).replace(/^\d+\.\s*/, '')}</h3>
-                      </span>
-                    </button>
-                    <div className="service-journey-step__content" aria-hidden={!isActive}>
-                      <p>{pickText(step.text, language)}</p>
+          <div className="service-details-editorial-grid" role="list">
+            {serviceDetailsSteps.map((step, index) => (
+              <article
+                className="service-details-editorial-card"
+                key={step.id}
+                role="listitem"
+                style={{ '--step-index': String(index) } as CSSProperties}
+              >
+                <div className="service-details-editorial-card__number" aria-hidden="true">
+                  {step.id}
+                </div>
+                <div className="service-details-editorial-card__media">
+                  <img alt={pickText(step.title, language)} loading="lazy" src={bannerFixTwoImageUrl} />
+                </div>
+                <div className="service-details-editorial-card__body">
+                  <span className="service-details-editorial-card__label">{pickText(step.label, language)}</span>
+                  <h3>{pickText(step.title, language).replace(/^\d+\.\s*/, '')}</h3>
+                  <p>{pickText(step.description, language)}</p>
+                  <ul className="service-details-editorial-card__list">
+                    {pickText(step.bullets, language).map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                  {step.links && (
+                    <div className="service-details-editorial-card__links">
+                      {step.links.map((link) => (
+                        <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+                          {link.label}
+                        </a>
+                      ))}
                     </div>
-                  </article>
-                );
-              })}
-            </div>
+                  )}
+                  {step.note && <span className="service-details-editorial-card__note">{pickText(step.note, language)}</span>}
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -866,7 +886,7 @@ export function LandingPage() {
         </div>
       </section> */}
 
-      <section id="faq" className="content-section faq-section section-tone-light">
+      {/* <section id="faq" className="content-section faq-section section-tone-light">
         <div className="section-inner faq-grid">
           <span className="faq-deco-number" aria-hidden="true">06</span>
           <div className="faq-copy">
@@ -886,7 +906,7 @@ export function LandingPage() {
             }))}
           />
         </div>
-      </section>
+      </section> */}
 
       <section id="contact" className="final-cta contact-section">
         <div className="section-inner final-cta-card contact-card">
@@ -938,26 +958,26 @@ export function LandingPage() {
 
       <footer className="landing-footer">
         <div className="section-inner footer-grid">
-          <div className="footer-brand">
+          <div className="footer-brand footer-column">
             <Link className="brand brand--footer" to={`/${language}`}>
               <img alt={t('landing.brand')} className="brand-logo" src={mehdiCarsLogoUrl} />
             </Link>
             <p>{t('landing.footer.description')}</p>
             <SocialLinks variant="dark" />
           </div>
-          <div>
+          <div className="footer-column">
             <h3>{t('landing.footer.navigation')}</h3>
             <a href="#home">{t('landing.nav.home')}</a>
-            <a href="#process">{t('landing.nav.process')}</a>
+            <a href="#service-details">{t('landing.nav.process')}</a>
             <a href="#faq">{t('landing.nav.faq')}</a>
             <a href="#contact">{t('landing.nav.contact')}</a>
           </div>
-          <div>
+          <div className="footer-column">
             <h3>{t('landing.footer.services')}</h3>
             <a href={funnelPath}>{t('landing.services.advisory.title')}</a>
-            <a href="#services">{t('landing.services.sell.title')}</a>
+            <a href={advisoryPath}>{t('landing.services.sell.title')}</a>
           </div>
-          <div>
+          <div className="footer-column">
             <h3>{t('landing.footer.legal')}</h3>
             <Link to={`/${language}/impressum`}>{t('landing.footer.imprint')}</Link>
             <Link to={privacyPath}>{t('landing.footer.privacy')}</Link>

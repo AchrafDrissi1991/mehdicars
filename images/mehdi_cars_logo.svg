@@ -1,17 +1,39 @@
-<svg width="500" height="160" viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="500" height="160" rx="12" fill="#0f1c2e"/>
-  
-  <!-- Shield shape -->
-  <path d="M100 20 L160 20 L185 38 L185 108 L130 138 L75 108 L75 38 Z" fill="#1a3a5c" stroke="#3a7bd5" stroke-width="2"/>
-  <!-- M inside shield -->
-  <text x="130" y="95" font-family="Arial,sans-serif" font-size="52" font-weight="700" fill="white" text-anchor="middle">M</text>
-  
-  <!-- Divider line -->
-  <line x1="205" y1="86" x2="480" y2="86" stroke="#3a7bd5" stroke-width="1" opacity="0.5"/>
-  
-  <!-- MEHDI text -->
-  <text x="205" y="78" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="white" letter-spacing="3">MEHDI</text>
-  <!-- CARS text -->
-  <text x="207" y="118" font-family="Arial,sans-serif" font-size="22" font-weight="400" fill="#3a7bd5" letter-spacing="10">CARS</text>
+<svg width="500" height="160" viewBox="0 0 500 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shieldFill" x1="70" y1="24" x2="188" y2="138" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#14243A"/>
+      <stop offset="0.55" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#05070B"/>
+    </linearGradient>
+    <linearGradient id="shieldStroke" x1="86" y1="26" x2="182" y2="134" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A9C8FF"/>
+      <stop offset="0.45" stop-color="#6EA5FF"/>
+      <stop offset="1" stop-color="#335B97"/>
+    </linearGradient>
+    <linearGradient id="dividerStroke" x1="205" y1="90" x2="480" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7CAAFF"/>
+      <stop offset="1" stop-color="#7CAAFF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="softGlow" x="58" y="8" width="144" height="144" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="6" result="effect1_foregroundBlur"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#softGlow)" opacity="0.22">
+    <path d="M98 22H158L184 40V106L128 136L72 106V40L98 22Z" fill="#6EA5FF"/>
+  </g>
+
+  <path d="M98 22H158L184 40V106L128 136L72 106V40L98 22Z" fill="url(#shieldFill)"/>
+  <path d="M98 22H158L184 40V106L128 136L72 106V40L98 22Z" stroke="url(#shieldStroke)" stroke-width="2.2"/>
+  <path d="M92 34H164" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1.2" stroke-linecap="round"/>
+
+  <path d="M104 103V54L128 84L152 54V103" stroke="#F8FBFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M104 103V54L128 84L152 54V103" stroke="#9FC4FF" stroke-opacity="0.18" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <line x1="208" y1="90" x2="480" y2="90" stroke="url(#dividerStroke)" stroke-width="1.2"/>
+
+  <text x="206" y="74" fill="#F8FBFF" font-family="Arial, sans-serif" font-size="40" font-weight="700" letter-spacing="4">MEHDI</text>
+  <text x="206" y="118" fill="#8FB8FF" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="9">CARS</text>
 </svg>

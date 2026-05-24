@@ -1,0 +1,147 @@
+.admin-page {
+  min-height: 100vh;
+  padding: 40px 20px 56px;
+  background:
+    radial-gradient(circle at top left, rgba(47, 111, 237, 0.08), transparent 28%),
+    linear-gradient(180deg, #f8fafc 0%, #eef3f9 100%);
+}
+
+.admin-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 40px);
+}
+
+.admin-header p {
+  margin: 8px 0 0;
+  color: var(--color-body-text);
+}
+
+.admin-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.admin-card {
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 24px 0;
+}
+
+.admin-card-header h2,
+.admin-login-card h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.admin-card-header p,
+.admin-login-card p {
+  margin: 8px 0 0;
+  color: var(--color-body-text);
+}
+
+.admin-card-body {
+  padding: 24px;
+}
+
+.admin-login-wrap {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 96px);
+}
+
+.admin-login-card {
+  width: min(460px, 100%);
+  padding: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-medium);
+}
+
+.admin-login-card .ant-form {
+  margin-top: 24px;
+}
+
+.admin-block-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-block-form .admin-field-full {
+  grid-column: 1 / -1;
+}
+
+.admin-block-list {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-block-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-surface-muted);
+}
+
+.admin-block-meta strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.admin-block-meta span {
+  color: var(--color-body-text);
+}
+
+.admin-table .ant-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-notes {
+  min-width: 220px;
+}
+
+@media (max-width: 860px) {
+  .admin-page {
+    padding-inline: 14px;
+  }
+
+  .admin-card-header,
+  .admin-card-body,
+  .admin-login-card {
+    padding: 20px;
+  }
+
+  .admin-block-form {
+    grid-template-columns: 1fr;
+  }
+}

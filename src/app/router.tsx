@@ -1,6 +1,7 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from '../components/common/AppLayout';
 import { AdvisoryPage } from '../pages/public/AdvisoryPage';
+import { AdminPage } from '../pages/admin/AdminPage';
 import { InternalReportPage } from '../pages/internal/InternalReportPage';
 import { FunnelPage } from '../pages/public/FunnelPage';
 import { LandingPage } from '../pages/public/LandingPage';
@@ -40,5 +41,9 @@ export const router = createBrowserRouter([
   {
     path: '/internal/report/:reportToken',
     element: <InternalReportPage />,
+  },
+  {
+    path: '/admin',
+    element: <AdminPage />,
   },
 ]);

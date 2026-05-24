@@ -1,42 +1,179 @@
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { Alert, Spin } from 'antd';
 import { CheckCircle2, ChevronLeft, ChevronRight, Lock, ShieldCheck } from 'lucide-react';
+import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
 import { LandingTopBar } from '../../components/landing/LandingTopBar';
 import { pickText } from '../../lib/localized';
+import { hasSupabaseConfig } from '../../lib/supabase';
+import {
+  buildSlotRangeLabel,
+  createConsultation,
+  getBookingAvailabilityWindow,
+  isSlotBlocked,
+} from '../../services/consultationService';
+import type { AvailabilityBlockRecord, ConsultationSlotRecord } from '../../types/consultation';
 import type { SupportedLanguage } from '../../types/i18n';
 import '../../components/funnel/funnel.css';
 import './landingPage.css';
+
+interface BookingWindowState {
+  consultations: ConsultationSlotRecord[];
+  blocks: AvailabilityBlockRecord[];
+}
+
+const advisoryCopy = {
+  brand: {
+    de: 'Andi Cars - Beratungsservice',
+    fr: 'Andi Cars - Service conseil',
+  },
+  leftHeadline: {
+    de: 'Ihr Projekt. Professionell begleitet.',
+    fr: 'Votre projet. Accompagne professionnellement.',
+  },
+  leftText: {
+    de: 'Wir fuehren Sie Schritt fuer Schritt durch den gesamten Kaufprozess - von der Fahrzeugsuche bis zur finalen Uebergabe.',
+    fr: "Nous vous guidons etape par etape dans tout le processus d'achat, de la recherche du vehicule jusqu'a la remise finale.",
+  },
+  bullet1: {
+    de: 'Klare Erklaerung jedes Prozessschritts',
+    fr: 'Explication claire de chaque etape du processus',
+  },
+  bullet2: {
+    de: 'Antworten zu Budget, Suche und Risiken',
+    fr: 'Reponses sur le budget, la recherche et les risques',
+  },
+  bullet3: {
+    de: 'Persoenliche Empfehlungen fuer Ihr Vorhaben',
+    fr: 'Recommandations personnalisees pour votre projet',
+  },
+  promoTag: {
+    de: 'Aktionspreis',
+    fr: 'Prix promotionnel',
+  },
+  bookingTitle: {
+    de: 'Termin buchen',
+    fr: 'Réserver une consultation',
+  },
+  bookingSubtitle: {
+    de: 'Waehlen Sie ein Datum, einen freien Slot und hinterlassen Sie Ihre Angaben.',
+    fr: 'Choisissez une date, un creneau libre et laissez vos informations.',
+  },
+  calendarLabel: {
+    de: 'Kalender',
+    fr: 'Calendrier',
+  },
+  firstName: {
+    de: 'Vorname',
+    fr: 'Prénom',
+  },
+  lastName: {
+    de: 'Name',
+    fr: 'Nom',
+  },
+  phone: {
+    de: 'Telefonnummer',
+    fr: 'Numéro de téléphone',
+  },
+  phoneError: {
+    de: 'Bitte eine gueltige Telefonnummer eingeben (nur Ziffern, z.B. +41791234567).',
+    fr: 'Veuillez saisir un numéro de téléphone valide (ex: +41791234567).',
+  },
+  email: {
+    de: 'E-Mail-Adresse',
+    fr: 'Adresse e-mail',
+  },
+  date: {
+    de: 'Datum',
+    fr: 'Date du rendez-vous',
+  },
+  time: {
+    de: 'Uhrzeit',
+    fr: 'Heure',
+  },
+  question: {
+    de: 'Ihre Frage (optional)',
+    fr: 'Votre question (optionnel)',
+  },
+  paymentTitle: {
+    de: 'Zahlungsmethoden',
+    fr: 'Moyens de paiement',
+  },
+  submit: {
+    de: '39 EUR bezahlen und Termin bestaetigen',
+    fr: 'Payer 39 EUR et confirmer le rendez-vous',
+  },
+  legalNote: {
+    de: 'Sichere Zahlung · Sofortige Bestaetigung per E-Mail',
+    fr: 'Paiement securise · Confirmation immediate par e-mail',
+  },
+  successBanner: {
+    de: 'Buchung bestätigt! Eine Bestätigungsmail wurde an',
+    fr: 'Réservation confirmée ! Un e-mail de confirmation a été envoyé à',
+  },
+  successBannerSuffix: {
+    de: 'gesendet.',
+    fr: 'envoyé.',
+  },
+  schedulerSubtitle: {
+    de: 'Verfuegbare Slots -',
+    fr: 'Créneaux disponibles le',
+  },
+  slotButton: {
+    de: 'Waehlen',
+    fr: 'Choisir',
+  },
+  slotChosen: {
+    de: 'Gewaehlt',
+    fr: 'Choisi',
+  },
+  noSlots: {
+    de: 'Keine freien Termine an diesem Tag.',
+    fr: 'Aucun créneau libre ce jour.',
+  },
+  reserved: {
+    de: 'Reserviert',
+    fr: 'Réservé',
+  },
+  availableOne: {
+    de: '1 Platz verfuegbar',
+    fr: '1 place disponible',
+  },
+  selectSlotHint: {
+    de: 'Bitte zuerst einen freien Termin auswaehlen.',
+    fr: "Veuillez d'abord choisir un créneau libre.",
+  },
+  limited: {
+    de: 'Limitiert',
+    fr: 'Limite',
+  },
+};
+
+function formatDateKey(date: Date) {
+  return dayjs(date).format('YYYY-MM-DD');
+}
+
+function validatePhone(value: string) {
+  const cleaned = value.replace(/\s/g, '');
+  return /^[+]?[0-9]{7,15}$/.test(cleaned);
+}
 
 export function AdvisoryPage() {
   const { lang = 'fr' } = useParams();
   const language = lang as SupportedLanguage;
   const locale = language === 'de' ? 'de-DE' : 'fr-FR';
-  const formatDateKey = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  };
-
-  const slotTemplates = useMemo(() => {
-    const slots: string[] = [];
-    for (let hour = 9; hour < 20; hour += 1) {
-      const from = `${String(hour).padStart(2, '0')}:00`;
-      const to = `${String(hour + 1).padStart(2, '0')}:00`;
-      slots.push(`${from} - ${to}`);
-    }
-
-    return slots;
-  }, []);
-
+  const slotTemplates = useMemo(() => Array.from({ length: 11 }, (_, index) => `${String(index + 9).padStart(2, '0')}:00`), []);
   const [viewDate, setViewDate] = useState(() => new Date());
   const [selectedDate, setSelectedDate] = useState(() => new Date());
-  const [reservedSlotsByDate, setReservedSlotsByDate] = useState<Record<string, string[]>>({});
+  const [availabilityWindow, setAvailabilityWindow] = useState<BookingWindowState>({ consultations: [], blocks: [] });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [phoneError, setPhoneError] = useState('');
+  const [slotError, setSlotError] = useState('');
+  const [availabilityError, setAvailabilityError] = useState('');
+  const [loadingAvailability, setLoadingAvailability] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -48,137 +185,39 @@ export function AdvisoryPage() {
     question: '',
   });
 
-  const validatePhone = (value: string) => {
-    const cleaned = value.replace(/\s/g, '');
-    return /^[+]?[0-9]{7,15}$/.test(cleaned);
-  };
+  useEffect(() => {
+    if (!hasSupabaseConfig()) {
+      return;
+    }
 
-  const advisoryCopy = {
-    brand: {
-      de: 'Andi Cars - Beratungsservice',
-      fr: 'Andi Cars - Service conseil',
-    },
-    leftHeadline: {
-      de: 'Ihr Projekt. Professionell begleitet.',
-      fr: 'Votre projet. Accompagne professionnellement.',
-    },
-    leftText: {
-      de: 'Wir fuehren Sie Schritt fuer Schritt durch den gesamten Kaufprozess - von der Fahrzeugsuche bis zur finalen Uebergabe.',
-      fr: 'Nous vous guidons etape par etape dans tout le processus d\'achat, de la recherche du vehicule jusqu\'a la remise finale.',
-    },
-    bullet1: {
-      de: 'Klare Erklaerung jedes Prozessschritts',
-      fr: 'Explication claire de chaque etape du processus',
-    },
-    bullet2: {
-      de: 'Antworten zu Budget, Suche und Risiken',
-      fr: 'Reponses sur le budget, la recherche et les risques',
-    },
-    bullet3: {
-      de: 'Persoenliche Empfehlungen fuer Ihr Vorhaben',
-      fr: 'Recommandations personnalisees pour votre projet',
-    },
-    promoTag: {
-      de: 'Aktionspreis',
-      fr: 'Prix promotionnel',
-    },
-    bookingTitle: {
-      de: 'Termin buchen',
-      fr: 'Réserver une consultation',
-    },
-    bookingSubtitle: {
-      de: 'Waehlen Sie ein Datum, einen freien Slot und hinterlassen Sie Ihre Angaben.',
-      fr: 'Choisissez une date, un creneau libre et laissez vos informations.',
-    },
-    calendarLabel: {
-      de: 'Kalender',
-      fr: 'Calendrier',
-    },
-    firstName: {
-      de: 'Vorname',
-      fr: 'Prénom',
-    },
-    lastName: {
-      de: 'Name',
-      fr: 'Nom',
-    },
-    phone: {
-      de: 'Telefonnummer',
-      fr: 'Numéro de téléphone',
-    },
-    phoneError: {
-      de: 'Bitte eine gueltige Telefonnummer eingeben (nur Ziffern, z.B. +41791234567).',
-      fr: 'Veuillez saisir un numéro de téléphone valide (ex: +41791234567).',
-    },
-    email: {
-      de: 'E-Mail-Adresse',
-      fr: 'Adresse e-mail',
-    },
-    date: {
-      de: 'Datum',
-      fr: 'Date du rendez-vous',
-    },
-    time: {
-      de: 'Uhrzeit',
-      fr: 'Heure',
-    },
-    question: {
-      de: 'Ihre Frage (optional)',
-      fr: 'Votre question (optionnel)',
-    },
-    paymentTitle: {
-      de: 'Zahlungsmethoden',
-      fr: 'Moyens de paiement',
-    },
-    submit: {
-      de: '39 EUR bezahlen und Termin bestaetigen',
-      fr: 'Payer 39 EUR et confirmer le rendez-vous',
-    },
-    legalNote: {
-      de: 'Sichere Zahlung · Sofortige Bestaetigung per E-Mail',
-      fr: 'Paiement securise · Confirmation immediate par e-mail',
-    },
-    successBanner: {
-      de: 'Buchung bestätigt! Eine Bestätigungsmail wurde an',
-      fr: 'Réservation confirmée ! Un e-mail de confirmation a été envoyé à',
-    },
-    successBannerSuffix: {
-      de: 'gesendet.',
-      fr: 'envoyé.',
-    },
-    schedulerSubtitle: {
-      de: 'Verfuegbare Slots -',
-      fr: 'Créneaux disponibles le',
-    },
-    slotButton: {
-      de: 'Waehlen',
-      fr: 'Choisir',
-    },
-    slotChosen: {
-      de: 'Gewaehlt',
-      fr: 'Choisi',
-    },
-    noSlots: {
-      de: 'Keine freien Termine an diesem Tag.',
-      fr: 'Aucun créneau libre ce jour.',
-    },
-    reserved: {
-      de: 'Reserviert',
-      fr: 'Réservé',
-    },
-    availableOne: {
-      de: '1 Platz verfuegbar',
-      fr: '1 place disponible',
-    },
-    selectSlotHint: {
-      de: 'Bitte zuerst einen freien Termin auswaehlen.',
-      fr: 'Veuillez d\'abord choisir un créneau libre.',
-    },
-    limited: {
-      de: 'Limitiert',
-      fr: 'Limite',
-    },
-  };
+    const start = dayjs(viewDate).startOf('month').startOf('week').format('YYYY-MM-DD');
+    const end = dayjs(viewDate).endOf('month').endOf('week').format('YYYY-MM-DD');
+
+    let isMounted = true;
+    setLoadingAvailability(true);
+    setAvailabilityError('');
+
+    getBookingAvailabilityWindow(start, end)
+      .then((windowData) => {
+        if (isMounted) {
+          setAvailabilityWindow(windowData);
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          setAvailabilityError(error instanceof Error ? error.message : 'Availability could not be loaded.');
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setLoadingAvailability(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [viewDate]);
 
   const monthLabel = useMemo(
     () => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(viewDate),
@@ -190,9 +229,33 @@ export function AdvisoryPage() {
     [locale, selectedDate],
   );
 
+  const currentDateKey = formatDateKey(new Date());
+  const selectedDateKey = formatDateKey(selectedDate);
+  const selectedDateInput = useMemo(
+    () => new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(selectedDate),
+    [locale, selectedDate],
+  );
+
   const weekDays = language === 'de'
     ? ['MO', 'DI', 'MI', 'DO', 'FR', 'SA', 'SO']
     : ['LU', 'MA', 'ME', 'JE', 'VE', 'SA', 'DI'];
+
+  const availableSlots = useMemo(() => {
+    return slotTemplates.map((time) => {
+      const blocked = isSlotBlocked({
+        appointmentDate: selectedDateKey,
+        appointmentTime: time,
+        consultations: availabilityWindow.consultations,
+        blocks: availabilityWindow.blocks,
+      });
+
+      return {
+        time,
+        range: buildSlotRangeLabel(time),
+        available: !blocked,
+      };
+    });
+  }, [availabilityWindow.blocks, availabilityWindow.consultations, selectedDateKey, slotTemplates]);
 
   const calendarDays = useMemo(() => {
     const year = viewDate.getFullYear();
@@ -201,9 +264,8 @@ export function AdvisoryPage() {
     const firstWeekday = (firstOfMonth.getDay() + 6) % 7;
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const prevMonthDays = new Date(year, month, 0).getDate();
-    const totalCells = 42;
 
-    return Array.from({ length: totalCells }, (_, index) => {
+    return Array.from({ length: 42 }, (_, index) => {
       const dayOffset = index - firstWeekday + 1;
       const inCurrentMonth = dayOffset > 0 && dayOffset <= daysInMonth;
       const date = inCurrentMonth
@@ -211,71 +273,104 @@ export function AdvisoryPage() {
         : dayOffset <= 0
           ? new Date(year, month - 1, prevMonthDays + dayOffset)
           : new Date(year, month + 1, dayOffset - daysInMonth);
+      const dateKey = formatDateKey(date);
+      const availableCount = inCurrentMonth
+        ? slotTemplates.filter((time) =>
+            !isSlotBlocked({
+              appointmentDate: dateKey,
+              appointmentTime: time,
+              consultations: availabilityWindow.consultations,
+              blocks: availabilityWindow.blocks,
+            }),
+          ).length
+        : 0;
 
       return {
         date,
+        dateKey,
         inCurrentMonth,
-        isSelected: formatDateKey(date) === formatDateKey(selectedDate),
-        availableCount: inCurrentMonth
-          ? slotTemplates.length - (reservedSlotsByDate[formatDateKey(date)]?.length ?? 0)
-          : 0,
+        isSelected: dateKey === selectedDateKey,
+        availableCount,
       };
     });
-  }, [reservedSlotsByDate, selectedDate, slotTemplates, viewDate]);
+  }, [availabilityWindow.blocks, availabilityWindow.consultations, selectedDateKey, slotTemplates, viewDate]);
 
-  const availableSlots = useMemo(() => {
-    const reservedForDay = reservedSlotsByDate[formatDateKey(selectedDate)] ?? [];
-
-    return slotTemplates.map((range) => ({
-      range,
-      available: !reservedForDay.includes(range),
-    }));
-  }, [reservedSlotsByDate, selectedDate, slotTemplates]);
-
-  const currentDateKey = formatDateKey(new Date());
-  const selectedDateInput = useMemo(
-    () => new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(selectedDate),
-    [locale, selectedDate],
-  );
-
-  const handleSelectDate = (date: Date) => {
+  function handleSelectDate(date: Date) {
     setSelectedDate(date);
-    setFormData((prev) => ({ ...prev, date: formatDateKey(date), time: '' }));
     setSelectedSlot('');
-  };
-
-  const handleBookSlot = (range: string) => {
-    const [start] = range.split(' - ');
-    setSelectedSlot(range);
+    setSlotError('');
     setFormData((prev) => ({
       ...prev,
-      date: formatDateKey(selectedDate),
-      time: start,
+      date: formatDateKey(date),
+      time: '',
     }));
-  };
+  }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  function handleBookSlot(range: string, time: string) {
+    setSelectedSlot(range);
+    setSlotError('');
+    setFormData((prev) => ({
+      ...prev,
+      date: selectedDateKey,
+      time,
+    }));
+  }
+
+  async function reloadAvailabilityForCurrentMonth() {
+    const start = dayjs(viewDate).startOf('month').startOf('week').format('YYYY-MM-DD');
+    const end = dayjs(viewDate).endOf('month').endOf('week').format('YYYY-MM-DD');
+    const nextWindow = await getBookingAvailabilityWindow(start, end);
+    setAvailabilityWindow(nextWindow);
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!selectedSlot) {
+
+    if (!selectedSlot || !formData.time) {
+      setSlotError(pickText(advisoryCopy.selectSlotHint, language));
       setIsSubmitted(false);
       return;
     }
+
     if (!validatePhone(formData.phone)) {
       setPhoneError(pickText(advisoryCopy.phoneError, language));
       return;
     }
+
     setPhoneError('');
+    setSlotError('');
+    setSubmitting(true);
 
-    const dayKey = formatDateKey(selectedDate);
-    setReservedSlotsByDate((prev) => ({
-      ...prev,
-      [dayKey]: Array.from(new Set([...(prev[dayKey] ?? []), selectedSlot])),
-    }));
+    try {
+      await createConsultation({
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        appointmentDate: formData.date,
+        appointmentTime: formData.time,
+        notes: formData.question,
+        paymentStatus: 'pending',
+        bookingStatus: 'pending',
+      });
+      setSelectedSlot('');
+      setIsSubmitted(true);
+      setFormData((prev) => ({ ...prev, time: '' }));
 
-    setSelectedSlot('');
-    setFormData((prev) => ({ ...prev, time: '' }));
-    setIsSubmitted(true);
-  };
+      try {
+        await reloadAvailabilityForCurrentMonth();
+      } catch (reloadError) {
+        setAvailabilityError(
+          reloadError instanceof Error
+            ? reloadError.message
+            : 'Booking was saved, but availability could not be refreshed.',
+        );
+      }
+    } catch (error) {
+      setAvailabilityError(error instanceof Error ? error.message : 'Booking could not be saved.');
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <main className="landing-page funnel-page advisory-page advisory-page-redesign">
@@ -285,8 +380,7 @@ export function AdvisoryPage() {
         <div className="advisory-success-banner" role="alert">
           <CheckCircle2 size={28} />
           <span>
-            {pickText(advisoryCopy.successBanner, language)}{' '}
-            <strong>{formData.email}</strong>{' '}
+            {pickText(advisoryCopy.successBanner, language)} <strong>{formData.email}</strong>{' '}
             {pickText(advisoryCopy.successBannerSuffix, language)}
           </span>
           <button type="button" onClick={() => setIsSubmitted(false)} aria-label="Schließen">✕</button>
@@ -295,6 +389,26 @@ export function AdvisoryPage() {
 
       <section className="funnel-content consultation-redesign-section">
         <div className="lead-funnel-shell">
+          {!hasSupabaseConfig() && (
+            <Alert
+              type="warning"
+              showIcon
+              style={{ marginBottom: 20 }}
+              message="Booking backend not configured"
+              description="Create a .env.local file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY, then restart the app. See SUPABASE_SETUP.md for the exact steps."
+            />
+          )}
+
+          {availabilityError && (
+            <Alert
+              type="error"
+              showIcon
+              style={{ marginBottom: 20 }}
+              message="Availability issue"
+              description={availabilityError}
+            />
+          )}
+
           <div className="consultation-redesign" role="region" aria-label={pickText(advisoryCopy.bookingTitle, language)}>
             <article className="consultation-left">
               <div>
@@ -358,7 +472,7 @@ export function AdvisoryPage() {
                   ))}
 
                   {calendarDays.map((dayItem) => {
-                    const isToday = formatDateKey(dayItem.date) === currentDateKey;
+                    const isToday = dayItem.dateKey === currentDateKey;
                     const label = new Intl.DateTimeFormat(locale, {
                       day: 'numeric',
                       month: 'long',
@@ -367,7 +481,7 @@ export function AdvisoryPage() {
 
                     return (
                       <button
-                        key={`${formatDateKey(dayItem.date)}-${dayItem.inCurrentMonth ? 'current' : 'other'}`}
+                        key={`${dayItem.dateKey}-${dayItem.inCurrentMonth ? 'current' : 'other'}`}
                         type="button"
                         className={[
                           'consultation-cal-day',
@@ -390,43 +504,49 @@ export function AdvisoryPage() {
               <p className="consultation-slots-heading">
                 {pickText(advisoryCopy.schedulerSubtitle, language)} <strong>{selectedDateLabel}</strong>
               </p>
-              <div className="consultation-slots-grid" id="slots">
-                {availableSlots.some((slot) => slot.available) ? (
-                  availableSlots.map((slot) => {
-                    const isPicked = slot.range === selectedSlot;
-                    return (
-                      <button
-                        key={slot.range}
-                        type="button"
-                        className={['consultation-slot', isPicked ? 'is-picked' : ''].join(' ').trim()}
-                        disabled={!slot.available}
-                        onClick={() => handleBookSlot(slot.range)}
-                      >
-                        <div>
-                          <p className="consultation-slot-time">{slot.range}</p>
-                          <p className="consultation-slot-availability">
-                            {slot.available
-                              ? pickText(advisoryCopy.availableOne, language)
-                              : pickText(advisoryCopy.reserved, language)}
-                          </p>
-                        </div>
-                        <span className="consultation-slot-pill">
-                          {isPicked
-                            ? pickText(advisoryCopy.slotChosen, language)
-                            : pickText(advisoryCopy.slotButton, language)}
-                        </span>
-                      </button>
-                    );
-                  })
-                ) : (
-                  <p className="consultation-empty-hint">{pickText(advisoryCopy.noSlots, language)}</p>
-                )}
-              </div>
 
-              {!selectedSlot && <p className="consultation-empty-hint">{pickText(advisoryCopy.selectSlotHint, language)}</p>}
+              {loadingAvailability ? (
+                <div className="consultation-empty-hint" style={{ display: 'flex', justifyContent: 'center', padding: '18px 0' }}>
+                  <Spin />
+                </div>
+              ) : (
+                <div className="consultation-slots-grid" id="slots">
+                  {availableSlots.some((slot) => slot.available) ? (
+                    availableSlots.map((slot) => {
+                      const isPicked = slot.range === selectedSlot;
+                      return (
+                        <button
+                          key={slot.range}
+                          type="button"
+                          className={['consultation-slot', isPicked ? 'is-picked' : ''].join(' ').trim()}
+                          disabled={!slot.available}
+                          onClick={() => handleBookSlot(slot.range, slot.time)}
+                        >
+                          <div>
+                            <p className="consultation-slot-time">{slot.range}</p>
+                            <p className="consultation-slot-availability">
+                              {slot.available
+                                ? pickText(advisoryCopy.availableOne, language)
+                                : pickText(advisoryCopy.reserved, language)}
+                            </p>
+                          </div>
+                          <span className="consultation-slot-pill">
+                            {isPicked ? pickText(advisoryCopy.slotChosen, language) : pickText(advisoryCopy.slotButton, language)}
+                          </span>
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <p className="consultation-empty-hint">{pickText(advisoryCopy.noSlots, language)}</p>
+                  )}
+                </div>
+              )}
+
+              {slotError && <p className="consultation-empty-hint">{slotError}</p>}
+              {!selectedSlot && !slotError && <p className="consultation-empty-hint">{pickText(advisoryCopy.selectSlotHint, language)}</p>}
 
               <p className="consultation-section-label">{pickText(advisoryCopy.bookingTitle, language)}</p>
-              <form className="consultation-form" onSubmit={handleSubmit}>
+              <form className="consultation-form" onSubmit={(event) => void handleSubmit(event)}>
                 <div className="consultation-form-grid">
                   <label className="consultation-field">
                     <span>{pickText(advisoryCopy.firstName, language)}</span>
@@ -459,7 +579,9 @@ export function AdvisoryPage() {
                       placeholder="+41 79 123 45 67"
                       onChange={(event) => {
                         setFormData((prev) => ({ ...prev, phone: event.target.value }));
-                        if (phoneError) setPhoneError('');
+                        if (phoneError) {
+                          setPhoneError('');
+                        }
                       }}
                     />
                     {phoneError && <span className="consultation-field-error">{phoneError}</span>}
@@ -513,9 +635,7 @@ export function AdvisoryPage() {
 
                 <div className="consultation-payment-title">
                   <ShieldCheck size={16} />
-                  <span>
-                    {pickText(advisoryCopy.paymentTitle, language)}
-                  </span>
+                  <span>{pickText(advisoryCopy.paymentTitle, language)}</span>
                 </div>
 
                 <div className="consultation-payment-methods" role="radiogroup" aria-label={pickText(advisoryCopy.paymentTitle, language)}>
@@ -532,9 +652,9 @@ export function AdvisoryPage() {
                   ))}
                 </div>
 
-                <button className="consultation-cta" type="submit">
+                <button className="consultation-cta" type="submit" disabled={!hasSupabaseConfig() || submitting}>
                   <Lock size={14} />
-                  {pickText(advisoryCopy.submit, language)}
+                  {submitting ? 'Saving...' : pickText(advisoryCopy.submit, language)}
                 </button>
 
                 <p className="consultation-legal-note">{pickText(advisoryCopy.legalNote, language)}</p>

@@ -1,5 +1,5 @@
 import { Progress } from 'antd';
-import { Menu, ShoppingCart } from 'lucide-react';
+import { LogIn, Menu, ShoppingCart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { LanguageSwitch } from '../common/LanguageSwitch';
@@ -37,6 +37,9 @@ export function FunnelTopBar({ current, total, showProgress = true }: FunnelTopB
 
       <div className="funnel-topbar__actions">
         <ShoppingCart size={20} />
+        <Link aria-label="Admin login" className="funnel-topbar__admin-link" title="Admin login" to="/admin">
+          <LogIn size={16} />
+        </Link>
         <LanguageSwitch />
       </div>
     </header>

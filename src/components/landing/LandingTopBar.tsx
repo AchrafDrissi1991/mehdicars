@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, LogIn, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -70,9 +70,6 @@ export function LandingTopBar() {
           <a className="nav-link" href={sectionHref('service-details')}>
             {lang === 'de' ? 'Service-Details' : 'Details du service'}
           </a>
-          <a className="nav-link" href={sectionHref('faq')}>
-            {t('landing.nav.faq')}
-          </a>
           <a className="nav-link" href={sectionHref('contact')}>
             {t('landing.nav.contact')}
           </a>
@@ -80,6 +77,9 @@ export function LandingTopBar() {
 
         <div className="topbar-actions">
           <SocialLinks />
+          <Link aria-label="Admin login" className="topbar-admin-link" title="Admin login" to="/admin">
+            <LogIn size={16} />
+          </Link>
           <LanguageSwitch />
         </div>
 
@@ -115,9 +115,6 @@ export function LandingTopBar() {
             <a href={sectionHref('service-details')} onClick={closeMobileMenu}>
               {lang === 'de' ? 'Service-Details' : 'Details du service'}
             </a>
-            <a href={sectionHref('faq')} onClick={closeMobileMenu}>
-              {t('landing.nav.faq')}
-            </a>
             <a href={sectionHref('contact')} onClick={closeMobileMenu}>
               {t('landing.nav.contact')}
             </a>
@@ -125,6 +122,9 @@ export function LandingTopBar() {
 
           <div className="mobile-nav-actions">
             <SocialLinks />
+            <Link aria-label="Admin login" className="topbar-admin-link" onClick={closeMobileMenu} title="Admin login" to="/admin">
+              <LogIn size={16} />
+            </Link>
             <LanguageSwitch />
           </div>
         </div>

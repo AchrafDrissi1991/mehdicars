@@ -6,6 +6,7 @@ import type {
   ConsultationRecord,
   ConsultationSlotRecord,
   PaymentStatus,
+  ScheduleWindowRecord,
 } from '../types/consultation';
 
 export interface CreateConsultationInput {
@@ -31,9 +32,19 @@ export interface CreateAvailabilityBlockInput {
   reason?: string;
 }
 
+export interface CreateScheduleWindowInput {
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+  slotDurationMinutes: number;
+  label?: string;
+}
+
 const CONSULTATION_SELECT =
   'id, name, email, phone, appointment_date, appointment_time, payment_status, booking_status, notes, created_at';
 const AVAILABILITY_SELECT = 'id, start_datetime, end_datetime, reason, created_at';
+const SCHEDULE_WINDOW_SELECT =
+  'id, day_of_week, start_time, end_time, slot_duration_minutes, label, is_active, created_at';
 
 function requireSupabase() {
   const client = getSupabaseClient();
@@ -129,6 +140,15 @@ export async function updateConsultation(id: string, updates: ConsultationUpdate
   return data as ConsultationRecord;
 }
 
+export async function deleteConsultation(id: string) {
+  const supabase = requireSupabase();
+  const { error } = await supabase.from('consultations').delete().eq('id', id);
+
+  if (error) {
+    throw mapSupabaseSetupError(error);
+  }
+}
+
 export async function listAvailabilityBlocks() {
   const supabase = requireSupabase();
   const { data, error } = await supabase
@@ -171,12 +191,68 @@ export async function deleteAvailabilityBlock(id: string) {
   }
 }
 
+export async function listScheduleWindows(includeInactive = false) {
+  const supabase = requireSupabase();
+  let query = supabase
+    .from('consultation_schedule_windows')
+    .select(SCHEDULE_WINDOW_SELECT)
+    .order('day_of_week', { ascending: true })
+    .order('start_time', { ascending: true });
+
+  if (!includeInactive) {
+    query = query.eq('is_active', true);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw mapSupabaseSetupError(error);
+  }
+
+  return (data ?? []) as ScheduleWindowRecord[];
+}
+
+export async function createScheduleWindow(input: CreateScheduleWindowInput) {
+  const supabase = requireSupabase();
+  const { data, error } = await supabase
+    .from('consultation_schedule_windows')
+    .insert({
+      day_of_week: input.dayOfWeek,
+      start_time: input.startTime,
+      end_time: input.endTime,
+      slot_duration_minutes: input.slotDurationMinutes,
+      label: input.label?.trim() || null,
+      is_active: true,
+    })
+    .select(SCHEDULE_WINDOW_SELECT)
+    .single();
+
+  if (error) {
+    throw mapSupabaseSetupError(error);
+  }
+
+  return data as ScheduleWindowRecord;
+}
+
+export async function deleteScheduleWindow(id: string) {
+  const supabase = requireSupabase();
+  const { error } = await supabase.from('consultation_schedule_windows').delete().eq('id', id);
+
+  if (error) {
+    throw mapSupabaseSetupError(error);
+  }
+}
+
 export async function getBookingAvailabilityWindow(startDate: string, endDate: string) {
   const supabase = requireSupabase();
   const startIso = dayjs(`${startDate}T00:00:00`).toISOString();
   const endIso = dayjs(`${endDate}T23:59:59`).toISOString();
 
-  const [{ data: consultations, error: consultationError }, { data: blocks, error: blockError }] = await Promise.all([
+  const [
+    { data: consultations, error: consultationError },
+    { data: blocks, error: blockError },
+    { data: windows, error: windowsError },
+  ] = await Promise.all([
     supabase.rpc('get_public_consultation_slots', {
       start_date: startDate,
       end_date: endDate,
@@ -186,6 +262,7 @@ export async function getBookingAvailabilityWindow(startDate: string, endDate: s
       .select(AVAILABILITY_SELECT)
       .lte('start_datetime', endIso)
       .gte('end_datetime', startIso),
+    supabase.from('consultation_schedule_windows').select(SCHEDULE_WINDOW_SELECT).eq('is_active', true),
   ]);
 
   if (consultationError) {
@@ -196,15 +273,20 @@ export async function getBookingAvailabilityWindow(startDate: string, endDate: s
     throw mapSupabaseSetupError(blockError);
   }
 
+  if (windowsError) {
+    throw mapSupabaseSetupError(windowsError);
+  }
+
   return {
     consultations: (consultations ?? []) as ConsultationSlotRecord[],
     blocks: (blocks ?? []) as AvailabilityBlockRecord[],
+    windows: (windows ?? []) as ScheduleWindowRecord[],
   };
 }
 
 export function buildSlotRangeLabel(time: string) {
   const normalizedTime = normalizeTimeValue(time);
-  const end = dayjs(`2000-01-01T${normalizedTime}`).add(1, 'hour').format('HH:mm');
+  const end = dayjs(`2000-01-01T${normalizedTime}`).add(30, 'minute').format('HH:mm');
   return `${normalizedTime} - ${end}`;
 }
 
@@ -224,7 +306,7 @@ export function isSlotBlocked({
   blocks: AvailabilityBlockRecord[];
 }) {
   const slotStart = dayjs(`${appointmentDate}T${appointmentTime}`);
-  const slotEnd = slotStart.add(1, 'hour');
+  const slotEnd = slotStart.add(30, 'minute');
   const normalizedTime = normalizeTimeValue(appointmentTime);
 
   const booked = consultations.some(
@@ -243,5 +325,23 @@ export function isSlotBlocked({
     const blockEnd = dayjs(block.end_datetime);
 
     return slotStart.isBefore(blockEnd) && slotEnd.isAfter(blockStart);
+  });
+}
+
+export function buildSlotsFromWindows(date: Date, windows: ScheduleWindowRecord[]) {
+  const dayOfWeek = dayjs(date).day();
+  const matchingWindows = windows.filter((window) => window.day_of_week === dayOfWeek && window.is_active);
+
+  return matchingWindows.flatMap((window) => {
+    const slots: string[] = [];
+    let cursor = dayjs(`2000-01-01T${normalizeTimeValue(window.start_time)}`);
+    const end = dayjs(`2000-01-01T${normalizeTimeValue(window.end_time)}`);
+
+    while (cursor.add(window.slot_duration_minutes, 'minute').valueOf() <= end.valueOf()) {
+      slots.push(cursor.format('HH:mm'));
+      cursor = cursor.add(window.slot_duration_minutes, 'minute');
+    }
+
+    return slots;
   });
 }

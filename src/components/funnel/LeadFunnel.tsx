@@ -7,7 +7,6 @@ import type { LeadFormData, LeadFormDraft } from '../../types/lead';
 import { FunnelNavigation } from './FunnelNavigation';
 import { StepBrand } from './StepBrand';
 import { StepContact } from './StepContact';
-import { StepCriteria } from './StepCriteria';
 import { StepTechnicalPreferences } from './StepTechnicalPreferences';
 import { SuccessStep } from './SuccessStep';
 
@@ -18,7 +17,7 @@ interface LeadFunnelProps {
   onStepChange?: (step: number) => void;
 }
 
-const totalSteps = 4;
+const totalSteps = 3;
 const currentYear = new Date().getFullYear();
 const initialMaxMileage = 80000;
 const initialBudget = 30000;
@@ -31,8 +30,8 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<LeadFormDraft>({
     brand: '',
-    gearbox: '',
-    fuel: '',
+    gearbox: [],
+    fuel: [],
     fullName: '',
     language,
     minYear: currentYear,
@@ -84,9 +83,21 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
           : 'Bitte geben Sie einen Fahrzeugwunsch oder ein Budget an.';
     }
 
-    if (step === 4) {
+    if (step === 2) {
+      if (!formData.gearbox?.length) {
+        nextErrors.gearbox = requiredMessage;
+      }
+      if (!formData.fuel?.length) {
+        nextErrors.fuel = requiredMessage;
+      }
+    }
+
+    if (step === 3) {
       if (isBlank(formData.fullName)) {
         nextErrors.fullName = requiredMessage;
+      }
+      if (isBlank(formData.email)) {
+        nextErrors.email = requiredMessage;
       }
       if (isBlank(formData.phone)) {
         nextErrors.phone = requiredMessage;
@@ -160,9 +171,8 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
       </div>
 
       {currentStep === 1 && <StepBrand data={formData} errors={errors} language={language} updateFormData={updateFormData} />}
-      {currentStep === 2 && <StepCriteria data={formData} errors={errors} language={language} updateFormData={updateFormData} />}
-      {currentStep === 3 && <StepTechnicalPreferences data={formData} language={language} updateFormData={updateFormData} />}
-      {currentStep === 4 && <StepContact data={formData} errors={errors} language={language} updateFormData={updateFormData} />}
+      {currentStep === 2 && <StepTechnicalPreferences data={formData} errors={errors} language={language} updateFormData={updateFormData} />}
+      {currentStep === 3 && <StepContact data={formData} errors={errors} language={language} updateFormData={updateFormData} />}
 
       <FunnelNavigation
         currentStep={currentStep}

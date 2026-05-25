@@ -2107,6 +2107,11 @@
   font-size: 12px;
 }
 
+.advisory-page-redesign .consultation-slots-heading:focus-visible {
+  outline: 2px solid #4A90C4;
+  outline-offset: 6px;
+}
+
 .advisory-page-redesign .consultation-slots-heading strong {
   color: #4A90C4;
 }
@@ -2515,5 +2520,158 @@
   .advisory-page-redesign .consultation-slots-grid,
   .advisory-page-redesign .consultation-form-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+.landing-page.funnel-page:not(.advisory-page) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  background: var(--section-royal-light);
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-content {
+  flex: 1 0 auto;
+  min-height: auto;
+  padding: calc(140px + var(--landing-topbar-safe-offset, 0px)) 24px 56px;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-funnel-shell--redesign {
+  width: min(1160px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-intro {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-intro h1 {
+  margin: 0;
+  color: #232629;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading);
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-intro p {
+  margin: 0;
+  color: var(--lux-ink-soft);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-funnel-card,
+.landing-page.funnel-page:not(.advisory-page) .success-step {
+  border: 1px solid rgba(156, 178, 214, 0.34);
+  border-radius: 0;
+  background:
+    radial-gradient(62% 54% at 84% 16%, rgba(120, 156, 214, 0.1) 0%, rgba(120, 156, 214, 0) 64%),
+    linear-gradient(145deg, #f9fbff 0%, #eef4fc 100%);
+  box-shadow: var(--lux-shadow-card);
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-funnel-card {
+  gap: 30px;
+  padding: clamp(24px, 3vw, 42px);
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-funnel-progress span,
+.landing-page.funnel-page:not(.advisory-page) .lead-step-heading span {
+  color: #6f9fe6;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-step-heading span {
+  background: rgba(224, 236, 255, 0.92);
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-step-heading h1,
+.landing-page.funnel-page:not(.advisory-page) .lead-field label,
+.landing-page.funnel-page:not(.advisory-page) .choice-section > label,
+.landing-page.funnel-page:not(.advisory-page) .lead-slider label {
+  color: #232629;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-step-intro {
+  margin: -8px 0 0;
+  color: #6a645d;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-field .ant-input,
+.landing-page.funnel-page:not(.advisory-page) .lead-field .ant-select-selector,
+.landing-page.funnel-page:not(.advisory-page) .lead-field .ant-input-affix-wrapper {
+  background: rgba(255, 255, 255, 0.84) !important;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .choice-grid button,
+.landing-page.funnel-page:not(.advisory-page) .lead-slider,
+.landing-page.funnel-page:not(.advisory-page) .privacy-row {
+  border-color: rgba(156, 178, 214, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.landing-page.funnel-page:not(.advisory-page) .choice-grid button:hover,
+.landing-page.funnel-page:not(.advisory-page) .choice-grid button.is-selected {
+  border-color: #6f9fe6;
+  background: rgba(224, 236, 255, 0.92);
+  color: #1e4ead;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .choice-grid button svg,
+.landing-page.funnel-page:not(.advisory-page) .lead-slider strong,
+.landing-page.funnel-page:not(.advisory-page) .funnel-prev-button {
+  color: #6f9fe6;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-prev-button {
+  border-color: #6f9fe6;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-funnel-navigation .ant-btn-primary {
+  background: #9cd5f5;
+  color: #2f3a45;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .lead-bonus-note {
+  margin: 10px 0 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(111, 159, 230, 0.34);
+  background: linear-gradient(135deg, rgba(156, 213, 245, 0.22) 0%, rgba(224, 236, 255, 0.56) 100%);
+  color: #1e4ead;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-footer {
+  margin-top: auto;
+}
+
+.landing-page.funnel-page:not(.advisory-page) .funnel-footer__inner {
+  padding: 28px 0 24px;
+}
+
+@media (max-width: 720px) {
+  .landing-page.funnel-page:not(.advisory-page) .funnel-content {
+    padding: 112px 10px 32px;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .lead-funnel-shell--redesign {
+    width: min(100%, calc(100% - 12px));
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-intro {
+    margin-bottom: 18px;
+    text-align: left;
+  }
+
+  .landing-page.funnel-page:not(.advisory-page) .funnel-intro h1 {
+    font-size: clamp(28px, 7vw, 36px);
   }
 }

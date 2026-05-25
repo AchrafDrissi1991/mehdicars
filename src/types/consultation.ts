@@ -27,3 +27,14 @@ export interface AvailabilityBlockRecord {
   reason: string | null;
   created_at: string;
 }
+
+export interface ScheduleWindowRecord {
+  id: string;
+  day_of_week: number;
+  start_time: string;
+  end_time: string;
+  slot_duration_minutes: number;
+  label: string | null;
+  is_active: boolean;
+  created_at: string;
+}

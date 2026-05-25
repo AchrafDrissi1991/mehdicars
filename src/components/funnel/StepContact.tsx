@@ -20,7 +20,7 @@ export function StepContact({ data, errors, language, updateFormData }: StepProp
   return (
     <div className="lead-step">
       <div className="lead-step-heading">
-        <span>04</span>
+        <span>03</span>
         <h1>{language === 'fr' ? 'Et pour vous recontacter ?' : 'Wie können wir Sie erreichen?'}</h1>
       </div>
 
@@ -31,8 +31,9 @@ export function StepContact({ data, errors, language, updateFormData }: StepProp
           {errors.fullName && <span className="field-error">{errors.fullName}</span>}
         </div>
         <div className="lead-field">
-          <label>{language === 'fr' ? 'E-mail' : 'E-Mail'}</label>
+          <label>{language === 'fr' ? 'E-mail' : 'E-Mail'} *</label>
           <Input type="email" size="large" value={data.email} onChange={(event) => updateFormData({ email: event.target.value })} />
+          {errors.email && <span className="field-error">{errors.email}</span>}
         </div>
         <div className="lead-field">
           <label>{language === 'fr' ? 'Téléphone' : 'Telefon'} *</label>
@@ -59,6 +60,11 @@ export function StepContact({ data, errors, language, updateFormData }: StepProp
             value={data.notesOrListingLink}
             onChange={(event) => updateFormData({ notesOrListingLink: event.target.value })}
           />
+          <p className="lead-bonus-note">
+            {language === 'fr'
+              ? 'Vous pouvez maintenant bénéficier de 8 minutes de temps de conseil offertes pour clarifier votre projet.'
+              : 'Sie können jetzt 8 Minuten kostenfreie Beratungszeit erhalten, um Ihr Fahrzeugprojekt zu klären.'}
+          </p>
         </div>
       </div>
     </div>

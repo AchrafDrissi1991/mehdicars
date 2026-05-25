@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Alert, Spin } from 'antd';
 import { CheckCircle2, ChevronLeft, ChevronRight, Lock, ShieldCheck } from 'lucide-react';
 import dayjs from 'dayjs';
@@ -8,12 +8,13 @@ import { LandingTopBar } from '../../components/landing/LandingTopBar';
 import { pickText } from '../../lib/localized';
 import { hasSupabaseConfig } from '../../lib/supabase';
 import {
+  buildSlotsFromWindows,
   buildSlotRangeLabel,
   createConsultation,
   getBookingAvailabilityWindow,
   isSlotBlocked,
 } from '../../services/consultationService';
-import type { AvailabilityBlockRecord, ConsultationSlotRecord } from '../../types/consultation';
+import type { AvailabilityBlockRecord, ConsultationSlotRecord, ScheduleWindowRecord } from '../../types/consultation';
 import type { SupportedLanguage } from '../../types/i18n';
 import '../../components/funnel/funnel.css';
 import './landingPage.css';
@@ -21,6 +22,7 @@ import './landingPage.css';
 interface BookingWindowState {
   consultations: ConsultationSlotRecord[];
   blocks: AvailabilityBlockRecord[];
+  windows: ScheduleWindowRecord[];
 }
 
 const advisoryCopy = {
@@ -47,10 +49,6 @@ const advisoryCopy = {
   bullet3: {
     de: 'Persoenliche Empfehlungen fuer Ihr Vorhaben',
     fr: 'Recommandations personnalisees pour votre projet',
-  },
-  promoTag: {
-    de: 'Aktionspreis',
-    fr: 'Prix promotionnel',
   },
   bookingTitle: {
     de: 'Termin buchen',
@@ -83,6 +81,26 @@ const advisoryCopy = {
   email: {
     de: 'E-Mail-Adresse',
     fr: 'Adresse e-mail',
+  },
+  streetName: {
+    de: 'Strasse',
+    fr: 'Rue',
+  },
+  streetNumber: {
+    de: 'Hausnummer',
+    fr: 'Numéro',
+  },
+  postalCode: {
+    de: 'PLZ',
+    fr: 'Code postal',
+  },
+  city: {
+    de: 'Stadt',
+    fr: 'Ville',
+  },
+  country: {
+    de: 'Land',
+    fr: 'Pays',
   },
   date: {
     de: 'Datum',
@@ -144,10 +162,6 @@ const advisoryCopy = {
     de: 'Bitte zuerst einen freien Termin auswaehlen.',
     fr: "Veuillez d'abord choisir un créneau libre.",
   },
-  limited: {
-    de: 'Limitiert',
-    fr: 'Limite',
-  },
 };
 
 function formatDateKey(date: Date) {
@@ -163,10 +177,9 @@ export function AdvisoryPage() {
   const { lang = 'fr' } = useParams();
   const language = lang as SupportedLanguage;
   const locale = language === 'de' ? 'de-DE' : 'fr-FR';
-  const slotTemplates = useMemo(() => Array.from({ length: 11 }, (_, index) => `${String(index + 9).padStart(2, '0')}:00`), []);
   const [viewDate, setViewDate] = useState(() => new Date());
   const [selectedDate, setSelectedDate] = useState(() => new Date());
-  const [availabilityWindow, setAvailabilityWindow] = useState<BookingWindowState>({ consultations: [], blocks: [] });
+  const [availabilityWindow, setAvailabilityWindow] = useState<BookingWindowState>({ consultations: [], blocks: [], windows: [] });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -174,11 +187,18 @@ export function AdvisoryPage() {
   const [availabilityError, setAvailabilityError] = useState('');
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const slotsHeadingRef = useRef<HTMLParagraphElement | null>(null);
+  const firstNameInputRef = useRef<HTMLInputElement | null>(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     phone: '',
     email: '',
+    streetName: '',
+    streetNumber: '',
+    postalCode: '',
+    city: '',
+    country: '',
     date: formatDateKey(new Date()),
     time: '',
     paymentMethod: 'Visa',
@@ -231,6 +251,10 @@ export function AdvisoryPage() {
 
   const currentDateKey = formatDateKey(new Date());
   const selectedDateKey = formatDateKey(selectedDate);
+  const slotTemplates = useMemo(
+    () => buildSlotsFromWindows(selectedDate, availabilityWindow.windows),
+    [availabilityWindow.windows, selectedDate],
+  );
   const selectedDateInput = useMemo(
     () => new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(selectedDate),
     [locale, selectedDate],
@@ -304,6 +328,9 @@ export function AdvisoryPage() {
       date: formatDateKey(date),
       time: '',
     }));
+    requestAnimationFrame(() => {
+      slotsHeadingRef.current?.focus();
+    });
   }
 
   function handleBookSlot(range: string, time: string) {
@@ -314,6 +341,9 @@ export function AdvisoryPage() {
       date: selectedDateKey,
       time,
     }));
+    requestAnimationFrame(() => {
+      firstNameInputRef.current?.focus();
+    });
   }
 
   async function reloadAvailabilityForCurrentMonth() {
@@ -341,6 +371,21 @@ export function AdvisoryPage() {
     setSlotError('');
     setSubmitting(true);
 
+    const billingAddress = [
+      `${formData.streetName} ${formData.streetNumber}`.trim(),
+      `${formData.postalCode} ${formData.city}`.trim(),
+      formData.country.trim(),
+    ]
+      .filter(Boolean)
+      .join(', ');
+
+    const notesWithBilling = [
+      formData.question.trim(),
+      billingAddress ? `${language === 'de' ? 'Rechnungsadresse' : 'Adresse de facturation'}: ${billingAddress}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n\n');
+
     try {
       await createConsultation({
         name: `${formData.firstName} ${formData.lastName}`.trim(),
@@ -348,7 +393,7 @@ export function AdvisoryPage() {
         phone: formData.phone.trim(),
         appointmentDate: formData.date,
         appointmentTime: formData.time,
-        notes: formData.question,
+        notes: notesWithBilling,
         paymentStatus: 'pending',
         bookingStatus: 'pending',
       });
@@ -424,15 +469,13 @@ export function AdvisoryPage() {
                   ))}
                 </div>
               </div>
-              <div className="consultation-price-box" aria-label={pickText(advisoryCopy.promoTag, language)}>
+              <div className="consultation-price-box" aria-label="39 EUR">
                 <div>
-                  <p className="consultation-price-label">{pickText(advisoryCopy.promoTag, language)}</p>
+                  <p className="consultation-price-label">{language === 'de' ? 'Beratungspreis' : 'Prix du conseil'}</p>
                   <div className="consultation-price-values">
                     <span className="consultation-price-new">39 EUR</span>
-                    <span className="consultation-price-old">50 EUR</span>
                   </div>
                 </div>
-                <span className="consultation-price-badge">{pickText(advisoryCopy.limited, language)}</span>
               </div>
             </article>
 
@@ -501,7 +544,7 @@ export function AdvisoryPage() {
                 </div>
               </div>
 
-              <p className="consultation-slots-heading">
+              <p className="consultation-slots-heading" ref={slotsHeadingRef} tabIndex={-1}>
                 {pickText(advisoryCopy.schedulerSubtitle, language)} <strong>{selectedDateLabel}</strong>
               </p>
 
@@ -551,6 +594,7 @@ export function AdvisoryPage() {
                   <label className="consultation-field">
                     <span>{pickText(advisoryCopy.firstName, language)}</span>
                     <input
+                      ref={firstNameInputRef}
                       type="text"
                       required
                       value={formData.firstName}
@@ -595,6 +639,61 @@ export function AdvisoryPage() {
                       value={formData.email}
                       placeholder="name@example.com"
                       onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                    />
+                  </label>
+
+                  <label className="consultation-field">
+                    <span>{pickText(advisoryCopy.streetName, language)}</span>
+                    <input
+                      type="text"
+                      required
+                      value={formData.streetName}
+                      placeholder={language === 'de' ? 'Musterstrasse' : 'Rue Exemple'}
+                      onChange={(event) => setFormData((prev) => ({ ...prev, streetName: event.target.value }))}
+                    />
+                  </label>
+
+                  <label className="consultation-field">
+                    <span>{pickText(advisoryCopy.streetNumber, language)}</span>
+                    <input
+                      type="text"
+                      required
+                      value={formData.streetNumber}
+                      placeholder={language === 'de' ? '12A' : '12A'}
+                      onChange={(event) => setFormData((prev) => ({ ...prev, streetNumber: event.target.value }))}
+                    />
+                  </label>
+
+                  <label className="consultation-field">
+                    <span>{pickText(advisoryCopy.postalCode, language)}</span>
+                    <input
+                      type="text"
+                      required
+                      value={formData.postalCode}
+                      placeholder={language === 'de' ? '8000' : '75001'}
+                      onChange={(event) => setFormData((prev) => ({ ...prev, postalCode: event.target.value }))}
+                    />
+                  </label>
+
+                  <label className="consultation-field">
+                    <span>{pickText(advisoryCopy.city, language)}</span>
+                    <input
+                      type="text"
+                      required
+                      value={formData.city}
+                      placeholder={language === 'de' ? 'Zürich' : 'Paris'}
+                      onChange={(event) => setFormData((prev) => ({ ...prev, city: event.target.value }))}
+                    />
+                  </label>
+
+                  <label className="consultation-field consultation-field-full">
+                    <span>{pickText(advisoryCopy.country, language)}</span>
+                    <input
+                      type="text"
+                      required
+                      value={formData.country}
+                      placeholder={language === 'de' ? 'Schweiz / Frankreich / Deutschland' : 'Suisse / France / Allemagne'}
+                      onChange={(event) => setFormData((prev) => ({ ...prev, country: event.target.value }))}
                     />
                   </label>
 

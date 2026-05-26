@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Alert, Spin } from 'antd';
 import { CheckCircle2, ChevronLeft, ChevronRight, Lock, ShieldCheck } from 'lucide-react';
 import dayjs from 'dayjs';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
 import { LandingTopBar } from '../../components/landing/LandingTopBar';
 import { pickText } from '../../lib/localized';
@@ -126,6 +126,18 @@ const advisoryCopy = {
     de: 'Sichere Zahlung · Sofortige Bestaetigung per E-Mail',
     fr: 'Paiement securise · Confirmation immediate par e-mail',
   },
+  privacyConsent: {
+    de: 'Ich stimme zu, dass meine Daten zur Terminbearbeitung verwendet werden und Mehdi Cars mich bei Bedarf per E-Mail, Telefon oder WhatsApp kontaktieren darf.',
+    fr: 'J’accepte que mes données soient utilisées pour traiter ce rendez-vous et que Mehdi Cars puisse me contacter par e-mail, téléphone ou WhatsApp si nécessaire.',
+  },
+  privacyConsentError: {
+    de: 'Bitte akzeptieren Sie vor der Zahlung die Datenschutzhinweise.',
+    fr: 'Veuillez accepter la politique de confidentialité avant le paiement.',
+  },
+  privacyLink: {
+    de: 'Datenschutzerklärung ansehen',
+    fr: 'Voir la politique de confidentialité',
+  },
   successBanner: {
     de: 'Buchung bestätigt! Eine Bestätigungsmail wurde an',
     fr: 'Réservation confirmée ! Un e-mail de confirmation a été envoyé à',
@@ -187,8 +199,11 @@ export function AdvisoryPage() {
   const [availabilityError, setAvailabilityError] = useState('');
   const [loadingAvailability, setLoadingAvailability] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [privacyError, setPrivacyError] = useState('');
   const slotsHeadingRef = useRef<HTMLParagraphElement | null>(null);
   const firstNameInputRef = useRef<HTMLInputElement | null>(null);
+  const privacyPath = `/${language}/${language === 'de' ? 'datenschutz' : 'confidentialite'}`;
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -356,6 +371,11 @@ export function AdvisoryPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (!privacyAccepted) {
+      setPrivacyError(pickText(advisoryCopy.privacyConsentError, language));
+      return;
+    }
+
     if (!selectedSlot || !formData.time) {
       setSlotError(pickText(advisoryCopy.selectSlotHint, language));
       setIsSubmitted(false);
@@ -369,6 +389,7 @@ export function AdvisoryPage() {
 
     setPhoneError('');
     setSlotError('');
+    setPrivacyError('');
     setSubmitting(true);
 
     const billingAddress = [
@@ -382,6 +403,9 @@ export function AdvisoryPage() {
     const notesWithBilling = [
       formData.question.trim(),
       billingAddress ? `${language === 'de' ? 'Rechnungsadresse' : 'Adresse de facturation'}: ${billingAddress}` : '',
+      language === 'de'
+        ? 'Einwilligung: Kontaktaufnahme per E-Mail, Telefon oder WhatsApp akzeptiert.'
+        : 'Consentement: contact par e-mail, téléphone ou WhatsApp accepté.',
     ]
       .filter(Boolean)
       .join('\n\n');
@@ -749,6 +773,26 @@ export function AdvisoryPage() {
                       <span>{method}</span>
                     </label>
                   ))}
+                </div>
+
+                <div className="privacy-row consultation-privacy-row">
+                  <label className="privacy-consent-label">
+                    <input
+                      type="checkbox"
+                      checked={privacyAccepted}
+                      onChange={(event) => {
+                        setPrivacyAccepted(event.target.checked);
+                        if (privacyError) {
+                          setPrivacyError('');
+                        }
+                      }}
+                    />
+                    <span>
+                      {pickText(advisoryCopy.privacyConsent, language)}{' '}
+                      <Link to={privacyPath}>{pickText(advisoryCopy.privacyLink, language)}</Link>
+                    </span>
+                  </label>
+                  {privacyError && <span className="consultation-field-error">{privacyError}</span>}
                 </div>
 
                 <button className="consultation-cta" type="submit" disabled={!hasSupabaseConfig() || submitting}>

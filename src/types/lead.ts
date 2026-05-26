@@ -21,6 +21,7 @@ export type LeadFormData = {
   phone: string;
   purchaseTimeline?: PurchaseTimeline;
   notesOrListingLink?: string;
+  privacyConsent?: boolean;
   language: Language;
   createdAt?: string;
 };

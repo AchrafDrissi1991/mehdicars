@@ -348,6 +348,7 @@ function buildReportText(payload: CreateLeadPayload | undefined) {
       `- E-Mail: ${lead.email || '-'}`,
       `- Telefon: ${lead.phone || '-'}`,
       `- Sprache: ${payload.language}`,
+      `- Datenschutz akzeptiert: ${lead.privacyConsent ? 'Ja' : 'Nein'}`,
       '',
       'Fahrzeugwunsch:',
       `- Marke: ${lead.brand === 'Autre' ? lead.otherBrand || 'Autre' : lead.brand || '-'}`,

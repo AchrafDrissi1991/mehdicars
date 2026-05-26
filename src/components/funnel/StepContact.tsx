@@ -1,4 +1,5 @@
 import { Input, Select } from 'antd';
+import { Link } from 'react-router-dom';
 import type { SupportedLanguage } from '../../types/i18n';
 import type { LeadFormDraft, PurchaseTimeline } from '../../types/lead';
 
@@ -17,6 +18,8 @@ const timelineOptions: Array<{ value: PurchaseTimeline; fr: string; de: string }
 ];
 
 export function StepContact({ data, errors, language, updateFormData }: StepProps) {
+  const privacyPath = `/${language}/${language === 'de' ? 'datenschutz' : 'confidentialite'}`;
+
   return (
     <div className="lead-step">
       <div className="lead-step-heading">
@@ -65,6 +68,25 @@ export function StepContact({ data, errors, language, updateFormData }: StepProp
               ? 'Vous pouvez maintenant bénéficier de 8 minutes de temps de conseil offertes pour clarifier votre projet.'
               : 'Sie können jetzt 8 Minuten kostenfreie Beratungszeit erhalten, um Ihr Fahrzeugprojekt zu klären.'}
           </p>
+        </div>
+
+        <div className="privacy-row lead-field--full">
+          <label className="privacy-consent-label">
+            <input
+              type="checkbox"
+              checked={Boolean(data.privacyConsent)}
+              onChange={(event) => updateFormData({ privacyConsent: event.target.checked })}
+            />
+            <span>
+              {language === 'fr'
+                ? "J’accepte que mes données soient utilisées pour traiter ma demande et que Mehdi Cars puisse me contacter par e-mail, téléphone ou WhatsApp si nécessaire. "
+                : 'Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage verwendet werden und Mehdi Cars mich bei Bedarf per E-Mail, Telefon oder WhatsApp kontaktieren darf. '}
+              <Link to={privacyPath}>
+                {language === 'fr' ? 'Voir la politique de confidentialité' : 'Datenschutzerklärung ansehen'}
+              </Link>
+            </span>
+          </label>
+          {errors.privacyConsent && <span className="field-error">{errors.privacyConsent}</span>}
         </div>
       </div>
     </div>

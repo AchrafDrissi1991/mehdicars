@@ -53,18 +53,26 @@ export function LandingPage() {
   const serviceJourneyRef = useRef<HTMLElement | null>(null);
   const touchIntentRef = useRef({ startX: 0, startY: 0, moved: false });
 
-  const serviceDetailsSteps = [
+  const serviceDetailsSteps: Array<{
+    id: number;
+    label: { de: string; fr: string };
+    description: { de: string; fr: string };
+    title: { de: string; fr: string };
+    bullets: { de: string[]; fr: string[] };
+    links?: Array<{ href: string; label: string }>;
+    note?: { de: string; fr: string };
+  }> = [
     {
       id: 1,
       label: { de: 'SCHRITT 01', fr: 'ÉTAPE 01' },
       description: {
-        de: 'Sie finden Ihr Wunschfahrzeug über bekannte Fahrzeugbörsen und senden uns einfach den Link zur Prüfung.',
-        fr: 'Vous trouvez votre véhicule idéal sur une plateforme reconnue et nous envoyez simplement le lien pour vérification.',
+        de: 'Sie senden uns ein interessantes Fahrzeug oder wir definieren gemeinsam die passende Auswahl.',
+        fr: 'Vous nous envoyez un véhicule intéressant ou nous cadrons ensemble la bonne sélection.',
       },
-      title: { de: 'Fahrzeugsuche', fr: 'Recherche du véhicule' },
+      title: { de: 'Suche & Auswahl', fr: 'Recherche & sélection' },
       bullets: {
-        de: ['mobile.de', 'AutoScout24', 'Vergleichbare Fahrzeugbörsen', 'Link direkt an uns senden'],
-        fr: ['mobile.de', 'AutoScout24', 'Plateformes similaires', 'Envoi direct du lien'],
+        de: ['Fahrzeugwunsch klären', 'Link oder Inserat senden', 'Passende Angebote eingrenzen'],
+        fr: ['Définir le besoin', 'Envoyer le lien ou l’annonce', 'Cibler les bonnes offres'],
       },
       links: [
         { href: 'https://www.mobile.de', label: 'mobile.de' },
@@ -75,69 +83,39 @@ export function LandingPage() {
       id: 2,
       label: { de: 'SCHRITT 02', fr: 'ÉTAPE 02' },
       description: {
-        de: 'Wir kontaktieren den Händler direkt und prüfen alle wesentlichen Fahrzeuginformationen vorab.',
-        fr: 'Nous contactons directement le vendeur et vérifions en amont toutes les informations essentielles du véhicule.',
+        de: 'Wir prüfen mit dem Händler die wichtigsten Informationen, bevor Zeit oder Geld investiert wird.',
+        fr: 'Nous validons avec le vendeur les points essentiels avant tout déplacement ou engagement.',
       },
-      title: { de: 'Händlerkontakt & Fahrzeugprüfung', fr: 'Contact vendeur & vérification' },
+      title: { de: 'Prüfung vorab', fr: 'Pré-vérification' },
       bullets: {
-        de: ['Unfallhistorie', 'Wartungs- und Servicehistorie', 'Vorbesitzer', 'Technischer Zustand', 'Laufleistung und Dokumentation'],
-        fr: ['Historique d’accident', 'Historique d’entretien', 'Nombre de propriétaires', 'État technique', 'Kilométrage et documents'],
+        de: ['Historie und Dokumente', 'Kilometerstand und Zustand', 'Direkter Kontakt mit dem Händler'],
+        fr: ['Historique et documents', 'Kilométrage et état', 'Contact direct avec le vendeur'],
       },
     },
     {
       id: 3,
       label: { de: 'SCHRITT 03', fr: 'ÉTAPE 03' },
       description: {
-        de: 'Nach positiver Vorprüfung besichtigen wir das Fahrzeug persönlich vor Ort und dokumentieren alles transparent.',
-        fr: 'Après une pré-vérification positive, nous inspectons personnellement le véhicule sur place et documentons tout avec transparence.',
+        de: 'Wenn das Fahrzeug passt, schauen wir es vor Ort an und geben Ihnen eine klare Einschätzung.',
+        fr: 'Si le véhicule est pertinent, nous l’inspectons sur place et vous donnons un retour clair.',
       },
-      title: { de: 'Vor-Ort-Besichtigung', fr: 'Inspection sur place' },
+      title: { de: 'Inspektion vor Ort', fr: 'Inspection sur place' },
       bullets: {
-        de: ['Karosserie und Lackzustand', 'Motor und Getriebe', 'Innenraumzustand', 'Reifen und Bremsen', 'Elektronik und Ausstattung', 'Schäden oder Mängel'],
-        fr: ['Carrosserie et peinture', 'Moteur et boîte', 'État intérieur', 'Pneus et freins', 'Électronique et équipements', 'Défauts éventuels'],
-      },
-      note: {
-        de: 'Zusätzlich erhalten Sie Fotos, Videos und eine ehrliche Einschätzung zum Fahrzeugzustand.',
-        fr: 'Vous recevez en plus des photos, des vidéos et une évaluation honnête de l’état du véhicule.',
+        de: ['Karosserie und Innenraum', 'Technischer Gesamteindruck', 'Fotos und ehrliches Feedback'],
+        fr: ['Carrosserie et intérieur', 'État technique global', 'Photos et avis honnête'],
       },
     },
     {
       id: 4,
       label: { de: 'SCHRITT 04', fr: 'ÉTAPE 04' },
       description: {
-        de: 'Auf Grundlage unserer Prüfung entscheiden Sie in Ruhe, ob das Fahrzeug gekauft werden soll.',
-        fr: 'Sur la base de notre contrôle, vous décidez sereinement si le véhicule doit être acheté ou non.',
+        de: 'Nach Ihrer Freigabe begleiten wir Kauf, Abholung oder Transport bis zur sauberen Übergabe.',
+        fr: 'Après votre validation, nous gérons l’achat, le retrait ou le transport jusqu’à la remise.',
       },
-      title: { de: 'Kaufentscheidung', fr: 'Décision d’achat' },
+      title: { de: 'Kauf & Übergabe', fr: 'Achat & remise' },
       bullets: {
-        de: ['Transparente Entscheidungsgrundlage', 'Alle Ergebnisse übersichtlich', 'Ohne Kaufdruck', 'Sie geben die finale Freigabe'],
-        fr: ['Base de décision claire', 'Résultats présentés de façon structurée', 'Sans pression', 'Validation finale par vous'],
-      },
-    },
-    {
-      id: 5,
-      label: { de: 'SCHRITT 05', fr: 'ÉTAPE 05' },
-      description: {
-        de: 'Bei positiver Entscheidung kümmern wir uns um die komplette Kaufabwicklung mit dem Händler.',
-        fr: 'En cas de validation, nous gérons l’ensemble de la procédure d’achat avec le vendeur.',
-      },
-      title: { de: 'Kaufabwicklung', fr: 'Gestion de l’achat' },
-      bullets: {
-        de: ['Kaufvertrag', 'Fahrzeugdokumente', 'Reservierung des Fahrzeugs', 'Abstimmung mit dem Händler'],
-        fr: ['Contrat de vente', 'Documents du véhicule', 'Réservation du véhicule', 'Coordination avec le vendeur'],
-      },
-    },
-    {
-      id: 6,
-      label: { de: 'SCHRITT 06', fr: 'ÉTAPE 06' },
-      description: {
-        de: 'Nach Abschluss aller Formalitäten organisieren wir die Abholung oder auf Wunsch den weiteren Transport.',
-        fr: 'Après la finalisation des démarches, nous organisons l’enlèvement du véhicule ou, sur demande, son transport.',
-      },
-      title: { de: 'Fahrzeugabholung & Transport', fr: 'Enlèvement & transport' },
-      bullets: {
-        de: ['Abholung nach Termin', 'Organisation des Transports', 'Saubere Übergabe', 'Begleitung bis zum nächsten Schritt'],
-        fr: ['Retrait sur rendez-vous', 'Organisation du transport', 'Remise structurée', 'Accompagnement jusqu’à la suite'],
+        de: ['Kaufabwicklung mit dem Händler', 'Organisation von Abholung oder Transport', 'Begleitung bis zur Übergabe'],
+        fr: ['Gestion de l’achat avec le vendeur', 'Organisation du retrait ou du transport', 'Accompagnement jusqu’à la remise'],
       },
     },
   ];
@@ -317,8 +295,8 @@ export function LandingPage() {
   const serviceDetailsSectionCopy = {
     eyebrow: { de: 'Service-Details', fr: 'Détails du service' },
     subtitle: {
-      de: '6 klar strukturierte Schritte von der Fahrzeugsuche bis zur Abholung oder zum Transport.',
-      fr: '6 étapes claires, de la recherche du véhicule jusqu’au retrait ou au transport.',
+      de: '4 klare Schritte von der Auswahl bis zur Übergabe.',
+      fr: '4 étapes claires, de la sélection jusqu’à la remise.',
     },
     title: { de: 'So funktioniert unser Fahrzeugservice', fr: 'Comment fonctionne notre service véhicule' },
   };

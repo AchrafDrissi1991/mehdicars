@@ -38,6 +38,7 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
     maxMileage: initialMaxMileage,
     budget: initialBudget,
     phone: '',
+    privacyConsent: false,
     purchaseTimeline: '',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -101,6 +102,12 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
       }
       if (isBlank(formData.phone)) {
         nextErrors.phone = requiredMessage;
+      }
+      if (!formData.privacyConsent) {
+        nextErrors.privacyConsent =
+          language === 'fr'
+            ? 'Veuillez accepter la politique de confidentialité avant l’envoi.'
+            : 'Bitte akzeptieren Sie vor dem Absenden die Datenschutzhinweise.';
       }
     }
 

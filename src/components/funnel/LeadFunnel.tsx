@@ -2,6 +2,7 @@ import { Progress } from 'antd';
 import type { KeyboardEvent } from 'react';
 import { useMemo, useState } from 'react';
 import { createLead } from '../../services/leadService';
+import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import type { LeadFormData, LeadFormDraft } from '../../types/lead';
 import { FunnelNavigation } from './FunnelNavigation';
@@ -46,7 +47,10 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
   const [submittedReportToken, setSubmittedReportToken] = useState<string>();
 
   const progress = useMemo(() => Math.round((currentStep / totalSteps) * 100), [currentStep]);
-  const requiredMessage = language === 'fr' ? 'Ce champ est obligatoire.' : 'Dieses Feld ist erforderlich.';
+  const requiredMessage = pickText(
+    { de: 'Dieses Feld ist erforderlich.', en: 'This field is required.', es: 'Este campo es obligatorio.', fr: 'Ce champ est obligatoire.' },
+    language,
+  );
 
   function setStep(step: number) {
     setCurrentStep(step);
@@ -78,10 +82,15 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
     }
 
     if (step === 2 && isBlank(formData.vehicleTypeOrModel) && !formData.budget) {
-      nextErrors.criteria =
-        language === 'fr'
-          ? 'Veuillez indiquer un véhicule recherché ou un budget.'
-          : 'Bitte geben Sie einen Fahrzeugwunsch oder ein Budget an.';
+        nextErrors.criteria = pickText(
+          {
+            de: 'Bitte geben Sie einen Fahrzeugwunsch oder ein Budget an.',
+            en: 'Please specify a vehicle preference or a budget.',
+            es: 'Indique un vehículo deseado o un presupuesto.',
+            fr: 'Veuillez indiquer un véhicule recherché ou un budget.',
+          },
+          language,
+        );
     }
 
     if (step === 2) {
@@ -104,10 +113,15 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
         nextErrors.phone = requiredMessage;
       }
       if (!formData.privacyConsent) {
-        nextErrors.privacyConsent =
-          language === 'fr'
-            ? 'Veuillez accepter la politique de confidentialité avant l’envoi.'
-            : 'Bitte akzeptieren Sie vor dem Absenden die Datenschutzhinweise.';
+        nextErrors.privacyConsent = pickText(
+          {
+            de: 'Bitte akzeptieren Sie vor dem Absenden die Datenschutzhinweise.',
+            en: 'Please accept the privacy policy before submitting.',
+            es: 'Acepte la política de privacidad antes de enviar.',
+            fr: 'Veuillez accepter la politique de confidentialité avant l’envoi.',
+          },
+          language,
+        );
       }
     }
 
@@ -172,7 +186,7 @@ export function LeadFunnel({ language, source, token, onStepChange }: LeadFunnel
     <div className="lead-funnel-card" onKeyDown={handleKeyDown}>
       <div className="lead-funnel-progress">
         <span>
-          {language === 'fr' ? 'ÉTAPE' : 'SCHRITT'} {currentStep} / {totalSteps}
+          {pickText({ de: 'SCHRITT', en: 'STEP', es: 'PASO', fr: 'ÉTAPE' }, language)} {currentStep} / {totalSteps}
         </span>
         <Progress percent={progress} showInfo={false} />
       </div>

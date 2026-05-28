@@ -1,5 +1,6 @@
 import { Input, Slider } from 'antd';
 import { Fuel, Settings } from 'lucide-react';
+import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import type { FuelType, Gearbox, LeadFormDraft } from '../../types/lead';
 
@@ -10,16 +11,16 @@ interface StepProps {
   updateFormData: (data: Partial<LeadFormDraft>) => void;
 }
 
-const gearboxOptions: Array<{ value: Gearbox; fr: string; de: string }> = [
-  { value: 'manual', fr: 'Manuelle', de: 'Manuell' },
-  { value: 'automatic', fr: 'Automatique', de: 'Automatik' },
+const gearboxOptions: Array<{ value: Gearbox; fr: string; de: string; en: string; es: string }> = [
+  { value: 'manual', fr: 'Manuelle', de: 'Manuell', en: 'Manual', es: 'Manual' },
+  { value: 'automatic', fr: 'Automatique', de: 'Automatik', en: 'Automatic', es: 'Automático' },
 ];
 
-const fuelOptions: Array<{ value: FuelType; fr: string; de: string }> = [
-  { value: 'petrol', fr: 'Essence', de: 'Benzin' },
-  { value: 'diesel', fr: 'Diesel', de: 'Diesel' },
-  { value: 'hybrid', fr: 'Hybride', de: 'Hybrid' },
-  { value: 'electric', fr: 'Électrique', de: 'Elektro' },
+const fuelOptions: Array<{ value: FuelType; fr: string; de: string; en: string; es: string }> = [
+  { value: 'petrol', fr: 'Essence', de: 'Benzin', en: 'Petrol', es: 'Gasolina' },
+  { value: 'diesel', fr: 'Diesel', de: 'Diesel', en: 'Diesel', es: 'Diésel' },
+  { value: 'hybrid', fr: 'Hybride', de: 'Hybrid', en: 'Hybrid', es: 'Híbrido' },
+  { value: 'electric', fr: 'Électrique', de: 'Elektro', en: 'Electric', es: 'Eléctrico' },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -38,21 +39,27 @@ export function StepTechnicalPreferences({ data, errors, language, updateFormDat
     <div className="lead-step">
       <div className="lead-step-heading">
         <span>02</span>
-        <h1>{language === 'fr' ? 'Critères et préférences techniques' : 'Kriterien und technische Wünsche'}</h1>
+        <h1>{pickText({ de: 'Kriterien und technische Wuensche', en: 'Criteria and technical preferences', es: 'Criterios y preferencias técnicas', fr: 'Critères et préférences techniques' }, language)}</h1>
       </div>
 
       <p className="lead-step-intro">
-        {language === 'fr'
-          ? 'Définissez le véhicule recherché, votre budget ainsi que les options techniques qui vous conviennent.'
-          : 'Definieren Sie Ihr Wunschfahrzeug, Ihr Budget sowie die technischen Optionen, die zu Ihnen passen.'}
+        {pickText(
+          {
+            de: 'Definieren Sie Ihr Wunschfahrzeug, Ihr Budget sowie die technischen Optionen, die zu Ihnen passen.',
+            en: 'Define your target vehicle, your budget and the technical options that fit your needs.',
+            es: 'Defina el vehículo deseado, su presupuesto y las opciones técnicas que le convienen.',
+            fr: 'Définissez le véhicule recherché, votre budget ainsi que les options techniques qui vous conviennent.',
+          },
+          language,
+        )}
       </p>
 
       <div className="lead-field">
-        <label>{language === 'fr' ? 'Type de véhicule ou modèle recherché' : 'Fahrzeugtyp oder Modellwunsch'}</label>
+        <label>{pickText({ de: 'Fahrzeugtyp oder Modellwunsch', en: 'Vehicle type or desired model', es: 'Tipo de vehículo o modelo deseado', fr: 'Type de véhicule ou modèle recherché' }, language)}</label>
         <Input
           size="large"
           value={data.vehicleTypeOrModel}
-          placeholder={language === 'fr' ? 'SUV, break, berline...' : 'SUV, Kombi, Limousine...'}
+          placeholder={pickText({ de: 'SUV, Kombi, Limousine...', en: 'SUV, estate, sedan...', es: 'SUV, familiar, berlina...', fr: 'SUV, break, berline...' }, language)}
           onChange={(event) => updateFormData({ vehicleTypeOrModel: event.target.value })}
         />
         {errors.criteria && <span className="field-error">{errors.criteria}</span>}
@@ -61,14 +68,14 @@ export function StepTechnicalPreferences({ data, errors, language, updateFormDat
       <div className="slider-grid">
         <div className="lead-slider">
           <div>
-            <label>{language === 'fr' ? 'Année minimum' : 'Baujahr ab'}</label>
+            <label>{pickText({ de: 'Baujahr ab', en: 'Minimum year', es: 'Año mínimo', fr: 'Année minimum' }, language)}</label>
             <strong>{data.minYear ?? currentYear}</strong>
           </div>
           <Slider min={2005} max={currentYear} value={data.minYear ?? currentYear} onChange={(minYear) => updateFormData({ minYear })} />
         </div>
         <div className="lead-slider">
           <div>
-            <label>{language === 'fr' ? 'Kilométrage maximum' : 'Maximale Kilometer'}</label>
+            <label>{pickText({ de: 'Maximale Kilometer', en: 'Maximum mileage', es: 'Kilometraje máximo', fr: 'Kilométrage maximum' }, language)}</label>
             <strong>{formatNumber(data.maxMileage ?? 80000)} km</strong>
           </div>
           <Slider
@@ -81,7 +88,7 @@ export function StepTechnicalPreferences({ data, errors, language, updateFormDat
         </div>
         <div className="lead-slider">
           <div>
-            <label>{language === 'fr' ? 'Votre budget' : 'Budget'}</label>
+            <label>{pickText({ de: 'Budget', en: 'Budget', es: 'Presupuesto', fr: 'Votre budget' }, language)}</label>
             <strong>{formatNumber(data.budget ?? 30000)} €</strong>
           </div>
           <Slider min={5000} max={100000} step={1000} value={data.budget ?? 30000} onChange={(budget) => updateFormData({ budget })} />
@@ -89,7 +96,7 @@ export function StepTechnicalPreferences({ data, errors, language, updateFormDat
       </div>
 
       <div className="choice-section">
-        <label>{language === 'fr' ? 'Boîte de vitesses' : 'Getriebe'} *</label>
+        <label>{pickText({ de: 'Getriebe', en: 'Gearbox', es: 'Caja de cambios', fr: 'Boîte de vitesses' }, language)} *</label>
         <div className="choice-grid choice-grid--two">
           {gearboxOptions.map((option) => (
             <button
@@ -107,7 +114,7 @@ export function StepTechnicalPreferences({ data, errors, language, updateFormDat
       </div>
 
       <div className="choice-section">
-        <label>{language === 'fr' ? 'Carburant' : 'Kraftstoff'} *</label>
+        <label>{pickText({ de: 'Kraftstoff', en: 'Fuel', es: 'Combustible', fr: 'Carburant' }, language)} *</label>
         <div className="choice-grid">
           {fuelOptions.map((option) => (
             <button

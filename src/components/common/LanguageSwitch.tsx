@@ -1,29 +1,13 @@
 import { Select } from 'antd';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { defaultLanguage, getLanguage, localizedRouteSegments } from '../../lib/language';
 import type { SupportedLanguage } from '../../types/i18n';
-
-const supportedLanguages: SupportedLanguage[] = ['de', 'fr'];
-
-const localizedRouteSegments: Record<SupportedLanguage, Record<string, string>> = {
-  de: {
-    confidentialite: 'datenschutz',
-    demande: 'anfrage',
-    merci: 'danke',
-  },
-  fr: {
-    anfrage: 'demande',
-    danke: 'merci',
-    datenschutz: 'confidentialite',
-  },
-};
 
 export function LanguageSwitch() {
   const { lang } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const currentLanguage = supportedLanguages.includes(lang as SupportedLanguage)
-    ? (lang as SupportedLanguage)
-    : 'fr';
+  const currentLanguage = getLanguage(lang);
 
   function switchLanguage(nextLanguage: SupportedLanguage) {
     const segments = location.pathname.split('/');
@@ -61,9 +45,32 @@ export function LanguageSwitch() {
       ),
       value: 'fr',
     },
+    {
+      label: (
+        <span className="language-option">
+          <span aria-hidden="true" className="language-option__flag">
+            🇬🇧
+          </span>
+          <span className="language-option__label">English</span>
+        </span>
+      ),
+      value: 'en',
+    },
+    {
+      label: (
+        <span className="language-option">
+          <span aria-hidden="true" className="language-option__flag">
+            🇪🇸
+          </span>
+          <span className="language-option__label">Español</span>
+        </span>
+      ),
+      value: 'es',
+    },
   ];
 
-  const selectedLanguage = languageOptions.find((option) => option.value === currentLanguage);
+  const selectedLanguage = languageOptions.find((option) => option.value === currentLanguage)
+    ?? languageOptions.find((option) => option.value === defaultLanguage);
 
   return (
     <Select

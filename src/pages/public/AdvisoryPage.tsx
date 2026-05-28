@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { Link, useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
 import { LandingTopBar } from '../../components/landing/LandingTopBar';
+import { getLanguage, localizeRoute } from '../../lib/language';
 import { pickText } from '../../lib/localized';
 import { hasSupabaseConfig } from '../../lib/supabase';
 import {
@@ -27,152 +28,246 @@ interface BookingWindowState {
 
 const advisoryCopy = {
   brand: {
-    de: 'Andi Cars - Beratungsservice',
-    fr: 'Andi Cars - Service conseil',
+    de: 'Mehdi Cars - Beratungsservice',
+    en: 'Mehdi Cars - Consultation service',
+    es: 'Mehdi Cars - Servicio de consulta',
+    fr: 'Mehdi Cars - Service conseil',
   },
   leftHeadline: {
     de: 'Ihr Projekt. Professionell begleitet.',
+    en: 'Your project. Professionally guided.',
+    es: 'Su proyecto. Acompañado profesionalmente.',
     fr: 'Votre projet. Accompagne professionnellement.',
   },
   leftText: {
     de: 'Wir fuehren Sie Schritt fuer Schritt durch den gesamten Kaufprozess - von der Fahrzeugsuche bis zur finalen Uebergabe.',
+    en: 'We guide you step by step through the entire buying process, from vehicle search to final handover.',
+    es: 'Le guiamos paso a paso durante todo el proceso de compra, desde la búsqueda del vehículo hasta la entrega final.',
     fr: "Nous vous guidons etape par etape dans tout le processus d'achat, de la recherche du vehicule jusqu'a la remise finale.",
   },
   bullet1: {
     de: 'Klare Erklaerung jedes Prozessschritts',
+    en: 'Clear explanation of every process step',
+    es: 'Explicación clara de cada etapa del proceso',
     fr: 'Explication claire de chaque etape du processus',
   },
   bullet2: {
     de: 'Antworten zu Budget, Suche und Risiken',
+    en: 'Answers about budget, search and risks',
+    es: 'Respuestas sobre presupuesto, búsqueda y riesgos',
     fr: 'Reponses sur le budget, la recherche et les risques',
   },
   bullet3: {
     de: 'Persoenliche Empfehlungen fuer Ihr Vorhaben',
+    en: 'Personal recommendations for your project',
+    es: 'Recomendaciones personales para su proyecto',
     fr: 'Recommandations personnalisees pour votre projet',
   },
   bookingTitle: {
     de: 'Termin buchen',
+    en: 'Book an appointment',
+    es: 'Reservar una cita',
     fr: 'Réserver une consultation',
   },
   bookingSubtitle: {
     de: 'Waehlen Sie ein Datum, einen freien Slot und hinterlassen Sie Ihre Angaben.',
+    en: 'Choose a date, an available slot and leave your details.',
+    es: 'Elija una fecha, una franja disponible y deje sus datos.',
     fr: 'Choisissez une date, un creneau libre et laissez vos informations.',
   },
   calendarLabel: {
     de: 'Kalender',
+    en: 'Calendar',
+    es: 'Calendario',
     fr: 'Calendrier',
   },
   firstName: {
     de: 'Vorname',
+    en: 'First name',
+    es: 'Nombre',
     fr: 'Prénom',
   },
   lastName: {
     de: 'Name',
+    en: 'Last name',
+    es: 'Apellido',
     fr: 'Nom',
   },
   phone: {
     de: 'Telefonnummer',
+    en: 'Phone number',
+    es: 'Número de teléfono',
     fr: 'Numéro de téléphone',
   },
   phoneError: {
     de: 'Bitte eine gueltige Telefonnummer eingeben (nur Ziffern, z.B. +41791234567).',
+    en: 'Please enter a valid phone number (digits only, e.g. +41791234567).',
+    es: 'Introduzca un número de teléfono válido (solo cifras, por ejemplo +41791234567).',
     fr: 'Veuillez saisir un numéro de téléphone valide (ex: +41791234567).',
   },
   email: {
     de: 'E-Mail-Adresse',
+    en: 'Email address',
+    es: 'Correo electrónico',
     fr: 'Adresse e-mail',
   },
   streetName: {
     de: 'Strasse',
+    en: 'Street',
+    es: 'Calle',
     fr: 'Rue',
   },
   streetNumber: {
     de: 'Hausnummer',
+    en: 'House number',
+    es: 'Número',
     fr: 'Numéro',
   },
   postalCode: {
     de: 'PLZ',
+    en: 'Postal code',
+    es: 'Código postal',
     fr: 'Code postal',
   },
   city: {
     de: 'Stadt',
+    en: 'City',
+    es: 'Ciudad',
     fr: 'Ville',
   },
   country: {
     de: 'Land',
+    en: 'Country',
+    es: 'País',
     fr: 'Pays',
   },
   date: {
     de: 'Datum',
+    en: 'Date',
+    es: 'Fecha',
     fr: 'Date du rendez-vous',
   },
   time: {
     de: 'Uhrzeit',
+    en: 'Time',
+    es: 'Hora',
     fr: 'Heure',
   },
   question: {
     de: 'Ihre Frage (optional)',
+    en: 'Your question (optional)',
+    es: 'Su pregunta (opcional)',
     fr: 'Votre question (optionnel)',
   },
   paymentTitle: {
     de: 'Zahlungsmethoden',
+    en: 'Payment methods',
+    es: 'Métodos de pago',
     fr: 'Moyens de paiement',
+  },
+  priceLabel: {
+    de: 'Beratungspreis',
+    en: 'Consultation price',
+    es: 'Precio de la consulta',
+    fr: 'Prix du conseil',
   },
   submit: {
     de: '39 EUR bezahlen und Termin bestaetigen',
+    en: 'Pay 39 EUR and confirm the appointment',
+    es: 'Pagar 39 EUR y confirmar la cita',
     fr: 'Payer 39 EUR et confirmer le rendez-vous',
   },
   legalNote: {
     de: 'Sichere Zahlung · Sofortige Bestaetigung per E-Mail',
+    en: 'Secure payment · Instant confirmation by email',
+    es: 'Pago seguro · Confirmación inmediata por correo electrónico',
     fr: 'Paiement securise · Confirmation immediate par e-mail',
   },
   privacyConsent: {
     de: 'Ich stimme zu, dass meine Daten zur Terminbearbeitung verwendet werden und Mehdi Cars mich bei Bedarf per E-Mail, Telefon oder WhatsApp kontaktieren darf.',
+    en: 'I agree that my data may be used to process this booking and that Mehdi Cars may contact me by email, phone or WhatsApp if needed.',
+    es: 'Acepto que mis datos se utilicen para tramitar esta cita y que Mehdi Cars pueda contactarme por correo electrónico, teléfono o WhatsApp si es necesario.',
     fr: 'J’accepte que mes données soient utilisées pour traiter ce rendez-vous et que Mehdi Cars puisse me contacter par e-mail, téléphone ou WhatsApp si nécessaire.',
   },
   privacyConsentError: {
     de: 'Bitte akzeptieren Sie vor der Zahlung die Datenschutzhinweise.',
+    en: 'Please accept the privacy policy before payment.',
+    es: 'Acepte la política de privacidad antes del pago.',
     fr: 'Veuillez accepter la politique de confidentialité avant le paiement.',
   },
   privacyLink: {
     de: 'Datenschutzerklärung ansehen',
+    en: 'View privacy policy',
+    es: 'Ver política de privacidad',
     fr: 'Voir la politique de confidentialité',
   },
   successBanner: {
     de: 'Buchung bestätigt! Eine Bestätigungsmail wurde an',
+    en: 'Booking confirmed. A confirmation email was sent to',
+    es: 'Reserva confirmada. Se ha enviado un correo de confirmación a',
     fr: 'Réservation confirmée ! Un e-mail de confirmation a été envoyé à',
   },
   successBannerSuffix: {
     de: 'gesendet.',
+    en: '.',
+    es: '.',
     fr: 'envoyé.',
   },
   schedulerSubtitle: {
     de: 'Verfuegbare Slots -',
+    en: 'Available slots -',
+    es: 'Franjas disponibles -',
     fr: 'Créneaux disponibles le',
   },
   slotButton: {
     de: 'Waehlen',
+    en: 'Choose',
+    es: 'Elegir',
     fr: 'Choisir',
   },
   slotChosen: {
     de: 'Gewaehlt',
+    en: 'Selected',
+    es: 'Elegido',
     fr: 'Choisi',
   },
   noSlots: {
     de: 'Keine freien Termine an diesem Tag.',
+    en: 'No available slots on this day.',
+    es: 'No hay franjas disponibles este día.',
     fr: 'Aucun créneau libre ce jour.',
   },
   reserved: {
     de: 'Reserviert',
+    en: 'Reserved',
+    es: 'Reservado',
     fr: 'Réservé',
   },
   availableOne: {
     de: '1 Platz verfuegbar',
+    en: '1 slot available',
+    es: '1 plaza disponible',
     fr: '1 place disponible',
   },
   selectSlotHint: {
     de: 'Bitte zuerst einen freien Termin auswaehlen.',
+    en: 'Please choose an available slot first.',
+    es: 'Seleccione primero una franja disponible.',
     fr: "Veuillez d'abord choisir un créneau libre.",
+  },
+  placeholders: {
+    firstName: { de: 'Max', en: 'John', es: 'Juan', fr: 'Jean' },
+    lastName: { de: 'Mustermann', en: 'Doe', es: 'Pérez', fr: 'Dupont' },
+    streetName: { de: 'Musterstrasse', en: 'Example Street', es: 'Calle Ejemplo', fr: 'Rue Exemple' },
+    streetNumber: { de: '12A', en: '12A', es: '12A', fr: '12A' },
+    postalCode: { de: '8000', en: '10001', es: '28001', fr: '75001' },
+    city: { de: 'Zuerich', en: 'London', es: 'Madrid', fr: 'Paris' },
+    country: {
+      de: 'Schweiz / Frankreich / Deutschland',
+      en: 'United Kingdom / France / Germany',
+      es: 'España / Francia / Alemania',
+      fr: 'Suisse / France / Allemagne',
+    },
   },
 };
 
@@ -187,8 +282,13 @@ function validatePhone(value: string) {
 
 export function AdvisoryPage() {
   const { lang = 'fr' } = useParams();
-  const language = lang as SupportedLanguage;
-  const locale = language === 'de' ? 'de-DE' : 'fr-FR';
+  const language = getLanguage(lang) as SupportedLanguage;
+  const locale = {
+    de: 'de-DE',
+    en: 'en-GB',
+    es: 'es-ES',
+    fr: 'fr-FR',
+  }[language];
   const [viewDate, setViewDate] = useState(() => new Date());
   const [selectedDate, setSelectedDate] = useState(() => new Date());
   const [availabilityWindow, setAvailabilityWindow] = useState<BookingWindowState>({ consultations: [], blocks: [], windows: [] });
@@ -203,7 +303,7 @@ export function AdvisoryPage() {
   const [privacyError, setPrivacyError] = useState('');
   const slotsHeadingRef = useRef<HTMLParagraphElement | null>(null);
   const firstNameInputRef = useRef<HTMLInputElement | null>(null);
-  const privacyPath = `/${language}/${language === 'de' ? 'datenschutz' : 'confidentialite'}`;
+  const privacyPath = `/${language}/${localizeRoute(language, 'privacy')}`;
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -275,9 +375,15 @@ export function AdvisoryPage() {
     [locale, selectedDate],
   );
 
-  const weekDays = language === 'de'
-    ? ['MO', 'DI', 'MI', 'DO', 'FR', 'SA', 'SO']
-    : ['LU', 'MA', 'ME', 'JE', 'VE', 'SA', 'DI'];
+  const weekDays = pickText(
+    {
+      de: ['MO', 'DI', 'MI', 'DO', 'FR', 'SA', 'SO'],
+      en: ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'],
+      es: ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'],
+      fr: ['LU', 'MA', 'ME', 'JE', 'VE', 'SA', 'DI'],
+    },
+    language,
+  );
 
   const availableSlots = useMemo(() => {
     return slotTemplates.map((time) => {
@@ -402,10 +508,18 @@ export function AdvisoryPage() {
 
     const notesWithBilling = [
       formData.question.trim(),
-      billingAddress ? `${language === 'de' ? 'Rechnungsadresse' : 'Adresse de facturation'}: ${billingAddress}` : '',
-      language === 'de'
-        ? 'Einwilligung: Kontaktaufnahme per E-Mail, Telefon oder WhatsApp akzeptiert.'
-        : 'Consentement: contact par e-mail, téléphone ou WhatsApp accepté.',
+      billingAddress
+        ? `${pickText({ de: 'Rechnungsadresse', en: 'Billing address', es: 'Dirección de facturación', fr: 'Adresse de facturation' }, language)}: ${billingAddress}`
+        : '',
+      pickText(
+        {
+          de: 'Einwilligung: Kontaktaufnahme per E-Mail, Telefon oder WhatsApp akzeptiert.',
+          en: 'Consent: contact by email, phone or WhatsApp accepted.',
+          es: 'Consentimiento: contacto por correo electrónico, teléfono o WhatsApp aceptado.',
+          fr: 'Consentement: contact par e-mail, téléphone ou WhatsApp accepté.',
+        },
+        language,
+      ),
     ]
       .filter(Boolean)
       .join('\n\n');
@@ -452,7 +566,13 @@ export function AdvisoryPage() {
             {pickText(advisoryCopy.successBanner, language)} <strong>{formData.email}</strong>{' '}
             {pickText(advisoryCopy.successBannerSuffix, language)}
           </span>
-          <button type="button" onClick={() => setIsSubmitted(false)} aria-label="Schließen">✕</button>
+          <button
+            type="button"
+            onClick={() => setIsSubmitted(false)}
+            aria-label={pickText({ de: 'Schliessen', en: 'Close', es: 'Cerrar', fr: 'Fermer' }, language)}
+          >
+            ✕
+          </button>
         </div>
       )}
 
@@ -495,7 +615,7 @@ export function AdvisoryPage() {
               </div>
               <div className="consultation-price-box" aria-label="39 EUR">
                 <div>
-                  <p className="consultation-price-label">{language === 'de' ? 'Beratungspreis' : 'Prix du conseil'}</p>
+                  <p className="consultation-price-label">{pickText(advisoryCopy.priceLabel, language)}</p>
                   <div className="consultation-price-values">
                     <span className="consultation-price-new">39 EUR</span>
                   </div>
@@ -622,7 +742,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.firstName}
-                      placeholder={language === 'de' ? 'Max' : 'Jean'}
+                      placeholder={pickText(advisoryCopy.placeholders.firstName, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, firstName: event.target.value }))}
                     />
                   </label>
@@ -633,7 +753,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.lastName}
-                      placeholder={language === 'de' ? 'Mustermann' : 'Dupont'}
+                      placeholder={pickText(advisoryCopy.placeholders.lastName, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, lastName: event.target.value }))}
                     />
                   </label>
@@ -672,7 +792,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.streetName}
-                      placeholder={language === 'de' ? 'Musterstrasse' : 'Rue Exemple'}
+                      placeholder={pickText(advisoryCopy.placeholders.streetName, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, streetName: event.target.value }))}
                     />
                   </label>
@@ -683,7 +803,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.streetNumber}
-                      placeholder={language === 'de' ? '12A' : '12A'}
+                      placeholder={pickText(advisoryCopy.placeholders.streetNumber, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, streetNumber: event.target.value }))}
                     />
                   </label>
@@ -694,7 +814,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.postalCode}
-                      placeholder={language === 'de' ? '8000' : '75001'}
+                      placeholder={pickText(advisoryCopy.placeholders.postalCode, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, postalCode: event.target.value }))}
                     />
                   </label>
@@ -705,7 +825,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.city}
-                      placeholder={language === 'de' ? 'Zürich' : 'Paris'}
+                      placeholder={pickText(advisoryCopy.placeholders.city, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, city: event.target.value }))}
                     />
                   </label>
@@ -716,7 +836,7 @@ export function AdvisoryPage() {
                       type="text"
                       required
                       value={formData.country}
-                      placeholder={language === 'de' ? 'Schweiz / Frankreich / Deutschland' : 'Suisse / France / Allemagne'}
+                      placeholder={pickText(advisoryCopy.placeholders.country, language)}
                       onChange={(event) => setFormData((prev) => ({ ...prev, country: event.target.value }))}
                     />
                   </label>

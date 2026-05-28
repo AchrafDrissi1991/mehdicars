@@ -1,5 +1,6 @@
 import { Input, Select } from 'antd';
 import { carBrands } from '../../data/carBrands';
+import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 import type { LeadFormDraft } from '../../types/lead';
 
@@ -19,15 +20,15 @@ export function StepBrand({ data, errors, language, updateFormData }: StepProps)
     <div className="lead-step">
       <div className="lead-step-heading">
         <span>01</span>
-        <h1>{language === 'fr' ? 'Quelle marque recherchez-vous ?' : 'Welche Automarke suchen Sie?'}</h1>
+        <h1>{pickText({ de: 'Welche Automarke suchen Sie?', en: 'Which car brand are you looking for?', es: '¿Qué marca de coche busca?', fr: 'Quelle marque recherchez-vous ?' }, language)}</h1>
       </div>
 
       <div className="lead-field">
-        <label>{language === 'fr' ? 'Marque' : 'Automarke'} *</label>
+        <label>{pickText({ de: 'Automarke', en: 'Brand', es: 'Marca', fr: 'Marque' }, language)} *</label>
         <Select
           showSearch
           size="large"
-          placeholder={language === 'fr' ? 'Sélectionnez une marque' : 'Marke auswählen'}
+          placeholder={pickText({ de: 'Marke auswaehlen', en: 'Select a brand', es: 'Seleccione una marca', fr: 'Sélectionnez une marque' }, language)}
           options={brandOptions}
           value={data.brand || undefined}
           onChange={(brand) => updateFormData({ brand, otherBrand: brand === 'Autre' ? data.otherBrand : '' })}
@@ -42,11 +43,11 @@ export function StepBrand({ data, errors, language, updateFormData }: StepProps)
 
       {isOtherBrand && (
         <div className="lead-field">
-          <label>{language === 'fr' ? 'Précisez la marque' : 'Andere Marke angeben'} *</label>
+          <label>{pickText({ de: 'Andere Marke angeben', en: 'Specify the brand', es: 'Indique la marca', fr: 'Précisez la marque' }, language)} *</label>
           <Input
             size="large"
             value={data.otherBrand}
-            placeholder={language === 'fr' ? 'Précisez la marque' : 'Andere Marke angeben'}
+            placeholder={pickText({ de: 'Andere Marke angeben', en: 'Specify the brand', es: 'Indique la marca', fr: 'Précisez la marque' }, language)}
             onChange={(event) => updateFormData({ otherBrand: event.target.value })}
           />
           {errors.otherBrand && <span className="field-error">{errors.otherBrand}</span>}
@@ -54,11 +55,11 @@ export function StepBrand({ data, errors, language, updateFormData }: StepProps)
       )}
 
       <div className="lead-field">
-        <label>{language === 'fr' ? 'Modèle optionnel' : 'Modell optional'}</label>
+        <label>{pickText({ de: 'Modell optional', en: 'Optional model', es: 'Modelo opcional', fr: 'Modèle optionnel' }, language)}</label>
         <Input
           size="large"
           value={data.model}
-          placeholder={language === 'fr' ? 'Ex. Q5, Série 3, Golf...' : 'z. B. Q5, 3er, Golf...'}
+          placeholder={pickText({ de: 'z. B. Q5, 3er, Golf...', en: 'e.g. Q5, 3 Series, Golf...', es: 'Ej. Q5, Serie 3, Golf...', fr: 'Ex. Q5, Série 3, Golf...' }, language)}
           onChange={(event) => updateFormData({ model: event.target.value })}
         />
       </div>

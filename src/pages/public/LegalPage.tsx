@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { SocialLinks } from '../../components/common/SocialLinks';
 import { LandingTopBar } from '../../components/landing/LandingTopBar';
+import { getLanguage } from '../../lib/language';
+import { pickText } from '../../lib/localized';
 import './landingPage.css';
 
 interface LegalPageProps {
@@ -11,7 +13,7 @@ interface LegalPageProps {
 export function LegalPage({ type }: LegalPageProps) {
   const { lang = 'fr' } = useParams();
   const isPrivacy = type === 'privacy';
-  const language = lang === 'de' ? 'de' : 'fr';
+  const language = getLanguage(lang);
   const homePath = `/${language}`;
 
   const privacySections = useMemo(
@@ -61,7 +63,8 @@ export function LegalPage({ type }: LegalPageProps) {
               ],
             },
           ]
-        : [
+        : language === 'de'
+          ? [
             {
               title: '1. Verantwortliche Stelle',
               paragraphs: [
@@ -104,7 +107,96 @@ export function LegalPage({ type }: LegalPageProps) {
                 'Eine erteilte Einwilligung fuer nicht zwingend notwendige Kontaktwege, insbesondere ueber WhatsApp, koennen Sie jederzeit mit Wirkung fuer die Zukunft widerrufen.',
               ],
             },
-          ],
+          ]
+          : language === 'en'
+            ? [
+                {
+                  title: '1. Data controller',
+                  paragraphs: [
+                    'This page explains how Mehdi Cars processes personal data submitted through the website, the vehicle request and consultation booking.',
+                    'Mehdi Cars is the data controller. For any privacy question, you can contact us using the details published on the website.',
+                  ],
+                },
+                {
+                  title: '2. Data collected',
+                  paragraphs: [
+                    'We may collect the information you voluntarily provide, such as name, phone number, email address, billing address, vehicle project details and appointment preferences.',
+                    'Depending on your request, this may also include listing links, search criteria, your budget or any information useful for evaluating the project.',
+                  ],
+                },
+                {
+                  title: '3. Purpose of processing',
+                  paragraphs: [
+                    'Your data is used to answer your request, prepare a vehicle search, organize a consultation, contact you and manage the commercial and administrative follow-up.',
+                    'If you agree in the form, we may contact you by email, phone or WhatsApp when this is useful for discussing your project.',
+                  ],
+                },
+                {
+                  title: '4. Service providers',
+                  paragraphs: [
+                    'Your data may be processed through technical services required to operate the service, such as hosting, email delivery, booking or business messaging tools.',
+                    'We do not sell your data. It is only shared with providers needed to manage your request or deliver the service.',
+                  ],
+                },
+                {
+                  title: '5. Retention period',
+                  paragraphs: [
+                    'We keep your data for the time necessary to process your request, support customers and comply with legal or administrative obligations.',
+                    'When longer retention is no longer necessary, the data is deleted or anonymized within a reasonable period.',
+                  ],
+                },
+                {
+                  title: '6. Your rights',
+                  paragraphs: [
+                    'You may request access, correction, deletion or restriction of processing of your personal data within the scope permitted by applicable law.',
+                    'You may also withdraw your consent for non-essential contact channels, especially WhatsApp, at any time.',
+                  ],
+                },
+              ]
+            : [
+                {
+                  title: '1. Responsable',
+                  paragraphs: [
+                    'Esta página explica cómo Mehdi Cars trata los datos personales enviados a través del sitio web, la solicitud de vehículo y la reserva de consulta.',
+                    'Mehdi Cars es el responsable del tratamiento. Para cualquier consulta sobre privacidad, puede contactarnos mediante los datos publicados en el sitio.',
+                  ],
+                },
+                {
+                  title: '2. Datos recogidos',
+                  paragraphs: [
+                    'Podemos recopilar la información que usted proporciona voluntariamente, como nombre, teléfono, correo electrónico, dirección de facturación, detalles del proyecto y preferencias de cita.',
+                    'Según su solicitud, esto también puede incluir enlaces de anuncios, criterios de búsqueda, presupuesto u otra información útil para evaluar el proyecto.',
+                  ],
+                },
+                {
+                  title: '3. Finalidad del tratamiento',
+                  paragraphs: [
+                    'Sus datos se utilizan para responder a su solicitud, preparar una búsqueda de vehículo, organizar una consulta, contactarle y gestionar el seguimiento comercial y administrativo.',
+                    'Si lo acepta en el formulario, podemos contactarle por correo electrónico, teléfono o WhatsApp cuando sea útil para hablar de su proyecto.',
+                  ],
+                },
+                {
+                  title: '4. Proveedores de servicio',
+                  paragraphs: [
+                    'Sus datos pueden tratarse mediante servicios técnicos necesarios para el funcionamiento del servicio, como alojamiento, envío de correos, reservas o mensajería profesional.',
+                    'No vendemos sus datos. Solo se comparten con proveedores necesarios para gestionar su solicitud o prestar el servicio.',
+                  ],
+                },
+                {
+                  title: '5. Conservación',
+                  paragraphs: [
+                    'Conservamos sus datos durante el tiempo necesario para tratar su solicitud, atender al cliente y cumplir con obligaciones legales o administrativas.',
+                    'Cuando ya no sea necesaria una conservación más larga, los datos se eliminarán o anonimizarán en un plazo razonable.',
+                  ],
+                },
+                {
+                  title: '6. Sus derechos',
+                  paragraphs: [
+                    'Puede solicitar acceso, rectificación, supresión o limitación del tratamiento de sus datos personales dentro de lo permitido por la legislación aplicable.',
+                    'También puede retirar en cualquier momento su consentimiento para canales de contacto no esenciales, especialmente WhatsApp.',
+                  ],
+                },
+              ],
     [language],
   );
 
@@ -114,16 +206,22 @@ export function LegalPage({ type }: LegalPageProps) {
 
       <section className="legal-hero">
         <div className="section-inner legal-hero__inner">
-          <span className="eyebrow">{isPrivacy ? (language === 'fr' ? 'Confidentialité' : 'Datenschutz') : 'Legal'}</span>
-          <h1>{isPrivacy ? (language === 'fr' ? 'Protection des données' : 'Datenschutz') : 'Impressum'}</h1>
+          <span className="eyebrow">{isPrivacy ? pickText({ de: 'Datenschutz', en: 'Privacy', es: 'Privacidad', fr: 'Confidentialité' }, language) : 'Legal'}</span>
+          <h1>{isPrivacy ? pickText({ de: 'Datenschutz', en: 'Data protection', es: 'Protección de datos', fr: 'Protection des données' }, language) : pickText({ de: 'Impressum', en: 'Imprint', es: 'Aviso legal', fr: 'Mentions légales' }, language)}</h1>
           <p>
             {isPrivacy
-              ? language === 'fr'
-                ? 'Informations sur le traitement de vos données personnelles dans le cadre de nos demandes et rendez-vous conseil.'
-                : 'Informationen zur Verarbeitung Ihrer personenbezogenen Daten im Rahmen unserer Anfragen und Beratungstermine.'
-              : language === 'fr'
-                ? 'Informations légales de l’entreprise.'
-                : 'Rechtliche Angaben zum Unternehmen.'}
+              ? pickText({
+                  de: 'Informationen zur Verarbeitung Ihrer personenbezogenen Daten im Rahmen unserer Anfragen und Beratungstermine.',
+                  en: 'Information about the processing of your personal data in connection with our requests and consultation appointments.',
+                  es: 'Información sobre el tratamiento de sus datos personales en el marco de nuestras solicitudes y citas de consulta.',
+                  fr: 'Informations sur le traitement de vos données personnelles dans le cadre de nos demandes et rendez-vous conseil.',
+                }, language)
+              : pickText({
+                  de: 'Rechtliche Angaben zum Unternehmen.',
+                  en: 'Legal information about the company.',
+                  es: 'Información legal de la empresa.',
+                  fr: 'Informations légales de l’entreprise.',
+                }, language)}
           </p>
         </div>
       </section>
@@ -142,28 +240,34 @@ export function LegalPage({ type }: LegalPageProps) {
               ))}
 
               <article className="legal-block">
-                <h2>{language === 'fr' ? '7. Contact' : '7. Kontakt'}</h2>
+                <h2>{pickText({ de: '7. Kontakt', en: '7. Contact', es: '7. Contacto', fr: '7. Contact' }, language)}</h2>
                 <p>
-                  {language === 'fr'
-                    ? 'Pour toute demande relative à vos données, vous pouvez nous écrire par e-mail ou utiliser le formulaire de contact du site.'
-                    : 'Fuer Datenschutzanfragen koennen Sie uns per E-Mail kontaktieren oder das Kontaktformular auf der Website nutzen.'}
+                  {pickText({
+                    de: 'Fuer Datenschutzanfragen koennen Sie uns per E-Mail kontaktieren oder das Kontaktformular auf der Website nutzen.',
+                    en: 'For privacy requests, you can contact us by email or use the contact form on the website.',
+                    es: 'Para solicitudes relacionadas con privacidad, puede contactarnos por correo electrónico o utilizar el formulario de contacto del sitio web.',
+                    fr: 'Pour toute demande relative à vos données, vous pouvez nous écrire par e-mail ou utiliser le formulaire de contact du site.',
+                  }, language)}
                 </p>
               </article>
             </>
           ) : (
             <article className="legal-block">
-              <h2>{language === 'fr' ? 'Informations légales' : 'Rechtliche Angaben'}</h2>
+              <h2>{pickText({ de: 'Rechtliche Angaben', en: 'Legal information', es: 'Información legal', fr: 'Informations légales' }, language)}</h2>
               <p>
-                {language === 'fr'
-                  ? 'Les informations légales détaillées doivent être complétées avec les données officielles de l’entreprise avant la mise en production.'
-                  : 'Die vollstaendigen rechtlichen Unternehmensangaben sollten vor dem Livegang noch mit den offiziellen Firmendaten ergaenzt werden.'}
+                {pickText({
+                  de: 'Die vollstaendigen rechtlichen Unternehmensangaben sollten vor dem Livegang noch mit den offiziellen Firmendaten ergaenzt werden.',
+                  en: 'The detailed legal company information should be completed with the official company data before production.',
+                  es: 'La información legal detallada debe completarse con los datos oficiales de la empresa antes de producción.',
+                  fr: 'Les informations légales détaillées doivent être complétées avec les données officielles de l’entreprise avant la mise en production.',
+                }, language)}
               </p>
             </article>
           )}
 
           <div className="legal-actions">
             <Link className="legal-back-link" to={homePath}>
-              {language === 'fr' ? "Retour à l'accueil" : 'Zur Startseite'}
+              {pickText({ de: 'Zur Startseite', en: 'Back to home', es: 'Volver al inicio', fr: "Retour à l'accueil" }, language)}
             </Link>
           </div>
         </div>

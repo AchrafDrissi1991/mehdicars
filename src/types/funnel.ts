@@ -13,6 +13,8 @@ export type QuestionType =
 export interface LocalizedText {
   de: string;
   fr: string;
+  en?: string;
+  es?: string;
 }
 
 export interface FunnelOption {

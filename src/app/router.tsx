@@ -7,12 +7,10 @@ import { FunnelPage } from '../pages/public/FunnelPage';
 import { LandingPage } from '../pages/public/LandingPage';
 import { LegalPage } from '../pages/public/LegalPage';
 import { ThankYouPage } from '../pages/public/ThankYouPage';
+import { getStoredLanguage } from '../lib/language';
 
 function getInitialLanguagePath() {
-  const storedLanguage = window.localStorage.getItem('appLanguage');
-  const language = storedLanguage === 'de' ? 'de' : 'fr';
-
-  return `/${language}`;
+  return `/${getStoredLanguage()}`;
 }
 
 export const router = createBrowserRouter([
@@ -31,11 +29,21 @@ export const router = createBrowserRouter([
       { path: 'anfrage/:token', element: <FunnelPage /> },
       { path: 'conseil', element: <AdvisoryPage /> },
       { path: 'beratung', element: <AdvisoryPage /> },
+      { path: 'advice', element: <AdvisoryPage /> },
+      { path: 'consejo', element: <AdvisoryPage /> },
       { path: 'merci', element: <ThankYouPage /> },
       { path: 'danke', element: <ThankYouPage /> },
+      { path: 'thanks', element: <ThankYouPage /> },
+      { path: 'gracias', element: <ThankYouPage /> },
       { path: 'impressum', element: <LegalPage type="imprint" /> },
       { path: 'datenschutz', element: <LegalPage type="privacy" /> },
       { path: 'confidentialite', element: <LegalPage type="privacy" /> },
+      { path: 'privacy', element: <LegalPage type="privacy" /> },
+      { path: 'privacidad', element: <LegalPage type="privacy" /> },
+      { path: 'request', element: <FunnelPage /> },
+      { path: 'request/:token', element: <FunnelPage /> },
+      { path: 'solicitud', element: <FunnelPage /> },
+      { path: 'solicitud/:token', element: <FunnelPage /> },
     ],
   },
   {

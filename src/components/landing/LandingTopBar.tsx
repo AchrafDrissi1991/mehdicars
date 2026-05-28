@@ -3,6 +3,8 @@ import { ChevronDown, LogIn, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import { getLanguage, localizeRoute } from '../../lib/language';
+import { pickText } from '../../lib/localized';
 import { LanguageSwitch } from '../common/LanguageSwitch';
 import { SocialLinks } from '../common/SocialLinks';
 import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
@@ -10,10 +12,11 @@ import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
 export function LandingTopBar() {
   const { t } = useTranslation();
   const { lang = 'fr' } = useParams();
+  const language = getLanguage(lang);
   const location = useLocation();
-  const funnelPath = `/${lang}/${lang === 'de' ? 'anfrage' : 'demande'}`;
-  const advisoryPath = `/${lang}/${lang === 'de' ? 'beratung' : 'conseil'}`;
-  const landingPath = `/${lang}`;
+  const funnelPath = `/${language}/${localizeRoute(language, 'request')}`;
+  const advisoryPath = `/${language}/${localizeRoute(language, 'advisory')}`;
+  const landingPath = `/${language}`;
   const isLandingPage = location.pathname === landingPath;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -45,7 +48,7 @@ export function LandingTopBar() {
   return (
     <header className={`landing-topbar ${isScrolled ? 'is-scrolled' : ''} ${mobileMenuOpen ? 'is-mobile-menu-open' : ''}`}>
       <div className="landing-topbar__inner">
-        <Link className="brand" to={`/${lang}`}>
+        <Link className="brand" to={`/${language}`}>
           <img alt={t('landing.brand')} className="brand-logo" src={mehdiCarsLogoUrl} />
         </Link>
 
@@ -68,7 +71,7 @@ export function LandingTopBar() {
             </div>
           </div>
           <a className="nav-link" href={sectionHref('service-details')}>
-            {lang === 'de' ? 'Service-Details' : 'Details du service'}
+            {pickText({ de: 'Service-Details', en: 'Service details', es: 'Detalles del servicio', fr: 'Details du service' }, language)}
           </a>
           <a className="nav-link" href={sectionHref('contact')}>
             {t('landing.nav.contact')}
@@ -113,7 +116,7 @@ export function LandingTopBar() {
               </div>
             )}
             <a href={sectionHref('service-details')} onClick={closeMobileMenu}>
-              {lang === 'de' ? 'Service-Details' : 'Details du service'}
+              {pickText({ de: 'Service-Details', en: 'Service details', es: 'Detalles del servicio', fr: 'Details du service' }, language)}
             </a>
             <a href={sectionHref('contact')} onClick={closeMobileMenu}>
               {t('landing.nav.contact')}

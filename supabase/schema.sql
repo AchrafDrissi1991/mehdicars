@@ -42,7 +42,7 @@ create table if not exists public.lead_requests (
   full_name text not null,
   email text,
   phone text not null,
-  language text not null check (language in ('de', 'fr')),
+  language text not null check (language in ('de', 'fr', 'en', 'es')),
   brand text not null,
   other_brand text,
   model text,

@@ -1,15 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import type { SupportedLanguage } from '../types/i18n';
-
-function getStoredLanguage(): SupportedLanguage {
-  if (typeof window === 'undefined') {
-    return 'fr';
-  }
-
-  const storedLanguage = window.localStorage.getItem('appLanguage');
-  return storedLanguage === 'de' || storedLanguage === 'fr' ? storedLanguage : 'fr';
-}
+import { defaultLanguage, getStoredLanguage } from './language';
 
 export const resources = {
   fr: {
@@ -47,9 +38,9 @@ export const resources = {
           eyebrow: 'Conciergerie Automobile',
           title: 'Votre voiture de rêve vous attend.',
           subtitle:
-            'Recherche, vérification, négociation et accompagnement personnalisé — du premier contact à la remise des clés.',
+            'Allemagne, sélection, accompagnement. Une expérience plus simple et plus sereine.',
           buyCta: 'Commencer ma recherche',
-          advisoryCta: 'Découvrir le service',
+          advisoryCta: 'Consultation',
           imageAlt: 'SUV moderne sur une route en Allemagne',
           overlayKicker: 'Recherche active',
           overlayTitle: 'Allemagne vers Europe',
@@ -257,6 +248,334 @@ export const resources = {
       },
     },
   },
+  en: {
+    translation: {
+      common: {
+        back: 'Back',
+        next: 'Next',
+        submit: 'Submit',
+        startRequest: 'Start my request',
+      },
+      landing: {
+        brand: 'Mehdi Cars',
+        nav: {
+          contact: 'Contact',
+          faq: 'FAQ',
+          home: 'Home',
+          label: 'Main navigation',
+          mobileLabel: 'Mobile navigation',
+          openMenu: 'Open menu',
+          process: 'Process',
+          services: 'Services',
+        },
+        servicesMenu: {
+          advisory: {
+            title: 'Buy a car',
+            description: 'Support to find, compare and buy the right vehicle.',
+          },
+          sell: {
+            title: 'Book a consultation',
+            description: 'Schedule a consultation to clarify your car project.',
+          },
+        },
+        hero: {
+          eyebrow: 'Automotive Concierge',
+          title: 'Your dream car is waiting.',
+          subtitle: 'Germany, selection and support. A calmer way to find the right car.',
+          buyCta: 'Start my search',
+          advisoryCta: 'Consultation',
+          proofOne: 'German market',
+          proofTwo: 'Full verification',
+          proofThree: 'End-to-end support',
+        },
+        trust: {
+          germany: 'Germany to Europe',
+          guidance: 'Personal guidance',
+          process: 'Transparent process',
+          structured: 'Structured request',
+        },
+        funnelPreview: {
+          eyebrow: 'Guided request',
+          title: 'Tell us about your vehicle project',
+          description: 'Answer a few essential questions so we can prepare a more targeted search.',
+          stepHint: 'The same 4 steps as in your request',
+          steps: {
+            brand: {
+              title: 'Brand and model',
+              description: 'Choose a brand and add a model if you already have one in mind.',
+            },
+            criteria: {
+              title: 'Search criteria',
+              description: 'Set your budget, minimum year, mileage and delivery destination.',
+            },
+            technical: {
+              title: 'Technical preferences',
+              description: 'Add gearbox, fuel and your desired purchase timeline.',
+            },
+            contact: {
+              title: 'Contact and details',
+              description: 'Leave your contact details and useful notes for the next steps.',
+            },
+          },
+        },
+        explanation: {
+          eyebrow: 'Support',
+          title: 'Clear support for your car project',
+          description: 'Buying a car remotely can be complex. Mehdi Cars helps you turn your needs into a clear and actionable request.',
+          cardTitle: 'What your request clarifies',
+          bullets: {
+            communication: 'Simple communication',
+            criteria: 'Clear criteria',
+            personal: 'Personal support',
+            structured: 'Structured request',
+          },
+        },
+        advantages: {
+          eyebrow: 'Why use a structured request?',
+          title: 'More clarity before comparing vehicles',
+          subtitle: 'A well-framed request saves time and makes the next steps easier to prepare.',
+          selection: {
+            description: 'Compare vehicles based on your real criteria instead of browsing endless listings.',
+            title: 'Clearer selection',
+          },
+          support: {
+            description: 'Move forward with a simple structure and easier follow-up.',
+            title: 'Personal support',
+          },
+          summary: {
+            description: 'Your information becomes a usable base for your vehicle project.',
+            title: 'Structured summary',
+          },
+          time: {
+            description: 'Focus the search on the information that matters most.',
+            title: 'Save time',
+          },
+        },
+        video: {
+          eyebrow: 'Explanation',
+          title: 'How does the Mehdi Cars request work?',
+          text: 'A short explanation helps you understand what information is useful and what happens after submission.',
+        },
+        germany: {
+          eyebrow: 'German market',
+          title: 'Why look for a car in Germany?',
+          text: 'Germany offers a large vehicle market with many brands, options and price ranges.',
+          bullets: {
+            choice: 'Large selection',
+            communication: 'Help with communication and selection',
+            search: 'Structured search',
+            variants: 'Many equipment variants',
+          },
+        },
+        faq: {
+          eyebrow: 'FAQ',
+          title: 'Frequently asked questions',
+          subtitle: 'The key answers before starting your vehicle request in Germany.',
+        },
+        contact: {
+          title: 'Ready to start your request?',
+          text: 'Describe your project in a few minutes and receive the next steps.',
+        },
+        footer: {
+          description: 'Personal support for customers looking for a vehicle in Germany.',
+          imprint: 'Imprint',
+          legal: 'Legal',
+          navigation: 'Navigation',
+          privacy: 'Privacy',
+          rights: 'Release candidate. Legal texts should be finalized before production.',
+          services: 'Services',
+        },
+        services: {
+          advisory: { title: 'Buy a car' },
+          sell: { title: 'Book a consultation' },
+        },
+      },
+      funnel: {
+        title: 'Your vehicle request',
+        subtitle: 'Answer the essential questions. It takes about 2 minutes.',
+        step: 'Step {{current}} of {{total}}',
+        privacy: 'I agree that my information may be stored and used to process my request.',
+        required: 'This field is required.',
+      },
+      advisory: {
+        title: 'Book a consultation',
+        subtitle: 'Schedule a call with our experts to discuss your vehicle project.',
+        comingSoon: 'This page is being prepared. Please check back soon.',
+      },
+      thankYou: {
+        title: 'Thank you for your request!',
+        subtitle: 'We received your information and are preparing the next steps.',
+      },
+      report: {
+        title: 'Internal report',
+        copy: 'Copy report',
+      },
+    },
+  },
+  es: {
+    translation: {
+      common: {
+        back: 'Atrás',
+        next: 'Siguiente',
+        submit: 'Enviar',
+        startRequest: 'Iniciar mi solicitud',
+      },
+      landing: {
+        brand: 'Mehdi Cars',
+        nav: {
+          contact: 'Contacto',
+          faq: 'FAQ',
+          home: 'Inicio',
+          label: 'Navegación principal',
+          mobileLabel: 'Navegación móvil',
+          openMenu: 'Abrir menú',
+          process: 'Proceso',
+          services: 'Servicios',
+        },
+        servicesMenu: {
+          advisory: {
+            title: 'Comprar un coche',
+            description: 'Acompañamiento para encontrar, comparar y comprar el vehículo adecuado.',
+          },
+          sell: {
+            title: 'Reservar una consulta',
+            description: 'Reserve una consulta para aclarar su proyecto de coche.',
+          },
+        },
+        hero: {
+          eyebrow: 'Conserjería automotriz',
+          title: 'Tu coche ideal te espera.',
+          subtitle: 'Alemania, selección y acompañamiento. Una forma más simple de encontrar el coche adecuado.',
+          buyCta: 'Empezar mi búsqueda',
+          advisoryCta: 'Consulta',
+          proofOne: 'Mercado alemán',
+          proofTwo: 'Verificación completa',
+          proofThree: 'Acompañamiento integral',
+        },
+        trust: {
+          germany: 'Alemania hacia Europa',
+          guidance: 'Acompañamiento personal',
+          process: 'Proceso transparente',
+          structured: 'Solicitud estructurada',
+        },
+        funnelPreview: {
+          eyebrow: 'Solicitud guiada',
+          title: 'Cuéntanos tu proyecto de vehículo',
+          description: 'Responde algunas preguntas esenciales para preparar una búsqueda más precisa.',
+          stepHint: 'Los mismos 4 pasos que en tu solicitud',
+          steps: {
+            brand: {
+              title: 'Marca y modelo',
+              description: 'Elige una marca y añade un modelo si ya tienes una idea.',
+            },
+            criteria: {
+              title: 'Criterios de búsqueda',
+              description: 'Define presupuesto, año mínimo, kilometraje y destino de entrega.',
+            },
+            technical: {
+              title: 'Preferencias técnicas',
+              description: 'Añade caja de cambios, combustible y plazo de compra.',
+            },
+            contact: {
+              title: 'Contacto y detalles',
+              description: 'Deja tus datos y notas útiles para los siguientes pasos.',
+            },
+          },
+        },
+        explanation: {
+          eyebrow: 'Acompañamiento',
+          title: 'Acompañamiento claro para tu proyecto',
+          description: 'Comprar un coche a distancia puede ser complejo. Mehdi Cars transforma tu necesidad en una solicitud clara y útil.',
+          cardTitle: 'Lo que aclara tu solicitud',
+          bullets: {
+            communication: 'Comunicación sencilla',
+            criteria: 'Criterios claros',
+            personal: 'Acompañamiento personal',
+            structured: 'Solicitud estructurada',
+          },
+        },
+        advantages: {
+          eyebrow: '¿Por qué una solicitud estructurada?',
+          title: 'Más claridad antes de comparar vehículos',
+          subtitle: 'Una solicitud bien definida ahorra tiempo y facilita los próximos pasos.',
+          selection: {
+            description: 'Compare vehículos según sus criterios reales en lugar de revisar demasiados anuncios.',
+            title: 'Selección más clara',
+          },
+          support: {
+            description: 'Avance con una estructura simple y un seguimiento más fácil.',
+            title: 'Acompañamiento personal',
+          },
+          summary: {
+            description: 'Su información se convierte en una base útil para su proyecto.',
+            title: 'Resumen estructurado',
+          },
+          time: {
+            description: 'Concentre la búsqueda en la información realmente importante.',
+            title: 'Ahorro de tiempo',
+          },
+        },
+        video: {
+          eyebrow: 'Explicación',
+          title: '¿Cómo funciona la solicitud con Mehdi Cars?',
+          text: 'Una breve explicación ayuda a entender qué información es útil y qué ocurre después del envío.',
+        },
+        germany: {
+          eyebrow: 'Mercado alemán',
+          title: '¿Por qué buscar un coche en Alemania?',
+          text: 'Alemania ofrece un mercado amplio con muchas marcas, opciones y rangos de precio.',
+          bullets: {
+            choice: 'Gran selección',
+            communication: 'Ayuda con la comunicación y la selección',
+            search: 'Búsqueda estructurada',
+            variants: 'Muchas variantes de equipamiento',
+          },
+        },
+        faq: {
+          eyebrow: 'FAQ',
+          title: 'Preguntas frecuentes',
+          subtitle: 'Las respuestas clave antes de iniciar su solicitud de vehículo en Alemania.',
+        },
+        contact: {
+          title: '¿Listo para empezar tu solicitud?',
+          text: 'Describe tu proyecto en unos minutos y recibe los siguientes pasos.',
+        },
+        footer: {
+          description: 'Acompañamiento personal para clientes que buscan un vehículo en Alemania.',
+          imprint: 'Aviso legal',
+          legal: 'Legal',
+          navigation: 'Navegación',
+          privacy: 'Privacidad',
+          rights: 'Release candidate. Los textos legales deben finalizarse antes de producción.',
+          services: 'Servicios',
+        },
+        services: {
+          advisory: { title: 'Comprar un coche' },
+          sell: { title: 'Reservar una consulta' },
+        },
+      },
+      funnel: {
+        title: 'Tu solicitud de vehículo',
+        subtitle: 'Responde las preguntas esenciales. Toma unos 2 minutos.',
+        step: 'Paso {{current}} de {{total}}',
+        privacy: 'Acepto que mis datos se almacenen y se utilicen para procesar mi solicitud.',
+        required: 'Este campo es obligatorio.',
+      },
+      advisory: {
+        title: 'Reservar una consulta',
+        subtitle: 'Agenda una cita con nuestros expertos para hablar de tu proyecto.',
+        comingSoon: 'Esta página está en preparación. Vuelva pronto.',
+      },
+      thankYou: {
+        title: 'Gracias por tu solicitud',
+        subtitle: 'Hemos recibido tu información y estamos preparando los siguientes pasos.',
+      },
+      report: {
+        title: 'Informe interno',
+        copy: 'Copiar informe',
+      },
+    },
+  },
   de: {
     translation: {
       common: {
@@ -290,11 +609,11 @@ export const resources = {
         },
         hero: {
           eyebrow: 'Automobil-Concierge',
-          title: 'Ihr Traumfahrzeug wartet in Deutschland.',
+          title: 'Ihr Traumfahrzeug wartet.',
           subtitle:
-            'Suche, Prüfung, Verhandlung und persönliche Begleitung — vom ersten Kontakt bis zur Schlüsselübergabe.',
-          buyCta: 'Meine Suche starten',
-          advisoryCta: 'Service entdecken',
+            'Deutschland, Auswahl und Begleitung. Klarer, persönlicher und entspannter zum richtigen Fahrzeug.',
+          buyCta: 'Suche starten',
+          advisoryCta: 'Beratung',
           imageAlt: 'Moderner SUV auf einer Straße in Deutschland',
           overlayKicker: 'Aktive Suche',
           overlayTitle: 'Deutschland nach Europa',
@@ -509,7 +828,7 @@ export const resources = {
 void i18n.use(initReactI18next).init({
   resources,
   lng: getStoredLanguage(),
-  fallbackLng: 'fr',
+  fallbackLng: defaultLanguage,
   interpolation: {
     escapeValue: false,
   },

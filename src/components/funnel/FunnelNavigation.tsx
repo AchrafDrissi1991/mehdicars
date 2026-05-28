@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import { pickText } from '../../lib/localized';
 import type { SupportedLanguage } from '../../types/i18n';
 
 interface FunnelNavigationProps {
@@ -26,13 +27,15 @@ export function FunnelNavigation({
   return (
     <div className="lead-funnel-navigation">
       <Button className="funnel-prev-button" disabled={isFirstStep} onClick={onPrevious}>
-        {language === 'fr' ? 'Précédent' : 'Zurück'}
+        {pickText({ de: 'Zurueck', en: 'Back', es: 'Atras', fr: 'Précédent' }, language)}
       </Button>
       <span>
-        {language === 'fr' ? 'ÉTAPE' : 'SCHRITT'} {currentStep} / {totalSteps}
+        {pickText({ de: 'SCHRITT', en: 'STEP', es: 'PASO', fr: 'ÉTAPE' }, language)} {currentStep} / {totalSteps}
       </span>
       <Button type="primary" disabled={isNextDisabled} loading={isSubmitting} onClick={onNext}>
-        {isLastStep ? (language === 'fr' ? 'Envoyer' : 'Absenden') : language === 'fr' ? 'Suivant' : 'Weiter'}
+        {isLastStep
+          ? pickText({ de: 'Absenden', en: 'Submit', es: 'Enviar', fr: 'Envoyer' }, language)
+          : pickText({ de: 'Weiter', en: 'Next', es: 'Siguiente', fr: 'Suivant' }, language)}
       </Button>
     </div>
   );

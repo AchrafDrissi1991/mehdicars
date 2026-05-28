@@ -1,4 +1,4 @@
-export type Language = 'de' | 'fr';
+export type Language = 'de' | 'fr' | 'en' | 'es';
 
 export type Gearbox = 'manual' | 'automatic';
 

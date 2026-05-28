@@ -2731,3 +2731,439 @@
     font-size: clamp(28px, 7vw, 36px);
   }
 }
+.funnel-page {
+  --funnel-surface: rgba(255, 255, 255, 0.96);
+  --funnel-border: rgba(15, 23, 42, 0.045);
+  --funnel-border-strong: rgba(15, 23, 42, 0.09);
+}
+
+.funnel-content {
+  padding: var(--section-space-compact) 0 !important;
+}
+
+.lead-funnel-card,
+.lead-funnel-shell,
+.question-card,
+.consultation-redesign,
+.consultation-left,
+.consultation-right,
+.success-step .ant-result,
+.funnel-topbar {
+  border-radius: var(--radius-lg) !important;
+}
+
+.lead-funnel-card,
+.question-card,
+.consultation-left,
+.consultation-right,
+.success-step .ant-result {
+  border: var(--border-width-soft) solid var(--funnel-border) !important;
+  background: var(--funnel-surface) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.lead-step-heading h1,
+.consultation-title,
+.consultation-right h2,
+.success-step .ant-result-title,
+.question-card h1 {
+  font-size: var(--type-h2) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.lead-step-intro,
+.consultation-text,
+.consultation-subtitle,
+.success-step .ant-result-subtitle,
+.question-card > p {
+  font-size: var(--type-body-lg) !important;
+  line-height: 1.72 !important;
+}
+
+.lead-field input,
+.lead-field textarea,
+.consultation-field input,
+.consultation-field textarea,
+.consultation-pay-badge,
+.choice-grid button,
+.consultation-slot {
+  border-radius: var(--radius-sm) !important;
+}
+
+.choice-grid button,
+.consultation-slot,
+.consultation-pay-badge,
+.consultation-cal-btn,
+.funnel-prev-button.ant-btn {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease !important;
+}
+
+.choice-grid button:hover,
+.consultation-slot:hover,
+.consultation-pay-badge:hover,
+.consultation-cal-btn:hover,
+.funnel-prev-button.ant-btn:hover {
+  transform: translateY(-2px);
+}
+
+.consultation-slot,
+.choice-grid button,
+.consultation-pay-badge {
+  border-width: var(--border-width-soft) !important;
+  border-color: var(--funnel-border-strong) !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04) !important;
+}
+
+.funnel-topbar {
+  border: var(--border-width-soft) solid rgba(15, 23, 42, 0.035);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+}
+
+.lead-funnel-card,
+.question-card,
+.consultation-left,
+.consultation-right,
+.success-step .ant-result {
+  border-color: rgba(15, 23, 42, 0.04) !important;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06) !important;
+}
+
+.choice-grid button:hover,
+.consultation-slot:hover,
+.consultation-pay-badge:hover,
+.consultation-cal-btn:hover,
+.funnel-prev-button.ant-btn:hover {
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* ========================================
+   Advisory Booking Recovery Pass
+   Local-only stabilization for consultation page
+   ======================================== */
+
+.advisory-page-redesign.funnel-page {
+  background: linear-gradient(180deg, #fcfcfb 0%, #f3f6fc 52%, #fcfcfb 100%);
+}
+
+.advisory-page-redesign .consultation-redesign-section {
+  position: relative;
+  z-index: 1;
+}
+
+.funnel-page,
+.landing-page.funnel-page:not(.advisory-page) {
+  background: linear-gradient(180deg, #fcfcfb 0%, #f3f6fc 52%, #fcfcfb 100%) !important;
+}
+
+.advisory-page-redesign .consultation-redesign {
+  border: 1px solid rgba(111, 99, 81, 0.12) !important;
+  border-radius: 26px !important;
+  background:
+    radial-gradient(68% 52% at 82% 14%, rgba(120, 156, 214, 0.08) 0%, rgba(120, 156, 214, 0) 60%),
+    linear-gradient(180deg, rgba(251, 249, 245, 0.98) 0%, rgba(244, 240, 233, 0.98) 100%) !important;
+  box-shadow:
+    0 20px 46px rgba(31, 25, 18, 0.08),
+    0 3px 12px rgba(31, 25, 18, 0.03) !important;
+}
+
+.advisory-page-redesign .consultation-left {
+  border: 0 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(58% 54% at 88% 14%, rgba(99, 147, 229, 0.22) 0%, rgba(99, 147, 229, 0) 58%),
+    linear-gradient(152deg, #11161f 0%, #182234 56%, #223251 100%) !important;
+  box-shadow: none !important;
+  color: #f7f3ec !important;
+}
+
+.advisory-page-redesign .consultation-left::before {
+  top: -44px;
+  right: -44px;
+  width: 220px;
+  height: 220px;
+  background: rgba(111, 159, 230, 0.12);
+}
+
+.advisory-page-redesign .consultation-left::after {
+  bottom: -54px;
+  left: -42px;
+  width: 170px;
+  height: 170px;
+  background: rgba(243, 239, 229, 0.05);
+}
+
+.advisory-page-redesign .consultation-brand,
+.advisory-page-redesign .consultation-price-label {
+  color: rgba(208, 221, 241, 0.84);
+}
+
+.advisory-page-redesign .consultation-title {
+  color: #ffffff !important;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+.advisory-page-redesign .consultation-text {
+  color: rgba(237, 241, 247, 0.86) !important;
+}
+
+.advisory-page-redesign .consultation-feature {
+  color: rgba(245, 247, 250, 0.94) !important;
+}
+
+.advisory-page-redesign .consultation-feature-dot {
+  background: #d8c4a0;
+}
+
+.advisory-page-redesign .consultation-price-box {
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 18px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.advisory-page-redesign .consultation-price-new {
+  color: #ffffff;
+}
+
+.advisory-page-redesign .consultation-right {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: rgba(252, 250, 246, 0.9) !important;
+  box-shadow: none !important;
+  color: #2d2924;
+}
+
+.advisory-page-redesign .consultation-right h2 {
+  color: #2d2924 !important;
+}
+
+.advisory-page-redesign .consultation-subtitle {
+  color: #655f58 !important;
+}
+
+.advisory-page-redesign .consultation-section-label {
+  color: #6f9fe6 !important;
+}
+
+.advisory-page-redesign .consultation-calendar-wrap {
+  padding: 18px;
+  border: 1px solid rgba(111, 99, 81, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.advisory-page-redesign .consultation-cal-month,
+.advisory-page-redesign .consultation-slot-time,
+.advisory-page-redesign .consultation-payment-title {
+  color: #2d2924 !important;
+}
+
+.advisory-page-redesign .consultation-cal-btn {
+  border: 1px solid rgba(111, 99, 81, 0.12);
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.88);
+  color: #5f5c57;
+  box-shadow: none !important;
+}
+
+.advisory-page-redesign .consultation-cal-btn:hover,
+.advisory-page-redesign .consultation-cal-btn:focus-visible {
+  transform: none;
+  border-color: rgba(111, 159, 230, 0.3);
+  background: #ffffff;
+  color: #314968;
+}
+
+.advisory-page-redesign .consultation-cal-day-name {
+  color: #8a8276;
+}
+
+.advisory-page-redesign .consultation-cal-day {
+  border: 1px solid rgba(111, 99, 81, 0.08);
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.9);
+  color: #4f4a43;
+}
+
+.advisory-page-redesign .consultation-cal-day.is-current:hover {
+  background: rgba(111, 159, 230, 0.1);
+  color: #2d2924;
+}
+
+.advisory-page-redesign .consultation-cal-day.is-selected {
+  border-color: #6f9fe6;
+  background: #6f9fe6;
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(111, 159, 230, 0.24);
+}
+
+.advisory-page-redesign .consultation-cal-day.is-other,
+.advisory-page-redesign .consultation-cal-day:disabled {
+  opacity: 0.42;
+  background: rgba(245, 241, 235, 0.74);
+}
+
+.advisory-page-redesign .consultation-slots-heading,
+.advisory-page-redesign .consultation-empty-hint,
+.advisory-page-redesign .consultation-slot-availability,
+.advisory-page-redesign .consultation-legal-note,
+.advisory-page-redesign .consultation-field span {
+  color: #6d665d !important;
+}
+
+.advisory-page-redesign .consultation-slots-grid {
+  gap: 10px;
+}
+
+.advisory-page-redesign .consultation-slot {
+  border: 1px solid rgba(111, 99, 81, 0.11) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 8px 18px rgba(31, 25, 18, 0.04) !important;
+}
+
+.advisory-page-redesign .consultation-slot:hover {
+  transform: none;
+  border-color: rgba(111, 159, 230, 0.26) !important;
+  background: rgba(246, 249, 255, 0.96) !important;
+  box-shadow: 0 10px 22px rgba(31, 25, 18, 0.05) !important;
+}
+
+.advisory-page-redesign .consultation-slot.is-picked {
+  border-color: rgba(111, 159, 230, 0.4) !important;
+  background: rgba(236, 243, 255, 0.96) !important;
+}
+
+.advisory-page-redesign .consultation-slot-pill {
+  border: 1px solid rgba(111, 99, 81, 0.12);
+  border-radius: 999px !important;
+  background: rgba(249, 246, 241, 0.96);
+  color: #5f5a53;
+}
+
+.advisory-page-redesign .consultation-slot.is-picked .consultation-slot-pill {
+  border-color: #6f9fe6;
+  background: #6f9fe6;
+  color: #ffffff;
+}
+
+.advisory-page-redesign .consultation-form-grid {
+  gap: 14px;
+}
+
+.advisory-page-redesign .consultation-field input,
+.advisory-page-redesign .consultation-field textarea {
+  border: 1px solid rgba(111, 99, 81, 0.12) !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #2d2924 !important;
+  box-shadow: none !important;
+}
+
+.advisory-page-redesign .consultation-field input::placeholder,
+.advisory-page-redesign .consultation-field textarea::placeholder {
+  color: #9a9287;
+}
+
+.advisory-page-redesign .consultation-field input:focus,
+.advisory-page-redesign .consultation-field textarea:focus {
+  border-color: rgba(111, 159, 230, 0.58) !important;
+  box-shadow: 0 0 0 4px rgba(111, 159, 230, 0.12) !important;
+}
+
+.advisory-page-redesign .consultation-divider {
+  background: rgba(111, 99, 81, 0.12);
+}
+
+.advisory-page-redesign .consultation-pay-badge span {
+  border: 1px solid rgba(111, 99, 81, 0.12) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #57524c !important;
+  box-shadow: none !important;
+}
+
+.advisory-page-redesign .consultation-pay-badge input:checked + span {
+  border-color: rgba(111, 159, 230, 0.42) !important;
+  background: rgba(236, 243, 255, 0.96) !important;
+  color: #27466d !important;
+}
+
+.advisory-page-redesign .consultation-privacy-row {
+  margin-top: 4px;
+  padding: 16px 18px;
+  border: 1px solid rgba(111, 99, 81, 0.1);
+  border-radius: 16px;
+  background: rgba(249, 246, 241, 0.86);
+}
+
+.advisory-page-redesign .consultation-privacy-row .privacy-consent-label {
+  color: #60594f;
+}
+
+.advisory-page-redesign .consultation-privacy-row .privacy-consent-label a {
+  color: #27466d;
+}
+
+.advisory-page-redesign .consultation-field-error {
+  color: #b42318 !important;
+}
+
+.advisory-page-redesign .consultation-cta {
+  min-height: 50px;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #151d2a 0%, #243246 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 16px 30px rgba(17, 24, 39, 0.16) !important;
+}
+
+.advisory-page-redesign .consultation-cta:hover,
+.advisory-page-redesign .consultation-cta:focus-visible {
+  background: linear-gradient(135deg, #111827 0%, #1f2b3d 100%) !important;
+  color: #ffffff !important;
+  transform: none;
+  box-shadow: 0 18px 34px rgba(17, 24, 39, 0.18) !important;
+}
+
+.advisory-page-redesign .consultation-cta:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+.advisory-page-redesign .advisory-success-banner {
+  border: 1px solid rgba(111, 159, 230, 0.18);
+  background: rgba(250, 249, 245, 0.96);
+  color: #2d2924;
+  box-shadow: 0 16px 30px rgba(31, 25, 18, 0.08);
+}
+
+.advisory-page-redesign .advisory-success-banner strong,
+.advisory-page-redesign .advisory-success-banner svg {
+  color: #27466d;
+}
+
+@media (max-width: 1080px) {
+  .advisory-page-redesign .consultation-left {
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .advisory-page-redesign .consultation-redesign {
+    border-radius: 20px !important;
+  }
+
+  .advisory-page-redesign .consultation-left,
+  .advisory-page-redesign .consultation-right {
+    padding: 24px 18px !important;
+  }
+
+  .advisory-page-redesign .consultation-calendar-wrap,
+  .advisory-page-redesign .consultation-privacy-row {
+    padding: 14px;
+  }
+}

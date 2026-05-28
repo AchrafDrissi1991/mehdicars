@@ -136,60 +136,84 @@ export const faqItems: FAQItem[] = [
     question: {
       fr: 'Comment fonctionne la recherche de voiture ?',
       de: 'Wie funktioniert die Fahrzeugsuche?',
+      en: 'How does the car search work?',
+      es: '¿Cómo funciona la búsqueda de coche?',
     },
     answer: {
       fr: 'Vous remplissez une demande guidée. Nous résumons vos critères, vérifions les points essentiels et vous recontactons avec les prochaines étapes.',
       de: 'Sie füllen eine geführte Anfrage aus. Wir strukturieren Ihre Kriterien, prüfen die wichtigsten Punkte und melden uns mit den nächsten Schritten.',
+      en: 'You complete a guided request. We summarize your criteria, verify the key points and get back to you with the next steps.',
+      es: 'Complete una solicitud guiada. Resumimos sus criterios, verificamos los puntos clave y volvemos a contactarle con los siguientes pasos.',
     },
   },
   {
     question: {
       fr: 'Est-ce que je peux faire une demande depuis la France ?',
       de: 'Kann ich aus Frankreich anfragen?',
+      en: 'Can I submit a request from France?',
+      es: '¿Puedo enviar una solicitud desde Francia?',
     },
     answer: {
       fr: 'Oui. Le service est pensé pour les clients en France qui recherchent un véhicule en Allemagne.',
       de: 'Ja. Der Service ist besonders für Kunden in Frankreich gedacht, die ein Fahrzeug in Deutschland suchen.',
+      en: 'Yes. The service is designed for clients in France who are looking for a vehicle in Germany.',
+      es: 'Sí. El servicio está pensado para clientes en Francia que buscan un vehículo en Alemania.',
     },
   },
   {
     question: {
       fr: 'Combien de temps faut-il pour recevoir une réponse ?',
       de: 'Wie schnell bekomme ich eine Rückmeldung?',
+      en: 'How long does it take to receive a reply?',
+      es: '¿Cuánto tiempo se tarda en recibir una respuesta?',
     },
     answer: {
       fr: 'Après votre demande, nous revenons vers vous dès que les informations ont été vérifiées et que les prochaines étapes sont claires.',
       de: 'Nach Ihrer Anfrage melden wir uns, sobald die Angaben geprüft sind und die nächsten Schritte sinnvoll vorbereitet wurden.',
+      en: 'After your request, we get back to you as soon as the information has been checked and the next steps are clear.',
+      es: 'Después de su solicitud, volvemos a contactarle en cuanto la información haya sido verificada y los siguientes pasos estén claros.',
     },
   },
   {
     question: {
       fr: 'Quelles informations dois-je fournir ?',
       de: 'Welche Informationen muss ich angeben?',
+      en: 'What information do I need to provide?',
+      es: '¿Qué información debo proporcionar?',
     },
     answer: {
       fr: 'Les informations utiles sont le type de véhicule, le budget, le kilométrage souhaité, la destination et vos coordonnées de contact.',
       de: 'Wichtig sind Fahrzeugtyp, Budget, Kilometerwunsch, Zielort und Ihre Kontaktdaten.',
+      en: 'Useful details include the vehicle type, budget, desired mileage, destination and your contact details.',
+      es: 'La información útil incluye el tipo de vehículo, el presupuesto, el kilometraje deseado, el destino y sus datos de contacto.',
     },
   },
   {
     question: {
       fr: 'Est-ce que je dois créer un compte ?',
       de: 'Muss ich ein Konto erstellen?',
+      en: 'Do I need to create an account?',
+      es: '¿Tengo que crear una cuenta?',
     },
     answer: {
       fr: 'Non. Pour le release candidate, vous pouvez lancer la demande sans espace client.',
       de: 'Nein. Für den Release Candidate können Sie die Anfrage ohne Kundenkonto starten.',
+      en: 'No. For the release candidate, you can start your request without a customer account.',
+      es: 'No. Para el release candidate, puede iniciar su solicitud sin una cuenta de cliente.',
     },
   },
   {
     question: {
       fr: 'Comment mes informations sont-elles utilisées ?',
       de: 'Wie werden meine Informationen verwendet?',
+      en: 'How is my information used?',
+      es: '¿Cómo se utiliza mi información?',
     },
     answer: {
       fr: 'Vos informations servent à comprendre votre projet automobile, structurer la demande et préparer une réponse adaptée.',
       de: 'Ihre Angaben werden genutzt, um Ihren Fahrzeugwunsch zu verstehen, die Anfrage zu strukturieren und eine passende Rückmeldung vorzubereiten.',
+      en: 'Your information is used to understand your automotive project, structure the request and prepare an appropriate response.',
+      es: 'Su información se utiliza para comprender su proyecto automovilístico, estructurar la solicitud y preparar una respuesta adecuada.',
     },
   },
 ];

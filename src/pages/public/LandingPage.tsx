@@ -39,7 +39,6 @@ import type { SupportedLanguage } from '../../types/i18n';
 import heroImageUrl from '../../../images/bannerfix2.png';
 import bannerFixTwoImageUrl from '../../../images/bannerfix2.png';
 import bannerGsTporchImageUrl from '../../../images/bannergstporch.png';
-import bannerXImageUrl from '../../../images/bannerx.png';
 import mehdiClaGrayImageUrl from '../../../images/mehdi_cla_gray.png';
 import mehdiCarsLogoUrl from '../../../images/mehdi_cars_logo.svg';
 import './landingPage.css';
@@ -57,9 +56,6 @@ export function LandingPage() {
   } as CSSProperties;
   const advisoryCtaStyle = {
     '--advisory-cta-image': `url(${bannerGsTporchImageUrl})`,
-  } as CSSProperties;
-  const contactCtaStyle = {
-    '--contact-cta-image': `url(${bannerXImageUrl})`,
   } as CSSProperties;
 
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -1148,7 +1144,7 @@ export function LandingPage() {
         </div>
       </section> */}
 
-      {/* <section id="faq" className="content-section faq-section section-tone-light">
+      <section id="faq" className="content-section faq-section section-tone-light">
         <div className="section-inner faq-grid">
           <span className="faq-deco-number" aria-hidden="true">06</span>
           <div className="faq-copy">
@@ -1168,10 +1164,10 @@ export function LandingPage() {
             }))}
           />
         </div>
-      </section> */}
+      </section> 
 
-      <section id="contact" className="final-cta contact-section">
-        <div className="section-inner final-cta-card contact-card contact-shell" style={contactCtaStyle}>
+      {/* <section id="contact" className="final-cta contact-section">
+        <div className="section-inner final-cta-card contact-card contact-shell">
           <span className="contact-card__menu" aria-hidden="true">
             <span />
             <span />
@@ -1217,7 +1213,7 @@ export function LandingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <footer className="landing-footer">
         <div className="section-inner footer-grid">

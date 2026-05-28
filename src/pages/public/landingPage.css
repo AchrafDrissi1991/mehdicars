@@ -2148,7 +2148,7 @@
 }
 
 .landing-page .feature-marquee-section {
-  padding: 26px 0 30px;
+  padding: 36px 0 42px;
   background: #ffffff !important;
 }
 
@@ -2157,12 +2157,157 @@
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding: 22px 0;
+  padding: 34px 0;
   overflow: hidden;
   border-top: 1px solid rgba(111, 99, 81, 0.08);
   border-bottom: 1px solid rgba(111, 99, 81, 0.08);
   background:
     linear-gradient(180deg, #f6f1e8 0%, #eee7da 100%);
+}
+
+.landing-page #faq,
+.landing-page #faq.faq-section,
+.landing-page .content-section.faq-section.section-tone-light {
+  background: linear-gradient(180deg, #f6f1e8 0%, #eee7da 100%) !important;
+}
+
+.landing-page .faq-section .section-inner.faq-grid {
+  width: min(1220px, calc(100% - 44px));
+  margin: 0 auto;
+  padding: clamp(40px, 4.6vw, 60px);
+  border: 1px solid rgba(111, 99, 81, 0.1);
+  border-radius: 30px !important;
+  background: rgba(240, 239, 235, 0.96) !important;
+  box-shadow: 0 20px 44px rgba(78, 69, 54, 0.06);
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: clamp(26px, 4vw, 48px);
+  align-items: start;
+}
+
+.landing-page .faq-deco-number {
+  display: none;
+}
+
+.landing-page #faq .faq-copy {
+  position: static;
+  top: auto;
+}
+
+.landing-page #faq .faq-copy .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #7d776d;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.landing-page #faq .faq-copy .eyebrow::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: #7d776d;
+}
+
+.landing-page #faq .faq-copy h2 {
+  margin: 14px 0 12px;
+  color: #20314d;
+  font-size: clamp(28px, 2.8vw, 38px);
+  line-height: 1.08;
+}
+
+.landing-page #faq .faq-copy p {
+  margin: 0;
+  color: #655f55;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.landing-page .faq-collapse {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.landing-page .faq-collapse .ant-collapse-item {
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: #e8e7e2 !important;
+  box-shadow: none !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-item-active {
+  background: #dddcd7 !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-item:hover {
+  border-color: transparent !important;
+  background: #e1e0da !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-header {
+  padding: 18px 20px !important;
+  color: #2c2c2a !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  font-weight: 500 !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-header-text {
+  padding-right: 16px;
+}
+
+.landing-page .faq-collapse .ant-collapse-expand-icon {
+  position: static;
+  transform: none;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: #d3d1c7;
+}
+
+.landing-page .faq-collapse .ant-collapse-item-active .ant-collapse-expand-icon {
+  background: #b4b2a9;
+}
+
+.landing-page .faq-collapse .ant-collapse-arrow {
+  color: #5f5e5a !important;
+  font-size: 13px !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-item-active .ant-collapse-arrow {
+  transform: rotate(45deg);
+  color: #5f5e5a !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-content {
+  border-top: 0 !important;
+  background: transparent !important;
+}
+
+.landing-page .faq-collapse .ant-collapse-content-box {
+  padding: 0 20px 18px !important;
+}
+
+.landing-page .faq-collapse p {
+  padding: 0 !important;
+  color: #5f5e5a !important;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+@media (max-width: 900px) {
+  .landing-page .faq-section .section-inner.faq-grid {
+    width: calc(100% - 24px);
+    padding: 28px 14px 32px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 .landing-page .feature-marquee-shell::before,
@@ -10863,12 +11008,17 @@
 
 .landing-page .contact-shell {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(360px, 560px) minmax(320px, 480px);
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+  justify-content: center;
   padding: 52px 40px;
   border: 0 !important;
   border-radius: 0 !important;
   background:
-    linear-gradient(180deg, rgba(11, 16, 24, 0.28) 0%, rgba(11, 16, 24, 0.38) 100%),
-    var(--contact-cta-image) center center / cover no-repeat !important;
+    linear-gradient(180deg, rgba(12, 17, 28, 0.96) 0%, rgba(5, 8, 14, 0.94) 100%),
+    radial-gradient(120% 160% at 18% 0%, rgba(72, 116, 194, 0.12) 0%, rgba(72, 116, 194, 0) 52%) !important;
   box-shadow: 0 22px 48px rgba(15, 18, 26, 0.16) !important;
   overflow: hidden;
 }
@@ -10878,8 +11028,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(8, 12, 18, 0.62) 0%, rgba(8, 12, 18, 0.44) 32%, rgba(8, 12, 18, 0.26) 58%, rgba(8, 12, 18, 0.5) 100%),
-    linear-gradient(180deg, rgba(8, 12, 18, 0.26) 0%, rgba(8, 12, 18, 0.54) 100%);
+    linear-gradient(90deg, rgba(8, 12, 18, 0.28) 0%, rgba(8, 12, 18, 0.16) 32%, rgba(8, 12, 18, 0.08) 58%, rgba(8, 12, 18, 0.2) 100%),
+    linear-gradient(180deg, rgba(8, 12, 18, 0.08) 0%, rgba(8, 12, 18, 0.18) 100%);
 }
 
 .landing-page .contact-shell::after {
@@ -10896,8 +11046,53 @@
   z-index: 1;
 }
 
+.landing-page .contact-shell.contact-card::before {
+  display: none;
+}
+
 .landing-page .contact-shell .contact-card__menu span {
   background: rgba(238, 242, 248, 0.72);
+}
+
+.landing-page .contact-shell .contact-copy {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  align-content: center;
+  align-self: center;
+  max-width: 560px;
+  justify-self: start;
+  padding-top: 8px;
+  padding-right: 0;
+}
+
+.landing-page .contact-shell .contact-details {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  max-width: 520px;
+  justify-self: start;
+  gap: 28px;
+  padding-top: 8px;
+  padding-left: 0;
+}
+
+.landing-page .contact-shell .contact-copy .eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 8px;
+}
+
+.landing-page .contact-shell .contact-copy h2 {
+  max-width: 520px;
+}
+
+.landing-page .contact-shell .contact-copy p {
+  max-width: 460px;
+}
+
+.landing-page .contact-shell .contact-steps {
+  gap: 16px;
 }
 
 .landing-page .contact-shell .contact-copy,
@@ -10949,7 +11144,17 @@
   }
 
   .landing-page .contact-shell {
+    grid-template-columns: 1fr;
+    gap: 24px;
     padding: 40px 20px;
+  }
+
+  .landing-page .contact-shell .contact-copy,
+  .landing-page .contact-shell .contact-details {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: none;
+    padding-top: 0;
   }
 }
 
